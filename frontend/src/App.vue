@@ -1,38 +1,23 @@
 <template>
   <div id="app">
-    <section class="en-tete">
-      <div id="logo">
-        <img alt="Vue logo" src="./assets/icon-left-font.png">
+    <header>
+      <div id="image">
+        <img src="./assets/logo.png" alt="Logo Groupomania">
       </div>
-      <nav class="navigation">
-        <p class="log-in">log-in</p>
-        <p class="forum">forum</p>
-        <p class="conversation">conversation</p>
-      </nav>
-    </section>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/Profile">Profil Utilisateur</router-link>
+      </div>
+    </header>
+    <router-view/>
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
-
 <style lang="scss">
-#logo {
-  height: 100px;
-  overflow: hidden;
-}
-
-img {
-  height: 100px;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #app {
@@ -41,21 +26,32 @@ img {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  width: 960px;
-  display: flex;
-  flex-direction: column;
+  width: 1024px;
 }
 
-.en-tete {
+header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.navigation {
+#image {
   width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+}
+img {
+  height: 100px;
+}
+
+#nav {
+  padding: 30px;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #FD2D01;
+    }
+  }
 }
 </style>
