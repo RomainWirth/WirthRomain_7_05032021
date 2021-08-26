@@ -1,9 +1,8 @@
 <template>
   <div id="app">
     <section class="en-tete">
-      <div>
-        <img alt="Vue logo" src="./assets/logo.png">
-        <h1>GROUPOMANIA</h1>
+      <div id="logo">
+        <img alt="Vue logo" src="./assets/icon-left-font.png">
       </div>
       <nav class="navigation">
         <p class="log-in">log-in</p>
@@ -27,27 +26,36 @@ export default {
 </script>
 
 <style lang="scss">
+#logo {
+  height: 100px;
+  overflow: hidden;
+}
+
+img {
+  height: 100px;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   width: 960px;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .en-tete {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .navigation {
+  width: 50%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
 }
 </style>
