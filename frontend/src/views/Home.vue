@@ -8,7 +8,7 @@
 
 <script>
 // @ is an alias to /src
-import login from '@/views/login.vue'
+import login from '@/components/login.vue'
 import forum from '@/components/forum.vue'
 import topic from '@/components/topic.vue'
 
