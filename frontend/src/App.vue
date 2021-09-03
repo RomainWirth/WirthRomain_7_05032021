@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <header>
-      <div id="image">
-        <img src="./assets/logo.png" alt="Logo Groupomania">
+      <div class="image">
+        <img class="image__logo" src="./assets/logo.png" alt="Logo Groupomania">
       </div>
       <div id="nav">
         <router-link to="/">Home</router-link> |
@@ -36,11 +36,11 @@ header {
   align-items: center;
 }
 
-#image {
+.image {
   width: 50%;
-}
-img {
+  &__logo {
   height: 100px;
+  }
 }
 
 #nav {
