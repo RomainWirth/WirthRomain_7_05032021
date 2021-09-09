@@ -39,3 +39,5 @@ CREATE TABLE p7_bdd.topic_messages (
     tm_moderation INT NOT NULL DEFAULT 0 COMMENT '0 = non modéré, 1 = accepté, 2 = refusé',
     PRIMARY KEY (tm_id)
 ) ENGINE = InnoDB;
+
+-- création d'une jointure
