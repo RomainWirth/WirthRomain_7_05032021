@@ -1,8 +1,13 @@
-CREATE DATABASE p7_bdd IF NOT EXISTS CHARACTER SET 'utf8';
+SET PATH=%PATH%;E:/Web_Dev/WirthRomain_7_05032021/backend
+mysql -u root -p
+
+CREATE DATABASE p7_bdd CHARACTER SET 'utf8';
 
 -- création utilisateur base de donnée
 CREATE USER 'p7_main_user'@'localhost' IDENTIFIED BY 'p7_main_mdp';
 GRANT ALL PRIVILEGES ON p7_bdd.* TO 'p7_main_user'@'localhost';
+
+mysql -u p7_main_user -p
 
 -- utilisation de la BDD
 USE p7_bdd;
