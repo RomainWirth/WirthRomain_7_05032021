@@ -3,7 +3,7 @@ import db from "../config/database.js";
 
 // Get All Topics
 export const getMessages = (result) => {
-    db.query("SELECT * FROM topic_messages", (err, results) => {             
+    db.query("SELECT tm_id, tm_titre, tm_posting_date FROM topic_messages WHERE tm_parent = 0", (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);
@@ -13,20 +13,20 @@ export const getMessages = (result) => {
     });   
 }
 
-// Get one topic
-export const getMessageById = (id, result) => {
-    db.query("SELECT * FROM topic_messages WHERE tm_id = ?", [id], (err, results) => {             
-        if(err) {
-            console.log(err);
-            result(err, null);
-        } else {
-            result(null, results[0]);
-        }
-    });   
-}
+// // Get one topic
+// export const getMessageById = (id, result) => {
+//     db.query("SELECT * FROM topic_messages WHERE tm_id = ?", [id], (err, results) => {             
+//         if(err) {
+//             console.log(err);
+//             result(err, null);
+//         } else {
+//             result(null, results[0]);
+//         }
+//     });   
+// }
 
 // Insert Topic_message to Database
-export const insertTopicMessage = (data, result) => {
+export const insertTopicMessages = (data, result) => {
     db.query("INSERT INTO topic_messages SET ?", [data], (err, results) => {             
         if(err) {
             console.log(err);
@@ -36,6 +36,9 @@ export const insertTopicMessage = (data, result) => {
         }
     });   
 }
+
+// 
+
 
 // Update Topic_message to Database
 export const updateMessageById = (data, id, result) => {
@@ -61,3 +64,5 @@ export const deleteMessageById = (id, result) => {
         }
     });   
 }
+
+// Moderation Message avec UPDATE

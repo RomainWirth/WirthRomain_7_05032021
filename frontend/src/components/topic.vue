@@ -1,7 +1,7 @@
 <template>
   <div class="topic">
     <h1 class="topic__titre">Topic 1</h1>
-    <p class="topic___">
+    <p class="topic__content">
       Affichage des messages du topic
     </p>
   </div>

@@ -1,16 +1,16 @@
 // Import function from User Model
-import { getUsers, getUserById, insertUsers, updateUserById, deleteUserById } from "../models/usersModel.js";
+import { getUserById, insertUsers, updateUserById, deleteUserById } from "../models/usersModel.js";
  
-// Get All Users
-export const showUsers = (req, res) => {
-    getUsers((err, results) => {
-        if (err){
-            res.send(err);
-        }else{
-            res.json(results);
-        }
-    });
-}
+// // Get All Users
+// export const showUsers = (req, res) => {
+//     getUsers((err, results) => {
+//         if (err){
+//             res.send(err);
+//         }else{
+//             res.json(results);
+//         }
+//     });
+// }
  
 // Get Single User 
 export const showUserById = (req, res) => {

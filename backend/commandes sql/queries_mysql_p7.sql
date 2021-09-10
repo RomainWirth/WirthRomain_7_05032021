@@ -1,4 +1,4 @@
-SET PATH=%PATH%;E:/Web_Dev/WirthRomain_7_05032021/backend
+SET PATH=%PATH%;C:/"Program Files"/MySQL/"MySQL Server 8.0"/bin
 mysql -u root -p
 
 CREATE DATABASE p7_bdd CHARACTER SET 'utf8';

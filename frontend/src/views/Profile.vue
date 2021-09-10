@@ -1,8 +1,5 @@
 <template>
   <div class="profile">
-    <div class="notloggedin"> <!-- apparant si utilisateur non logged-in -->
-      <login />
-    </div>
     <div class="loggedin">
       <h1>PROFIL UTILISATEUR</h1>
       <section class="loggedin__content">
@@ -24,14 +21,6 @@
 </template>
 
 <script>
-import login from '@/components/login.vue'
-
-export default {
-  name: 'Home',
-  components: {
-    login,
-  }
-}
 </script>
 
 

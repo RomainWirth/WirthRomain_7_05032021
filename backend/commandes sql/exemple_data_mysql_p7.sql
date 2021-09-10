@@ -13,22 +13,22 @@ VALUES
 -- tm_id, tm_parent, tm_titre, tm_content, tm_posting_date, tm_user_id, tm_moderation, tm_picture_url
 INSERT INTO topic_messages (tm_id, tm_parent, tm_titre, tm_content, tm_posting_date, tm_user_id, tm_moderation, tm_picture_url)
 VALUES
-(1, 0, 'titre #1', 'contenu texte numéro 1', CURRENT_TIMESTAMP, 1, 0, ''), -- topic n°1 - nouveau parent 0
-(2, 1, 'titre #1', 'contenu texte numéro 1', CURRENT_TIMESTAMP, 2, 0, ''),
-(3, 2, 'titre #1', 'contenu texte numéro 1', CURRENT_TIMESTAMP, 4, 0, ''),
-(4, 3, 'titre #1', 'contenu texte numéro 1', CURRENT_TIMESTAMP, 6, 0, ''),
-(5, 4, 'titre #1', 'contenu texte numéro 1', CURRENT_TIMESTAMP, 3, 0, ''),
-(6, 0, 'titre #2', 'contenu texte numéro 2', CURRENT_TIMESTAMP, 6, 0, ''), -- topic n°2 - nouveau parent 0
-(7, 6, 'titre #2', 'contenu texte numéro 2', CURRENT_TIMESTAMP, 1, 0, ''),
-(8, 6, 'titre #2', 'contenu texte numéro 2', CURRENT_TIMESTAMP, 3, 0, ''),
-(9, 7, 'titre #2', 'contenu texte numéro 2', CURRENT_TIMESTAMP, 2, 0, ''),
+(1, 0, 'titre #1', 'contenu texte numéro 1.0', CURRENT_TIMESTAMP, 1, 0, ''), -- topic n°1 - nouveau parent 0
+(2, 1, 'titre #1', 'contenu texte numéro 1.1', CURRENT_TIMESTAMP, 2, 0, ''),
+(3, 2, 'titre #1', 'contenu texte numéro 1.2', CURRENT_TIMESTAMP, 4, 0, ''),
+(4, 3, 'titre #1', 'contenu texte numéro 1.3', CURRENT_TIMESTAMP, 6, 0, ''),
+(5, 4, 'titre #1', 'contenu texte numéro 1.4', CURRENT_TIMESTAMP, 3, 0, ''),
+(6, 0, 'titre #2', 'contenu texte numéro 2.0', CURRENT_TIMESTAMP, 6, 0, ''), -- topic n°2 - nouveau parent 0
+(7, 6, 'titre #2', 'contenu texte numéro 2.1', CURRENT_TIMESTAMP, 1, 0, ''),
+(8, 7, 'titre #2', 'contenu texte numéro 2.2', CURRENT_TIMESTAMP, 3, 0, ''),
+(9, 8, 'titre #2', 'contenu texte numéro 2.3', CURRENT_TIMESTAMP, 2, 0, '');
 
 
 SELECT * FROM users;
 SELECT * FROM topic_messages;
 
-DROP TABLE users;
-DROP TABLE topic_messages;
+TRUNCATE TABLE users;
+TRUNCATE TABLE topic_messages;
 
 -- selection de tous les topics avec tri ascendant (ici 2 topics selon la table topic_messages de test)
 SELECT tm_id, tm_titre, tm_posting_date 

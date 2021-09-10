@@ -4,14 +4,29 @@
       <div class="image">
         <img class="image__logo" src="./assets/logo.png" alt="Logo Groupomania">
       </div>
-      <div id="nav">
+      <div id="nav"> <!-- v-show après login -->
         <router-link to="/">Home</router-link> |
         <router-link to="/Profile">Profil Utilisateur</router-link>
       </div>
     </header>
+    <body>
+      <login /> <!-- voir l'endroit ou c'est affiché -->
+    </body>
     <router-view/>
   </div>
 </template>
+
+<script>
+import login from '@/components/login.vue'
+
+export default {
+  name: 'Login',
+  components: {
+    login,
+  }
+}
+</script>
+
 
 <style lang="scss">
 body {
