@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <body>
     <header>
       <div class="image">
         <img class="image__logo" src="./assets/logo.png" alt="Logo Groupomania">
@@ -9,20 +9,30 @@
         <router-link to="/Profile">Profil Utilisateur</router-link>
       </div>
     </header>
-    <body>
-      <login /> <!-- voir l'endroit ou c'est affiché -->
-    </body>
+    <section class="corps"> <!-- disparaît quand utilisateur logged-in -->
+      <div class="corps__buttons">
+        <button type="submit">SIGN UP</button>
+        <button type="submit">LOGIN</button>
+      </div>
+      <login />
+      <signup />
+    </section>
     <router-view/>
-  </div>
+    <footer>
+
+    </footer>
+  </body>
 </template>
 
 <script>
 import login from '@/components/login.vue'
+import signup from '@/components/signup.vue'
 
 export default {
   name: 'Login',
   components: {
     login,
+    signup
   }
 }
 </script>
@@ -30,18 +40,16 @@ export default {
 
 <style lang="scss">
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   width: 1024px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;;
 }
 
 header {
@@ -52,7 +60,6 @@ header {
 }
 
 .image {
-  width: 50%;
   &__logo {
   height: 100px;
   }
@@ -68,5 +75,17 @@ header {
       color: #FD2D01;
     }
   }
+}
+
+.corps {
+  width: 100%;
+  margin: auto;
+  & button {
+    margin: 0 10px;
+  }
+}
+
+footer {
+  height: 50px;
 }
 </style>

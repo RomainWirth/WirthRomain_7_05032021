@@ -1,9 +1,29 @@
 <template>
   <div class="topic">
-    <h1 class="topic__titre">Topic 1</h1>
-    <p class="topic__content">
-      Affichage des messages du topic
-    </p>
+    <h1 class="topic__title">Topic 1</h1>
+    <div class="topic__content"> <!-- boucle v-for -->
+      <p class="topic__content--answers">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+        when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+        It has survived not only five centuries, but also the leap into electronic typesetting, 
+        remaining essentially unchanged. 
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      </p>
+      <div class="topic__content--details">
+        <p>abcdefghijklmnopqrstuvwxyz</p>
+        <p>10/10/2010 00:00:00</p>
+      <button type="submit">Modifier</button>
+      </div>
+    </div>
+    <div class="topic__answer-area">
+      <textarea class="topic__anwsering--field" name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600"></textarea>
+      <div class="topic__anwser-area--button">
+        <button type="submit">Répondre</button>
+      </div>
+    </div>
+    
   </div>
 </template>
 
@@ -22,19 +42,38 @@ h3 {
   margin: 40px 0 0;
 }
 .topic {
-  width: 90%;
   border: 1px solid #CCCCCC;
   border-radius: 15px;
   background-color: #FFFFFF;
-  margin: auto;
   padding: 20px;
-  &__titre {
+  &__title {
     border-bottom: 1px solid #CCCCCC;
     padding: 10px;
   }
   &__content {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 10px;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
+    &--answers {
+      text-align: justify;
+    }
+    &--details {
+      font-size: 0.75em;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  }
+  &__answer-area {
+    margin-top: 10px;
+    & textarea {
+      width: 90%;
+    }
+    &--button {
+      width: 30%;
+    }
   }
 }
 </style>

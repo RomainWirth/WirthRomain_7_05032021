@@ -1,5 +1,5 @@
 // Import function from Topic_message Model
-import { getMessages, getMessageById, insertTopicMessages, updateMessageById, deleteMessageById } from "../models/topic_messageModel.js";
+import { getMessages, insertTopicMessages, updateMessageById, deleteMessageById } from "../models/topic_messageModel.js";
 
 // Voir tous les messages (parents 0)
 export const showTopicMessages = (req, res) => {

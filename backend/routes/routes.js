@@ -2,14 +2,14 @@
 import express from "express";
  
 // import function from controller
-import { showUsers, showUserById, createUsers, updateUser, deleteUser } from "../controllers/users.js";
+import { showUserById, createUsers, updateUser, deleteUser } from "../controllers/users.js";
 import { showTopicMessages, showTopicById, createMessage, updateMessage, deleteMessage } from "../controllers/topic_messages.js";
 
 // init express router
 const router = express.Router();
  
 // Get All Users
-router.get('/users', showUsers);
+// router.get('/users', showUsers);
 // Get Single User
 router.get('/users/:id', showUserById);
 // Create New User

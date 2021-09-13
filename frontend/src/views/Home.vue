@@ -1,8 +1,8 @@
 <template>
-  <div class="home">
-    <forum msg="Bienvenue sur le forum de discussion de Groupomania"/>
+  <section class="home">
+    <forum msg="Bienvenue sur le forum de discussion de Groupomania" />
     <topic />
-  </div>
+  </section>
 </template>
 
 <script>
@@ -18,3 +18,9 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.home {
+  width: 100%;
+}
+</style>
