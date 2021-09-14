@@ -36,6 +36,9 @@ SELECT * FROM topic_messages;
 TRUNCATE TABLE users;
 TRUNCATE TABLE topic_messages;
 
+
+-- création de jointures
+
 -- selection de tous les topics avec tri ascendant (ici 2 topics selon la table topic_messages de test)
 SELECT tm_id, tm_titre, tm_posting_date 
 FROM topic_messages 
@@ -45,11 +48,11 @@ ORDER BY tm_posting_date DESC;
 -- selection de tous les postes d'un user
 SELECT tm.*, u.u_pseudo FROM topic_messages tm
 INNER JOIN users u ON tm.tm_user_id = u.u_id
-WHERE u.u_id = 1
+WHERE u.u_id = 1 
 ORDER BY tm.tm_id ASC;
 
 -- selection de tous les messages dans une conversation
 SELECT tm.*, u.u_pseudo FROM topic_messages tm
 INNER JOIN users u ON tm.tm_user_id = u.u_id
-WHERE tm.tm_titre = 'titre n1'
+WHERE tm.tm_titre = 'titre n1' -- changer avec titre n2 pour le topic n2
 ORDER BY tm.tm_id ASC;

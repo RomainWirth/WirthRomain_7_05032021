@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS p7_bdd.users (
 CREATE TABLE p7_bdd.topic_messages (
     tm_id INT NOT NULL AUTO_INCREMENT,
     tm_parent INT NOT NULL DEFAULT 1 COMMENT '0 = topic, >0 = réponses',
-    tm_titre VARCHAR(50) NOT NULL UNIQUE,
+    tm_titre VARCHAR(50) NOT NULL,
     tm_content VARCHAR(500) NOT NULL,
     tm_posting_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     tm_user_id INT NOT NULL,
@@ -39,5 +39,3 @@ CREATE TABLE p7_bdd.topic_messages (
     tm_moderation INT NOT NULL DEFAULT 0 COMMENT '0 = non modéré, 1 = accepté, 2 = refusé',
     PRIMARY KEY (tm_id)
 ) ENGINE = InnoDB;
-
--- création d'une jointure
