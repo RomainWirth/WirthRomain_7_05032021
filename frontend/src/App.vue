@@ -4,39 +4,23 @@
       <div class="image">
         <img class="image__logo" src="./assets/logo.png" alt="Logo Groupomania">
       </div>
-      <div id="nav"> <!-- v-show après login -->
-        <router-link to="/">Home</router-link> |
-        <router-link to="/Profile">Profil Utilisateur</router-link>
+      <div class="nav"> <!-- v-show après login -->
+        <div class="nav__registration">
+          <router-link to="/login">Login</router-link> |
+          <router-link to="/signup">Signup</router-link>
+        </div>
+        <div class="nav__navigation">
+          <router-link to="/home">Home</router-link> |
+          <router-link to="/profile">Profil Utilisateur</router-link>
+        </div>
       </div>
     </header>
-    <section class="corps"> <!-- disparaît quand utilisateur logged-in -->
-      <div class="corps__buttons">
-        <button type="submit">SIGN UP</button>
-        <button type="submit">LOGIN</button>
-      </div>
-      <login />
-      <signup />
-    </section>
     <router-view/>
     <footer>
 
     </footer>
   </body>
 </template>
-
-<script>
-import login from '@/components/login.vue'
-import signup from '@/components/signup.vue'
-
-export default {
-  name: 'Login',
-  components: {
-    login,
-    signup
-  }
-}
-</script>
-
 
 <style lang="scss">
 body {
@@ -65,23 +49,26 @@ header {
   }
 }
 
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #FD2D01;
+.nav {
+  &__registration {
+    padding: 30px;
+    a {
+      font-weight: bold;
+      color: #2c3e50;
+      &.router-link-exact-active {
+        color: #FD2D01;
+      }
     }
   }
-}
-
-.corps {
-  width: 100%;
-  margin: auto;
-  & button {
-    margin: 0 10px;
+  &__navigation {
+    padding: 30px;
+    a {
+      font-weight: bold;
+      color: #2c3e50;
+      &.router-link-exact-active {
+        color: #FD2D01;
+      }
+    }
   }
 }
 

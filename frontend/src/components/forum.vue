@@ -11,6 +11,20 @@
         <p>10/10/2010 00:00:00</p>
       </div>
     </div>
+    <div class="forum__topics"> <!-- boucle v-for selon le nombre de sujets créés -->
+      <h2 class="forum__topics--title">Titre topic</h2> <!-- cliquable : donne accès au topic en question -->
+      <div class="forum__topics--details">
+        <p>absdefghijklmnopqrstuvwxyz</p>
+        <p>10/10/2010 00:00:00</p>
+      </div>
+    </div>
+    <div class="forum__topics"> <!-- boucle v-for selon le nombre de sujets créés -->
+      <h2 class="forum__topics--title">Titre topic</h2> <!-- cliquable : donne accès au topic en question -->
+      <div class="forum__topics--details">
+        <p>absdefghijklmnopqrstuvwxyz</p>
+        <p>10/10/2010 00:00:00</p>
+      </div>
+    </div>
     <div class="forum__new-topic">
       <button type="submit">Nouveau</button>
     </div>
