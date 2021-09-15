@@ -18,6 +18,9 @@
         &--answers {
             text-align: justify;
         }
+        & textarea {
+            width: 100%;
+        }
         &--details {
             font-size: 0.75em;
             display: flex;
@@ -28,7 +31,7 @@
     &__answer-area {
         margin-top: 10px;
         & textarea {
-            width: 90%;
+            width: 100%;
         }
         &--button {
             width: 30%;

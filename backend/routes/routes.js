@@ -2,7 +2,7 @@
 import express from "express";
  
 // import function from controller
-import { showUserById, createUsers, updateUser, deleteUser } from "../controllers/users.js";
+import { showUserById, createUsers, updateUser, deleteUser } from "../controllers/profile.js";
 import { showTopicMessages, showTopicById, createMessage, updateMessage, deleteMessage } from "../controllers/topic_messages.js";
 
 // init express router
