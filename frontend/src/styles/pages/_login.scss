@@ -1,0 +1,21 @@
+.login {
+    width: 90%;
+    border: 1px solid #CCC;
+    border-radius: 15px;
+    background-color: #FFF;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    @media (max-width: 425px) {
+        width: 85%;
+    }
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        & input {
+            width: 100%;
+            margin: 10px 0;
+        }
+    }
+}

@@ -34,49 +34,5 @@
 
 
 <style lang="scss">
-.profile {
-  width: 100%;
-}
 
-.loggedin {
-  &__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    &--information {
-      width: 50%;
-      align-items: flex-start;
-      border: #2c3e50 1px solid;
-      border-radius: 15px;
-    }
-    &--buttons {
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-around;
-      & button {
-        margin: 10px;
-      }
-    }
-  }
-}
-
-label {
-  width: 110px;
-  display: inline-block;
-  vertical-align: top;
-  margin: 6px;
-}
-
-input:focus {
-  background: #eaeaea;
-}
- 
-input, textarea {
-  width: 249px;
-}
- 
-textarea {
-  height: 100px;
-}
 </style>

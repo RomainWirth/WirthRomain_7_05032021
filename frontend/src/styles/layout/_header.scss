@@ -1,0 +1,39 @@
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    @media (max-width: 425px) {
+        flex-direction: column;
+    }
+}
+
+.image {
+    &__logo {
+    height: 100px;
+    }
+  }
+  
+.nav {
+    &__registration {
+        padding: 30px;
+        a {
+            font-weight: bold;
+            color: #2c3e50;
+            &.router-link-exact-active {
+                color: #FD2D01;
+            }
+        }
+    }
+    &__navigation {
+        padding: 30px;
+        a {
+            font-weight: bold;
+            color: #2c3e50;
+            &.router-link-exact-active {
+            color: #FD2D01;
+            }
+        }
+    }
+}
