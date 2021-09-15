@@ -48,7 +48,7 @@ ORDER BY tm_posting_date DESC;
 -- selection de tous les postes d'un user
 SELECT tm.*, u.u_pseudo FROM topic_messages tm
 INNER JOIN users u ON tm.tm_user_id = u.u_id
-WHERE u.u_id = 1 
+WHERE u.u_id = 1 -- changer pour voir les messages postés par d'autres utilisateurs
 ORDER BY tm.tm_id ASC;
 
 -- selection de tous les messages dans une conversation
