@@ -1,9 +1,9 @@
 // import connection
-import db from "../config/database.js";
+import connection from "../config/database.js";
 
 // Get All Topics
 export const getMessages = (result) => {
-    db.query("SELECT tm_id, tm_titre, tm_posting_date FROM topic_messages WHERE tm_parent = 0", (err, results) => {             
+    connection.query("SELECT tm_id, tm_titre, tm_posting_date FROM topic_messages WHERE tm_parent = 0", (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);
@@ -15,7 +15,7 @@ export const getMessages = (result) => {
 
 // // Get one topic
 // export const getMessageById = (id, result) => {
-//     db.query("SELECT * FROM topic_messages WHERE tm_id = ?", [id], (err, results) => {             
+//     connection.query("SELECT * FROM topic_messages WHERE tm_id = ?", [id], (err, results) => {             
 //         if(err) {
 //             console.log(err);
 //             result(err, null);
@@ -27,7 +27,7 @@ export const getMessages = (result) => {
 
 // Insert Topic_message to Database
 export const insertTopicMessages = (data, result) => {
-    db.query("INSERT INTO topic_messages SET ?", [data], (err, results) => {             
+    connection.query("INSERT INTO topic_messages SET ?", [data], (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);
@@ -42,7 +42,7 @@ export const insertTopicMessages = (data, result) => {
 
 // Update Topic_message to Database
 export const updateMessageById = (data, id, result) => {
-    db.query("UPDATE topic_messages SET tm_parent = ?, tm_titre = ?, tm_content = ?, tm_posting_date = ?, tm_user_id = ?, tm_picture_url = ?, tm_moderation = ?, WHERE u_id = ?", 
+    connection.query("UPDATE topic_messages SET tm_parent = ?, tm_titre = ?, tm_content = ?, tm_posting_date = ?, tm_user_id = ?, tm_picture_url = ?, tm_moderation = ?, WHERE u_id = ?", 
     [data.tm_parent, data.tm_titre, data.tm_content, data.tm_posting_date, data.tm_user_id, data.tm_picture_url, data.tm_moderation, id], (err, results) => {             
         if(err) {
             console.log(err);
@@ -55,7 +55,7 @@ export const updateMessageById = (data, id, result) => {
 
 // Delete Message to Database
 export const deleteMessageById = (id, result) => {
-    db.query("DELETE FROM topic_messages WHERE tm_id = ?", [id], (err, results) => {             
+    connection.query("DELETE FROM topic_messages WHERE tm_id = ?", [id], (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);
