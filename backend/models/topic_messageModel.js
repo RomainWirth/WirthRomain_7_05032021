@@ -37,8 +37,6 @@ export const insertTopicMessages = (data, result) => {
     });   
 }
 
-// 
-
 
 // Update Topic_message to Database
 export const updateMessageById = (data, id, result) => {

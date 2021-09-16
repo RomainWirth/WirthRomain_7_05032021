@@ -1,22 +1,27 @@
-// import express
-import express from "express";
+const express = require('express');
+const router = express.Router();
+
+const auth = require('../middleware/auth');
+const multer = require('../middleware/multer-config');
  
 // import function from controller
 import { showTopicMessages, showTopicById, createMessage, updateMessage, deleteMessage } from "../controllers/topic_messages.js";
 
-// init express router
-const router = express.Router();
+
+// Create new Topic_message (insert to Database)
+router.post('topic_messages', auth, multer, createMessage)
 
 // Get all topics
-router.get('/topic_messages', showTopicMessages);
+router.get('/topic_messages', auth, showTopicMessages);
+
 // Get one topic
-router.get('/topic_messages', showTopicById);
-// Insert Topic_message to Database
-router.post('topic_messages', createMessage)
+router.get('/topic_messages', auth, showTopicById);
+
 // Update Topic_message to Database
-router.put('topic_messages', updateMessage);
+router.put('topic_messages', auth, updateMessage);
+
 // Delete Message to Database
-router.delete('topic_messages', deleteMessage);
+router.delete('topic_messages', auth, deleteMessage);
 
 // Get All messages from One User
 
