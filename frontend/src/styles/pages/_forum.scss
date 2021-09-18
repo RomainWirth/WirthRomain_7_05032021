@@ -9,6 +9,15 @@
         border-bottom: 1px solid #CCC;
         padding: 10px;
     }
+    &__new-topic {
+        display: flex;
+        flex-direction: column;
+        &--field {
+            & textarea {
+                width: 100%;
+            }    
+        }
+    }
     &__topics {
         margin: 10px 0;
         padding: 10px;
@@ -20,6 +29,9 @@
         &--title {
             margin: 0px;
             padding: 10px 10px 5px 10px;
+        }
+        &--content {
+            text-align: justify;
         }
         &--details {
             width: 50%;
