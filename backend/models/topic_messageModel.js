@@ -1,3 +1,5 @@
+// les queries viennent ici
+
 // import connection
 import connection from "../config/database.js";
 

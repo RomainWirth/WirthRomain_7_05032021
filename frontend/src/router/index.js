@@ -36,6 +36,7 @@ const router = new VueRouter({
   routes
 });
 
+// voir si cette section est essentielle
 router.beforeEach((to, from, next) => {
   if (to.matched.some((routes) => routes.meta.requiresAuth)) {
     if (!Data.taka.token) {

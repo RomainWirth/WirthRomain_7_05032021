@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const auth = require('../middleware/auth');
-const multer = require('../middleware/multer-config');
+import auth from '../middleware/auth';
+import multer from '../middleware/multer-config';
  
 // import function from controller
 import { showTopicMessages, showTopicById, createMessage, updateMessage, deleteMessage } from "../controllers/topic_messages.js";
