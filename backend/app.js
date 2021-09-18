@@ -1,14 +1,21 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+// const express = require('express');
+// const bodyParser = require('body-parser');
+// const path = require('path');
 
 // import cors
-const cors = require('cors');
+import cors from 'cors';
+// const cors = require('cors');
 
 // import routes
-const loginRoutes = require('./routes/login');
-const usersRoutes = require('./routes/users');
-const topicMessageRoutes = require('./routes/topicMessage');
+import loginRoutes from './routes/login';
+import usersRoutes from './routes/users';
+import topicMessageRoutes from './routes/topicMessage';
+// const loginRoutes = require('./routes/login');
+// const usersRoutes = require('./routes/users');
+// const topicMessageRoutes = require('./routes/topicMessage');
  
 // init express
 const app = express();

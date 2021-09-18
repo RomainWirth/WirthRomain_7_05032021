@@ -40,8 +40,8 @@ export const insertTopicMessages = (data, result) => {
 
 // Update Topic_message to Database
 export const updateMessageById = (data, id, result) => {
-    connection.query("UPDATE topic_messages SET tm_parent = ?, tm_titre = ?, tm_content = ?, tm_posting_date = ?, tm_user_id = ?, tm_picture_url = ?, tm_moderation = ?, WHERE u_id = ?", 
-    [data.tm_parent, data.tm_titre, data.tm_content, data.tm_posting_date, data.tm_user_id, data.tm_picture_url, data.tm_moderation, id], (err, results) => {             
+    connection.query("UPDATE topic_messages SET tm_titre = ?, tm_content = ?, tm_picture_url = ?, tm_moderation = ? WHERE tm_id = ?", 
+    [data.tm_titre, data.tm_content, data.tm_picture_url, data.tm_moderation, data.tm_id], (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);
@@ -53,7 +53,7 @@ export const updateMessageById = (data, id, result) => {
 
 // Delete Message to Database
 export const deleteMessageById = (id, result) => {
-    connection.query("DELETE FROM topic_messages WHERE tm_id = ?", [id], (err, results) => {             
+    connection.query("DELETE FROM topic_messages WHERE tm_id = ?", [data.tm_id], (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);

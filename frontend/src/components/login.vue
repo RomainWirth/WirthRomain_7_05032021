@@ -2,9 +2,11 @@
     <section class="login">
         <h1>Login</h1>
         <div class="login__content">
-            <input type="text" name="username" v-model="input.username" placeholder="Username" />
-            <input type="password" name="password" v-model="input.password" placeholder="Password" />
-            <button type="submit">Login</button>
+            <form @submit.prevent="submit()">
+                <input type="email" name="email" v-model="input.email" placeholder="Email" />
+                <input type="password" name="password" v-model="input.password" placeholder="Password" />
+                <button type="submit">Login</button>
+            </form>
         </div>
     </section>
 </template>
@@ -15,10 +17,20 @@ export default {
     data() {
         return {
             input: {
-                username: "",
+                email: "",
                 password: ""
             }
+        };
+    },
+    methods: {
+        submit() {
+            this.$emit("submit", {
+                email: this.email,
+                password: this.password
+            });
         }
     }
-}
+};
 </script>
+
+<style lang="scss"></style>

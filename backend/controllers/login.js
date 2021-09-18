@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt'); // Algorythme de hachage = package de chiffrement
 const jwt = require('jsonwebtoken'); // standard qui permet l'échange de jetons
 
-const User = require('../models/Login'); // récupéré du modèle User.js avec uniqueValidator : on ne peut pas utiliser deux fois la même adresse email
+// const User = require('../models/Login'); // récupéré du modèle User.js avec uniqueValidator : on ne peut pas utiliser deux fois la même adresse email
 
 // signup
 exports.signup = (req, res, next) => {

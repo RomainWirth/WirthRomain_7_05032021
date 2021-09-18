@@ -23,6 +23,9 @@
     </div>
     <div class="topic__answer-area">
       <textarea class="topic__anwser-area--field" name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600"></textarea>
+      <input type="hidden" value="" name="tm_parent"> <!-- value = id du poste parent -->
+      <input type="hidden" value="" name="tm_titre"> <!-- value = même titre que parent -->
+      <input type="hidden" value="" name="tm_user_id"> <!-- value = id de l'usager identifié -->
       <div class="topic__anwser-area--button">
         <p>
           <button type="submit">Ajouter un fichier</button>
@@ -42,3 +45,5 @@ export default {
   }
 }
 </script>
+
+<style lang="scss"></style>

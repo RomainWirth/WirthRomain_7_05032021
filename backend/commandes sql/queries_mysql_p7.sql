@@ -19,8 +19,8 @@ DROP TABLE IF EXISTS topic_messages;
 -- création de la table 1 :  users :
 CREATE TABLE IF NOT EXISTS p7_bdd.users (
     u_id INT NOT NULL AUTO_INCREMENT,
-    u_pseudo VARCHAR(30) NOT NULL,
-    u_email VARCHAR(50) NOT NULL,
+    u_pseudo VARCHAR(30) UNIQUE NOT NULL,
+    u_email VARCHAR(50) UNIQUE NOT NULL,
     u_password VARCHAR(100) NOT NULL,
     u_level INT(1) NOT NULL DEFAULT 1 COMMENT 'niveau 0 = moderateur, niveau 1 = usager',
     u_registration_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS p7_bdd.users (
 -- création de la table 2 : topic + messages :
 CREATE TABLE p7_bdd.topic_messages (
     tm_id INT NOT NULL AUTO_INCREMENT,
-    tm_parent INT NOT NULL DEFAULT 1 COMMENT '0 = topic, >0 = réponses',
+    tm_parent INT NOT NULL COMMENT '0 = topic, >0 = réponses',
     tm_titre VARCHAR(50) NOT NULL,
     tm_content VARCHAR(500) NOT NULL,
     tm_posting_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
