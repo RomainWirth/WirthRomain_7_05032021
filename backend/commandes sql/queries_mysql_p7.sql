@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS p7_bdd.users (
 CREATE TABLE p7_bdd.topic_messages (
     tm_id INT NOT NULL AUTO_INCREMENT,
     tm_parent INT NOT NULL COMMENT '0 = topic, >0 = réponses',
-    tm_titre VARCHAR(50) NOT NULL,
+    tm_title VARCHAR(50) NOT NULL,
     tm_content VARCHAR(500) NOT NULL,
     tm_posting_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     tm_user_id INT NOT NULL,

@@ -1,6 +1,6 @@
-const express = require('express'); // modifier par import
+import express from 'express'; // modifier par import
 const router = express.Router();
-const loginCtrl = require('../controllers/login');
+import loginCtrl from '../controllers/login';
 
 router.post('/signup', loginCtrl.signup); // requête post pour s'enregistrer
 router.post('/login', loginCtrl.login); // requête post pour se 'log'
