@@ -1,5 +1,4 @@
 // les queries viennent ici
-
 // import connection
 const connection = require("../config/database.js");
 
@@ -31,10 +30,8 @@ exports.insertTopicMessages = (data, result) => {
 
 // Get All Topics = trouver tous les messages parents
 exports.getMessages = (result) => {
-    connection.query(
-        "SELECT tm_id, tm_titre, tm_posting_date FROM topic_messages WHERE tm_parent = 0", 
-        (err, results) => {             
-        if(err) {console.log(err); result(err, null);} 
+    connection.query("SELECT tm_id, tm_titre, tm_posting_date FROM topic_messages WHERE tm_parent = 0", (err, results) => {             
+        if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results);}
     });   
 }
@@ -49,7 +46,7 @@ exports.getMessages = (result) => {
 exports.updateMessageById = (data, id, result) => {
     connection.query("UPDATE topic_messages SET tm_title = ?, tm_content = ?, tm_picture_url = ?, tm_moderation = ? WHERE tm_id = ?", 
     [data.tm_titre, data.tm_content, data.tm_picture_url, data.tm_moderation, data.tm_id], (err, results) => {             
-        if(err) {console.log(err); result(err, null);} 
+        if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results);}
     });   
 }
@@ -62,9 +59,9 @@ exports.updateMessageById = (data, id, result) => {
 // }
 
 // Delete Message to Database
-exports.deleteMessageById = (id, result) => {
+exports.deleteMessageById = (data, result) => {
     connection.query("DELETE FROM topic_messages WHERE tm_id = ?", [data.tm_id], (err, results) => {             
-        if(err) {console.log(err); result(err, null);} 
+        if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results);}
     });   
 }
@@ -77,11 +74,20 @@ exports.deleteMessageById = (id, result) => {
 
 // Moderation Message avec UPDATE
 exports.moderateMessage = (id, result) => {
-    connection.query("")
+    connection.query("UPDATE topic_messages SET tm_moderation = ?  WHERE tm_id = ?", [id.tm_id], (err, results) => {
+        if(err) {console.log("error: ", err); result(err, null);} 
+        else {result(null, results);}
+    });
 }
 
 // Récupérer les Messages d'un seul utilisateur
-
+exports.userMessages = (id, result) => {
+    connection.query("SELECT tm.*, u.u_pseudo FROM topic_messages tm INNER JOIN users u ON tm.tm_user_id = u.u_id WHERE u.u_id = ? ORDER BY tm.tm_id ASC", 
+    [id.u_id], (err, results) => {
+        if(err) {console.log("error: ", err); result(err, null);} 
+        else {result(null, results);}
+    });
+}
 
 // // Get one topic
 // exports.getMessageById = (id, result) => {

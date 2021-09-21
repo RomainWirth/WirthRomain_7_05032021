@@ -25,17 +25,11 @@ VALUES
 (8, 7, 'titre n2', 'contenu texte numéro 2.2', CURRENT_TIMESTAMP, 3, 0, ''),
 (9, 8, 'titre n2', 'contenu texte numéro 2.3', CURRENT_TIMESTAMP, 2, 0, '');
 
--- update moderation
-UPDATE topic_messages SET tm_moderation = 0  WHERE tm_id = 7;
--- -----------------
-
-
 SELECT * FROM users;
 SELECT * FROM topic_messages;
 
 TRUNCATE TABLE users;
 TRUNCATE TABLE topic_messages;
-
 
 -- création de jointures
 
@@ -48,7 +42,7 @@ ORDER BY tm_posting_date DESC;
 -- selection de tous les postes d'un user
 SELECT tm.*, u.u_pseudo FROM topic_messages tm
 INNER JOIN users u ON tm.tm_user_id = u.u_id
-WHERE u.u_id = 1 -- changer pour voir les messages postés par d'autres utilisateurs
+WHERE u.u_id = 1
 ORDER BY tm.tm_id ASC;
 
 -- selection de tous les messages dans une conversation
@@ -56,3 +50,11 @@ SELECT tm.*, u.u_pseudo FROM topic_messages tm
 INNER JOIN users u ON tm.tm_user_id = u.u_id
 WHERE tm.tm_titre = 'titre n1' -- changer avec titre n2 pour le topic n2
 ORDER BY tm.tm_id ASC;
+
+-- Queries
+-- mettre à jour un utilisateur
+-- update moderation
+UPDATE topic_messages SET tm_moderation = 1  WHERE tm_id = 7;
+
+-- update USER
+UPDATE users SET u_pseudo = ?, u_email = ?, u_password = ? WHERE u_id = ?

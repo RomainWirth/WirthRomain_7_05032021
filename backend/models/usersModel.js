@@ -27,7 +27,7 @@ exports.insertUsers = (data, result) => {
 
 // Update User to Database
 exports.updateUserById = (data, id, result) => {
-    connection.query("UPDATE users SET u_pseudo = ?, u_email = ?, u_password = ?, u_level = ?, u_registration_date = ?, WHERE u_id = ?", 
+    connection.query("UPDATE users SET u_pseudo = ?, u_email = ?, u_password = ? WHERE u_id = ?", 
     [data.u_pseudo, data.u_email, data.u_password, data.u_level, data.u_registration_date, id], (err, results) => {             
         if(err) {console.log(err); result(err, null);} 
         else {result(null, results);}

@@ -8,9 +8,9 @@ const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config'); 
 
 // import function from controller
+const createMessage = require("../controllers/topic_messages.js");
 const showTopicMessages = require("../controllers/topic_messages.js");
 const showTopicById = require("../controllers/topic_messages.js");
-const createMessage = require("../controllers/topic_messages.js");
 const updateMessage = require("../controllers/topic_messages.js");
 const deleteMessage = require("../controllers/topic_messages.js");
 
