@@ -1,4 +1,5 @@
-import mysql from "mysql2";
+// import mysql from "mysql2";
+const mysql = require("mysql2");
   
 // create the connection to database
 const connection = mysql.createConnection({
@@ -8,4 +9,5 @@ const connection = mysql.createConnection({
   database: 'p7_bdd'
 });
  
-export default connection;
+// export default connection;
+module.exports = connection;

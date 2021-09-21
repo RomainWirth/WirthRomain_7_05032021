@@ -1,9 +1,13 @@
 // Import function from Topic_message Model
-// import { getMessages, insertTopicMessages, updateMessageById, deleteMessageById } from "../models/topic_messageModel.js";
-import Message from "../models/topic_messageModel.js";
+// const getMessages = require("../models/topic_messageModel.js");
+// const insertTopicMessages = require("../models/topic_messageModel.js");
+// const updateMessageById = require("../models/topic_messageModel.js");
+// const deleteMessageById = require("../models/topic_messageModel.js");
+
+const Message = require("../models/topic_messageModel.js");
 
 // Créer un message (parent 0) : insert Topic_message to Database
-// export const createMessage = (req, res) => {
+// exports.createMessage = (req, res) => {
 //     const data = req.body;
 //     insertTopicMessages(data, (err, results) => {
 //         if (err){res.send(err);} 
@@ -23,12 +27,12 @@ exports.createMessage = (req, res, next) => {
 };
 
 // Voir tous les messages (parents 0)
-export const showTopicMessages = (req, res) => {
-    getMessages((err, results) => {
-        if (err){res.send(err);}
-        else{res.json(results);}
-    });
-};
+// exports.showTopicMessages = (req, res) => {
+//     getMessages((err, results) => {
+//         if (err){res.send(err);}
+//         else{res.json(results);}
+//     });
+// };
 exports.showTopicMessages = (req, res, next) => {
     Message.find()
     .then(message => { res.status(200).json(message); })
@@ -36,7 +40,7 @@ exports.showTopicMessages = (req, res, next) => {
 };
 
 // Voir un seul message (parent 0) + affichage de ses enfants (réponses)
-// export const showTopicById = (req, res) => {
+// exports.showTopicById = (req, res) => {
 //     getMessageById(req.params.id, (err, results) => {
 //         if (err){res.send(err);}
 //         else {res.json(results);}
@@ -46,7 +50,7 @@ exports.showTopicMessages = (req, res, next) => {
 
 
 // Modifier un message : Update Topic_message to Database
-// export const updateMessage = (req, res) => {
+// exports.updateMessage = (req, res) => {
 //     const data  = req.body;
 //     const id    = req.params.id;
 //     updateMessageById(data, id, (err, results) => {
@@ -66,13 +70,13 @@ exports.updateMessage = (req, res, next) => {
 };
 
 // Supprimer un message : Delete Message to Database
-export const deleteMessage = (req, res, next) => {
-    const id = req.params.id;
-    deleteMessageById(id, (err, results) => {
-        if (err){res.send(err);}
-        else{res.json(results);}
-    });
-};
+// exports.deleteMessage = (req, res, next) => {
+//     const id = req.params.id;
+//     deleteMessageById(id, (err, results) => {
+//         if (err){res.send(err);}
+//         else{res.json(results);}
+//     });
+// };
 exports.deleteMessage = (req, res, next) => {
     deleteMessageById.findOne({ _id: req.params.id}) // on trouve la sauce dans la BDD
     .then(message => { // une fois trouvée

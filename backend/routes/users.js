@@ -1,8 +1,13 @@
 // import express
-import express from "express";
+// import express from "express";
+const express = require("express");
 
 // import function from controller
-import { showUserById, createUsers, updateUser, deleteUser } from "../controllers/profile.js";
+// import { showUserById, createUsers, updateUser, deleteUser } from "../controllers/profile.js";
+const showUserById = require("../controllers/profile.js");
+const createUsers = require("../controllers/profile.js");
+const updateUser = require("../controllers/profile.js");
+const deleteUser = require("../controllers/profile.js");
 
 // init express router
 const router = express.Router();
@@ -19,4 +24,5 @@ router.put('/users/:id', updateUser);
 router.delete('/users/:id', deleteUser);
 
 // export default router
-export default router;
+// export default router;
+module.exports = router;

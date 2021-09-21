@@ -1,22 +1,10 @@
-import createRequire from 'module';
-const require = createRequire(import.meta.url);
-
-import express from 'express';
-import bodyParser from 'body-parser';
-import path from 'path';
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const path = require('path');
-
-// import cors
-import cors from 'cors';
-// const cors = require('cors');
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const cors = require('cors');
 
 // import routes
-import loginRoutes from './routes/login.js';
-import usersRoutes from './routes/users.js';
-import topicMessageRoutes from './routes/topicMessage.js';
-// const loginRoutes = require('./routes/login');
+const loginRoutes = require('./routes/login');
 // const usersRoutes = require('./routes/users');
 // const topicMessageRoutes = require('./routes/topicMessage');
  
@@ -39,8 +27,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // use routers
 app.use(loginRoutes);
-app.use(usersRoutes);
-app.use(topicMessageRoutes); 
+// app.use(usersRoutes);
+// app.use(topicMessageRoutes); 
 
 app.listen(5000, () => console.log('Server running at http://localhost:5000'));
 

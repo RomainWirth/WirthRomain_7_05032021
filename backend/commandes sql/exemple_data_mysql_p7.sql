@@ -13,7 +13,7 @@ VALUES
 UPDATE users SET u_level = 0 WHERE u_id = 7; -- ou u_email = '...'
 
 -- tm_id, tm_parent, tm_titre, tm_content, tm_posting_date, tm_user_id, tm_moderation, tm_picture_url
-INSERT INTO topic_messages (tm_id, tm_parent, tm_titre, tm_content, tm_posting_date, tm_user_id, tm_moderation, tm_picture_url)
+INSERT INTO topic_messages (tm_id, tm_parent, tm_title, tm_content, tm_posting_date, tm_user_id, tm_moderation, tm_picture_url)
 VALUES
 (1, 0, 'titre n1', 'contenu texte numéro 1.0', CURRENT_TIMESTAMP, 1, 0, ''), -- topic n°1 - nouveau parent 0
 (2, 1, 'titre n1', 'contenu texte numéro 1.1', CURRENT_TIMESTAMP, 2, 0, ''),
@@ -40,7 +40,7 @@ TRUNCATE TABLE topic_messages;
 -- création de jointures
 
 -- selection de tous les topics avec tri descendant (ici 2 topics selon la table topic_messages de test)
-SELECT tm_id, tm_titre, tm_posting_date 
+SELECT tm_id, tm_title, tm_posting_date 
 FROM topic_messages 
 WHERE tm_parent = 0
 ORDER BY tm_posting_date DESC;
