@@ -7,20 +7,25 @@
       </div>
       <div class="forum__new-topic--field"> <!-- v-show @clic bouton "Nouveau" -->
         <input name="titre" cols="120" rows="1" placeholder="titre" v-model="tmTitle"> <!-- value = même titre que parent -->
-        <textarea name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600" v-model="tmContent"></textarea>
+        <textarea name="réponse" id="" cols="120" rows="5" placeholder="écrivez le contenu ici" maxlength="600" v-model="tmContent"></textarea>
         <input type="hidden" value="" name="tm_parent" v-model="tmIdParent"> <!-- value = id du poste parent -->
-        <input type="hidden" value="" name="tm_user_id" v-model="tmUserId"> <!-- value = id de l'usager identifié -->           
+        <input type="hidden" value="" name="tm_user_id" v-model="tmUserId"> <!-- value = id de l'usager identifié -->
+        <p>
+          <button type="submit">Ajouter un fichier</button>
+          Aucun fichier
+        </p>
         <button type="submit" @click="createMessage">Poster</button> <!-- @clic -->
       </div>
     </div>
     <div class="forum__topics" v-for="topic_message in topic_messages" :key="topic_message.tm_id"> <!-- boucle v-for selon le nombre de sujets créés :  -->
       <h2 class="forum__topics--title" v-bind:href="topic.vue">{{ topic_messages.tm_title }}</h2> <!-- cliquable : donne accès au topic en question = -->
-      <p class="forum__topics--content">{{ topic_messages.tm_content }}</p>
+    <!--  <p class="forum__topics--content">{{ topic_messages.tm_content }}</p> -->
       <div class="forum__topics--details">
         <p>{{ topic_messages.tm_user_id }}</p>
         <p>{{ topic_messages.tm_posting_date }}</p>
         <p>modération : {{ tm_messages.tm_moderation }}</p>
       </div>
+      <button type="submit" @click="createMessage">Modifier</button> <!-- @clic -->
     </div>
     <!--
     <div class="forum__new-topic">
@@ -45,9 +50,10 @@ export default {
   name: 'forum',
   data() {
     return {
-      tmContent: "",
-      tmIdParent: "",
       tmTitle: "",
+      tmContent: "",
+      // ajouter l'image
+      tmIdParent: "",
       tmUserId: ""
     };
   },
@@ -61,11 +67,36 @@ export default {
           tm_title: this.tmTitle,
           tm_user_id: this.tmUserId
         });
-
+        this.tmTitle = "";
+        this.tmContent = "";
+        this.$router.push("/");
       } catch (err) {
         console.log(err);
       }
     },
+    // get messages
+    async getMessages() {
+      try {
+        const response = await axios.get("http://localhost:/5000/topic_messages");
+        this.tmTitle = response.topic_messages.tm_title,
+        this.tmContent = response.topic_messages.tm_content,
+        this.tmIdParent = response.topic_messages.tm_parent,
+        this.tmUserId = response.topic_messages.tm_user_id
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    // update messages
+    async updateMessage() {
+      try {
+        await axios.update("http://localhost:/5000/topic_messages", {
+
+        });
+        
+      } catch (err) {
+        console.log(err);
+      }
+    }
   },
 };
 </script>
