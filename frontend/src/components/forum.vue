@@ -17,15 +17,15 @@
         <button type="submit" @click="createMessage">Poster</button> <!-- @clic -->
       </div>
     </div>
-    <div class="forum__topics" v-for="topic_message in topic_messages" :key="topic_message.tm_id"> <!-- boucle v-for selon le nombre de sujets créés :  -->
-      <h2 class="forum__topics--title" v-bind:href="topic.vue">{{ topic_messages.tm_title }}</h2> <!-- cliquable : donne accès au topic en question = -->
+    <div class="forum__topics" v-for="topic_message in topic_messages" :key="topic_message.tm_id"> <!-- boucle v-for selon le nombre de sujets créés : v-for="topic_message in topic_messages" :key="topic_message.tm_id" -->
+      <h2 class="forum__topics--title" v-bind:href="topic.vue">{{ topic_messages.tm_title }}</h2> <!-- cliquable : donne accès au topic en question = v-bind:href="topic.vue" + {{ topic_messages.tm_title }} + parent 0 -->
     <!--  <p class="forum__topics--content">{{ topic_messages.tm_content }}</p> -->
       <div class="forum__topics--details">
         <p>{{ topic_messages.tm_user_id }}</p>
         <p>{{ topic_messages.tm_posting_date }}</p>
         <p>modération : {{ tm_messages.tm_moderation }}</p>
       </div>
-      <button type="submit" @click="createMessage">Modifier</button> <!-- @clic -->
+      <button type="submit" @click="updateMessage">Modifier</button> <!-- @clic update -->
     </div>
     <!--
     <div class="forum__new-topic">
