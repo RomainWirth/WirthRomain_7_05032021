@@ -1,22 +1,22 @@
 <template>
-  <body>
+  <body id="App">
     <header>
       <div class="image">
         <img class="image__logo" src="./assets/logo.png" alt="Logo Groupomania">
       </div>
       <div class="nav">
-        <div class="nav__navigation" > <!-- v-show condition user identifié : v-if="!identified" -->
+        <div class="nav__navigation" v-if="!identified"> <!-- v-show condition user identifié : v-if="identified" to="/login"-->
           <router-link to="/home">Home</router-link> |
           <router-link to="/profile">Profil Utilisateur</router-link> |
-          <router-link to="/logout">Logout</router-link> <!-- voir pour mettre un composant logout avec fonction pour mettre fin à la session -->
+          <router-link to="/login" v-on:click.native="Logout()">Logout</router-link> <!-- voir pour mettre un composant logout avec fonction pour mettre fin à la session v-on:click.native="Logout()" -->
         </div>
-        <div class="nav__navigation" > <!-- disparaît quand user identifié : v-else --> 
+        <div class="nav__navigation" v-else> <!-- disparaît quand user identifié : v-else --> 
           <router-link to="/signup">Signup</router-link> |
           <router-link to="/login">Login</router-link>
         </div>
       </div>
     </header>
-    <router-view/>
+    <router-view @identified="setIdentified"/>
     <footer>
     </footer>
   </body>
@@ -26,19 +26,12 @@
 // import axios from 'axios';
 // import Vue from 'vue';
 
-// new Vue({
+// export default {
 //   el : '.nav',
 //   data: {
 //     identified: true
 //   },
-//   methods: {
-//     login() {
-//       const response = axios.get("http://localhost:5000/products");
-//       this.users = response.data;
-//     }
-//   }
-// });
+// };
 </script>
-
 
 <style lang="scss"></style>

@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <forum msg="Bienvenue sur le forum de discussion de Groupomania" />
+    <forum msg="Bienvenue sur le forum de discussion de Groupomania" /> <!-- ajouter un v-show -->
     <topic />
   </section>
 </template>
