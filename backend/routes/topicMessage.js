@@ -11,24 +11,24 @@ const multer = require('../middleware/multer-config');
 const topic_messagesCtrl = require("../controllers/topic_messages.js");
 
 // Create new Topic_message (insert to Database)
-router.post('topic_messages', auth, multer, topic_messagesCtrl.createMessage)
+router.post('/topic_messages', auth, multer, topic_messagesCtrl.createMessage)
 
 // Get all topics (parent 0)
 router.get('/topic_messages', auth, topic_messagesCtrl.showTopicMessages);
 
-// Get one topic
-router.get('/topic_messages', auth, topic_messagesCtrl.showTopicById);
-
 // Update Topic_message to Database
-router.put('topic_messages', auth, topic_messagesCtrl.updateMessage);
+router.put('/topic_messages', auth, topic_messagesCtrl.updateMessage);
+
+// Update Moderation
+router.get('/topic_messages', auth, topic_messagesCtrl.updateModeration);
 
 // Delete Message from Database
-router.delete('topic_messages', auth, topic_messagesCtrl.deleteMessage);
+router.delete('/topic_messages', auth, topic_messagesCtrl.deleteMessage);
 
 // Get message by title
-router.get('topic_messages', auth, topic_messagesCtrl.showMessageByTitle);
+router.get('/topic_messages', auth, topic_messagesCtrl.showMessageByTitle);
 // Delete Message by title (all conversation : parent 0 +  children)
-router.delete('topic_messages', auth, topic_messagesCtrl.deleteConversation);
+router.delete('/topic_messages', auth, topic_messagesCtrl.deleteConversation);
 
 // export router
 module.exports = router;

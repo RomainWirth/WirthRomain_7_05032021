@@ -7,7 +7,7 @@
 // Get one topic : getMessageByTitle
 // Delete conversation : deleteConversationByTitle
 
-const topic_message_path = "..models/topic_messageModel.js";
+const topic_message_path = "../models/topic_messageModel.js";
 const topicMessages = require(topic_message_path);
 
 // Créer un message (parent 0) : INSERT Topic_message to Database
