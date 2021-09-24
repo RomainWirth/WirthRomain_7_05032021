@@ -1,13 +1,13 @@
 const bcrypt = require('bcrypt'); // Algorythme de hachage = package de chiffrement
 const jwt = require('jsonwebtoken'); // standard qui permet l'échange de jetons
 
-const insertUser = require('../models/usersModel'); // récupéré du modèle User.js avec uniqueValidator : on ne peut pas utiliser deux fois la même adresse email
+const userData = require('../models/usersModel'); // récupéré du modèle User.js avec uniqueValidator : on ne peut pas utiliser deux fois la même adresse email
 
 // signup
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10) // hash : salt = 10 tours d'algorythme de hashage suffisent pour la sécurité et éviter que ce soit trop long
     .then(hash => { // hash = méthode pour crypter le mot de passe
-        const user = new insertUser({
+        const user = userData.insertUser({
             u_pseudo: req.body.pseudo, // requiert le pseudo du corps de la requête
             u_email: req.body.email, // adresse email du corps de la requête
             u_password: hash // le mot de passe est stocké crypté
@@ -21,7 +21,10 @@ exports.signup = (req, res, next) => {
 
 // login
 exports.login = (req, res, next) => {
-    insertUser.findOne({ u_email: req.body.email })
+    const data = req.body.email;
+    userData.getUserByEmail(data, (err, results) => { 
+        u_email: req.body.email 
+    })
     .then(user => {
         if (!user) {
             return res.status(403).json({ error: 'unothorized request'});

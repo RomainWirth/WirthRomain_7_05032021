@@ -41,3 +41,11 @@ exports.deleteUserById = (id, result) => {
         else {result(null, results);}
     });   
 }
+
+// fonction findOne
+exports.getUserByEmail = (email, result) => {
+    connection.query("SELECT * FROM users WHERE u_email = ?", [email], (err, results) => {
+        if(err) {console.log(err); result(err, null);} 
+        else {result(null, results);}
+    })
+}

@@ -1,10 +1,10 @@
 // Import function from User Model
 // import { getUserById, insertUsers, updateUserById, deleteUserById } from "../models/usersModel.js";
 // const insertUsers = require("../models/usersModel.js");
-const getUserById = require("../models/usersModel.js");
-const updateUserById = require("../models/usersModel.js");
-const deleteUserById = require("../models/usersModel.js");
-
+// const getUserById = require("../models/usersModel.js");
+// const updateUserById = require("../models/usersModel.js");
+// const deleteUserById = require("../models/usersModel.js");
+const user = require("../models/usersModel");
  
 // // Get All Users
 // export const showUsers = (req, res) => {
@@ -25,7 +25,7 @@ const deleteUserById = require("../models/usersModel.js");
 
 // Get Single User 
 exports.showUserById = (req, res) => {
-    getUserById(req.params.u_id, (err, results) => { // u_id ou id ?
+    user.getUserById(req.params.u_id, (err, results) => { // u_id ou id ?
         if (err){res.send(err);}
         else{res.json(results);}
     });
@@ -35,7 +35,7 @@ exports.showUserById = (req, res) => {
 exports.updateUser = (req, res) => {
     const data = req.body;
     const id = req.params.u_id;
-    updateUserById(data, id, (err, results) => {
+    user.deleteUserByIdupdateUserById(data, id, (err, results) => {
         if (err){res.send(err);}
         else{res.json(results);}
     });
@@ -44,7 +44,7 @@ exports.updateUser = (req, res) => {
 // Delete User
 exports.deleteUser = (req, res) => {
     const id = req.params.u_id;
-    deleteUserById(id, (err, results) => {
+    user.deleteUserById(id, (err, results) => {
         if (err){res.send(err);}
         else{res.json(results);}
     });

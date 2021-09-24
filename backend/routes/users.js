@@ -1,14 +1,11 @@
 // import express
 const express = require("express");
-const auth = require('../middleware/auth');
+const auth = require('../middleware/auth.js');
 
 // import function from controller
 // import { showUserById, createUsers, updateUser, deleteUser } from "../controllers/profile.js";
-const loginCtrl = require('../controllers/login');
-const showUserById = require("../controllers/users.js");
-// const createUsers = require("../controllers/profile.js");
-const updateUser = require("../controllers/users.js");
-const deleteUser = require("../controllers/users.js");
+const loginCtrl = require('../controllers/login.js');
+const users = require("../controllers/users.js");
 
 // init express router
 const router = express.Router();
@@ -21,12 +18,12 @@ router.post('/login', loginCtrl.login); // requête post pour se 'log'
 // Get All Users
 // router.get('/users', showUsers);
 // Get Single User
-router.get('/users/:id', auth, showUserById);
+router.get('/users/:id', auth, users.showUserById);
 // Create New User
-// router.post('/users', createUsers); // doublon avec login et signup
+// router.post('/users', users.createUsers); // doublon avec login et signup
 // Update User
-router.put('/users/:id', auth, updateUser);
+router.put('/users/:id', auth, users.updateUser);
 // Delete User
-router.delete('/users/:id', auth, deleteUser);
+router.delete('/users/:id', auth, users.deleteUser);
 
 module.exports = router;
