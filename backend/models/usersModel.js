@@ -9,15 +9,7 @@ const connection = require("../config/database.js");
 //     });   
 // }
 
-// Get Single User
-exports.getUserById = (id, result) => {
-    connection.query("SELECT * FROM users WHERE u_id = ?", [id], (err, results) => {             
-        if(err) {console.log(err); result(err, null);} 
-        else {result(null, results[0]);}
-    });   
-}
-
-// Insert Users to Database
+// Insert into Users in Database table users
 exports.insertUsers = (data, result) => {
     connection.query("INSERT INTO users SET ?", [data], (err, results) => {             
         if(err) {console.log(err); result(err, null);} 
@@ -25,7 +17,15 @@ exports.insertUsers = (data, result) => {
     });   
 }
 
-// Update User to Database
+// Get Single User from Database table users
+exports.getUserById = (id, result) => {
+    connection.query("SELECT * FROM users WHERE u_id = ?", [id], (err, results) => {             
+        if(err) {console.log(err); result(err, null);} 
+        else {result(null, results[0]);}
+    });   
+}
+
+// Update one User into Database table users
 exports.updateUserById = (data, id, result) => {
     connection.query("UPDATE users SET u_pseudo = ?, u_email = ?, u_password = ? WHERE u_id = ?", 
     [data.u_pseudo, data.u_email, data.u_password, data.u_level, data.u_registration_date, id], (err, results) => {             
@@ -34,7 +34,7 @@ exports.updateUserById = (data, id, result) => {
     });   
 }
 
-// Delete User to Database
+// Delete one User from Database table users
 exports.deleteUserById = (id, result) => {
     connection.query("DELETE FROM users WHERE u_id = ?", [id], (err, results) => {             
         if(err) {console.log(err); result(err, null);} 

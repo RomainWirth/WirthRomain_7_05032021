@@ -4,9 +4,9 @@ const path = require('path');
 const cors = require('cors');
 
 // import routes
-const loginRoutes = require('./routes/login');
-// const usersRoutes = require('./routes/users');
-// const topicMessageRoutes = require('./routes/topicMessage');
+// const loginRoutes = require('./routes/login'); // doublon avec route users
+const usersRoutes = require('./routes/users');
+const topicMessageRoutes = require('./routes/topicMessage');
  
 // init express
 const app = express();
@@ -26,9 +26,9 @@ app.use(bodyParser.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // use routers
-app.use(loginRoutes);
-// app.use(usersRoutes);
-// app.use(topicMessageRoutes); 
+// app.use(loginRoutes);
+app.use(usersRoutes);
+app.use(topicMessageRoutes); 
 
 app.listen(5000, () => console.log('Server running at http://localhost:5000'));
 

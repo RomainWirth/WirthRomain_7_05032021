@@ -45,7 +45,6 @@ export default {
             }
         };
     },
-
     validations: {
         pseudo: { required, alphaNum, maxLength: maxLength(30) },
         email: { required, email, maxLength: maxLength(30) },
