@@ -1,49 +1,70 @@
 const bcrypt = require('bcrypt'); // Algorythme de hachage = package de chiffrement
 const jwt = require('jsonwebtoken'); // standard qui permet l'échange de jetons
 
-const userData = require('../models/usersModel'); // récupéré du modèle User.js avec uniqueValidator : on ne peut pas utiliser deux fois la même adresse email
+const userData = require('../models/usersModel');
+const user = userData.getUserByEmail;
+
+const pseudo = req.body.pseudo;
+const email = req.body.email;
+const pwd = req.body.password;
 
 // signup
-exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10) // hash : salt = 10 tours d'algorythme de hashage suffisent pour la sécurité et éviter que ce soit trop long
-    .then(hash => { // hash = méthode pour crypter le mot de passe
-        const user = userData.insertUser({
+exports.signup = async (req, res) => {
+    try {
+        if (!pseudo || !email || !pwd) { res.status(400).json(`${!pseudo ? "pseudo" : !email ? "email" : "pwd"} manquant`); }            
+        const hash = await bcrypt.hash(req.body.password, 10);
+        userData.insertUsers({
             u_pseudo: req.body.pseudo, // requiert le pseudo du corps de la requête
             u_email: req.body.email, // adresse email du corps de la requête
             u_password: hash // le mot de passe est stocké crypté
+            // date et id générés automatiquement et level default = 1
         });
-        user.save() // enregistrement du user dans la BDD
-        .then(() => res.status(201).json({ message: 'utilisateur créé'}))
-        .catch(error => res.status(400).json({ error }));
-    })
-    .catch(error => res.status(500).json({ error }));
+        res.status(200).json('Utilisateur créé');
+    } catch (error) {
+        if (error.errno === 19) {
+            res.status(400).json('utilisateur déjà existant');
+        } else {
+            console.log(error);
+            res.status(500).json({ error });
+        }
+    }
 };
 
+// exports.signup = (req, res) => {
+//     bcrypt.hash(req.body.password, 10)
+//     .then(hash => {
+//         userData.insertUsers({
+//             u_pseudo: req.body.pseudo, // requiert le pseudo du corps de la requête
+//             u_email: req.body.email, // adresse email du corps de la requête
+//             u_password: hash // le mot de passe est stocké crypté
+//             // date et id générés automatiquement et level default = 1
+//         });
+//         res.status(200).json('Utilisateur créé');
+//     })
+//     .catch(error => res.status(500).json({ error }));
+// };
+
 // login
-exports.login = (req, res, next) => {
-    const data = req.body.email;
-    userData.getUserByEmail(data, (err, results) => { 
-        u_email: req.body.email 
-    })
-    .then(user => {
-        if (!user) {
-            return res.status(403).json({ error: 'unothorized request'});
-        }
-        bcrypt.compare(req.body.password, user.u_password)
-        .then(valid => {
-            if (!valid) {
-                return res.status(401).json({ error: 'mot de passe incorrect'})
+exports.login = async (req, res) => {
+    try {
+        if (!email || !pwd) { res.status(400).json(`${!email ? "email" : "pwd"} manquant`); }
+
+        if (user) {
+            const validPwd = await bcrypt.compare(req.body.password, user.u_password);
+            if (validPwd) {
+                const token = jwt.sign(
+                    { userId: user.u_id }, 
+                    'RANDOM_TOKEN_SECRET', 
+                    {expiresIn: "24h"}
+                );
+                res.status(200).json({ userId: user.u_id, token: token });
+            } else {
+                return res.status(401).json("Mot de passe incorrect");
             }
-            res.status(200).json({
-                userId: user._id,
-                token: jwt.sign(
-                    { userId: user._id },
-                    'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
-                    { expiresIn: '24h' } // limite de durée du token : 24h
-                )
-            });
-        })
-        .catch(error => res.status(500).json({ error }));
-    })
-    .catch(error => res.status(500).json({ error }));
+        } else {
+            res.status(401).json("Utilisateur inconnu");
+        }
+    } catch (error) {
+        res.status(400).json({ error: 'requête non autorisée'});
+    }
 };

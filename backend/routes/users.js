@@ -1,19 +1,16 @@
 // import express
 const express = require("express");
-const auth = require('../middleware/auth.js');
-
-// import function from controller
-// import { showUserById, createUsers, updateUser, deleteUser } from "../controllers/profile.js";
-const loginCtrl = require('../controllers/login.js');
-const users = require("../controllers/users.js");
-
-// init express router
 const router = express.Router();
 
+// Routes login + signup
+const loginCtrl = require('../controllers/login.js');
 // routes signup et login voir controller login
 router.post('/signup', loginCtrl.signup); // requête post pour s'enregistrer
 router.post('/login', loginCtrl.login); // requête post pour se 'log'
 
+// Routes get, update et delete
+const users = require("../controllers/users.js");
+const auth = require('../middleware/auth.js');
 // routes get, update et delete one user voir controller users, requiert user authentifié
 // Get All Users
 // router.get('/users', showUsers);
