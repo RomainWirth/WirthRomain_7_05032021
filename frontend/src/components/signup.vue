@@ -2,23 +2,25 @@
     <section class="login">
         <h1>Signup</h1>
         <div class="login__content">
-            <form @submit.prevent="createAccount">
-                <input type="text" name="pseudo" v-model="input.email" placeholder="Pseudonyme" />
-                <p class="erreur" v-if="!$v.pseudo.required && submitStatus === 'ERROR'">Champ requis</p>
-                <p class="erreur" v-if="!$v.pseudo.alpha">Le pseudo ne doit contenir que des chiffres et des lettres sans caractères spéciaux</p>
-                <p class="erreur" v-if="!$v.pseudo.maxLength">Maximum {{ $v.pseudo.$params.maxLength.max }} lettres</p>
+            <form @submit.prevent="createAccount()">
+                <input type="text" name="pseudo" v-model="input.pseudo" placeholder="Pseudonyme" />                
+                <p class="erreur" v-if="!validations.pseudo.required && submitStatus === 'ERROR'">Champ requis</p>
+                <p class="erreur" v-if="!validations.pseudo.alpha">Le pseudo ne doit contenir que des chiffres et des lettres sans caractères spéciaux</p>
+                <p class="erreur" v-if="!validations.pseudo.maxLength">Maximum {{ validations.pseudo.$params.maxLength.max }} lettres</p>
                 
                 <input type="email" name="email" v-model="input.email" placeholder="Email" />
-                <p class="erreur" v-if="!$v.email.required && submitStatus === 'ERROR'">Champ requis</p>
-                <p class="erreur" v-if="!$v.email.maxLength">Maximum {{ $v.email.$params.maxLength.max }} lettres</p>
-                <p class="erreur" v-if="!$v.email.email">L'email doit être valide et sans majuscules : exemple@domaine.fr</p>
+                <p class="erreur" v-if="!validations.email.required && submitStatus === 'ERROR'">Champ requis</p>
+                <p class="erreur" v-if="!validations.email.maxLength">Maximum {{ validations.email.$params.maxLength.max }} lettres</p>
+                <p class="erreur" v-if="!validations.email.email">L'email doit être valide et sans majuscules : exemple@domaine.fr</p>
+                
 
-                <input type="password" name="password" v-model="input.password" placeholder="Password" />
-                <p class="error" v-if="!$v.pwd.required && submitStatus === 'ERROR'">Champ requis</p>
-                <p class="error" v-if="!$v.pwd.maxLength">Maximum {{ $v.pwd.$params.maxLength.max }} lettres</p>
-                <p class="error" v-if="!$v.pwd.minLength">Minimum {{ $v.pwd.$params.minLength.min }} lettres</p>
-                <p class="error" v-if="!$v.pwd.alphaNum">Uniquement chiffres, lettres et pas de caractères spéciaux</p>
-                <p class="error" v-if="!$v.pwd.strongPassword && submitStatus === 'ERROR'">Le mot de passe doit contenir des chiffres et lettres sans espace</p>
+                <input type="password" name="password" v-model="input.password" placeholder="Password" />                
+                <p class="error" v-if="!validations.password.required && submitStatus === 'ERROR'">Champ requis</p>
+                <p class="error" v-if="!validations.password.maxLength">Maximum {{ validations.password.$params.maxLength.max }} lettres</p>
+                <p class="error" v-if="!validations.password.minLength">Minimum {{ validations.password.$params.minLength.min }} lettres</p>
+                <p class="error" v-if="!validations.password.alphaNum">Uniquement chiffres, lettres et pas de caractères spéciaux</p>
+                <p class="error" v-if="!validations.password.strongPassword && submitStatus === 'ERROR'">Le mot de passe doit contenir des chiffres et lettres sans espace</p>
+                
 
                 <!-- voir si utile
                 <input type="hidden" name="level" v-model="moderationLevel" />
@@ -41,8 +43,9 @@ export default {
             input: {
                 pseudo: "",
                 email: "",
-                password: ""
-            }
+                password: "",
+            },
+            submitStatus: null
         };
     },
     validations: {
@@ -53,12 +56,12 @@ export default {
             maxLength: maxLength(30), 
             minLength: minLength(8), 
             alphaNum, 
-            strongPassword(pwd) {
+            strongPassword(password) {
                 return (
-                    /[a-zA-Z]/.test(pwd) && // checks for a-z
-                    /^\S+$/.test(pwd) &&
-                    /[0-9]/.test(pwd) && // checks for 0-9
-                    pwd.length >= 8
+                    /[a-zA-Z]/.test(password) && // checks for a-z
+                    /^\S+$/.test(password) &&
+                    /[0-9]/.test(password) && // checks for 0-9
+                    password.length >= 8
                 );
             },
         },

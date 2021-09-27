@@ -4,14 +4,14 @@ const jwt = require('jsonwebtoken'); // standard qui permet l'échange de jetons
 const userData = require('../models/usersModel');
 const user = userData.getUserByEmail;
 
-const pseudo = req.body.pseudo;
-const email = req.body.email;
-const pwd = req.body.password;
-
 // signup
 exports.signup = async (req, res) => {
     try {
+        const pseudo = req.body.pseudo;
+        const email = req.body.email;
+        const pwd = req.body.password;
         if (!pseudo || !email || !pwd) { res.status(400).json(`${!pseudo ? "pseudo" : !email ? "email" : "pwd"} manquant`); }            
+        
         const hash = await bcrypt.hash(req.body.password, 10);
         userData.insertUsers({
             u_pseudo: req.body.pseudo, // requiert le pseudo du corps de la requête
@@ -47,6 +47,8 @@ exports.signup = async (req, res) => {
 // login
 exports.login = async (req, res) => {
     try {
+        const email = req.body.email;
+        const pwd = req.body.password;
         if (!email || !pwd) { res.status(400).json(`${!email ? "email" : "pwd"} manquant`); }
 
         if (user) {

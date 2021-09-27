@@ -27,7 +27,7 @@ export default {
     methods: {
         async connect() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
             try {
-                const response = await axios.get("http://localhost:5000/users");
+                const response = await axios.post("http://localhost:5000/users");
                 if(this.input.email != "" && this.input.password != "") {
                     if(this.input.email == response.u_email && this.input.password == response.u_password) {
                         this.$emit("identified", true);

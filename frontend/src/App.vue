@@ -1,5 +1,5 @@
 <template>
-  <body id="App">
+  <body id="app">
     <header>
       <div class="image">
         <img class="image__logo" src="./assets/logo.png" alt="Logo Groupomania">
@@ -16,7 +16,7 @@
         </div>
       </div>
     </header>
-    <router-view @identified="setIdentified"/>
+    <router-view /> <!-- @identified="setIdentified" -->
     <footer>
     </footer>
   </body>
@@ -27,10 +27,9 @@
 // import Vue from 'vue';
 
 export default {
-  el : '.nav',
   data() {
     return {
-      identified: false
+      identified: Boolean
     }
   },
   methods: {
