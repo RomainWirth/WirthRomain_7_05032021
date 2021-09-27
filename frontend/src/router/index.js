@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Data from '../components/login.vue';
+import Data from '../views/Login.vue';
 
 Vue.use(VueRouter);
 

@@ -17,7 +17,7 @@
         <button type="submit" @click="createMessage">Poster</button> <!-- @clic -->
       </div>
     </div>
-    <div class="forum__topics" v-for="topic_content in topic_contents" :key="topic_content.tmid"> <!-- boucle v-for selon le nombre de sujets créés : v-for="topic_message in topic_messages" :key="topic_message.tm_id" -->
+    <div class="forum__topics" v-for="topic_content in topic_contents" :key="topic_content.tmId"> <!-- boucle v-for selon le nombre de sujets créés : v-for="topic_message in topic_messages" :key="topic_message.tm_id" -->
       <h2 class="forum__topics--title" v-bind:href="topic.vue">{{ topic_contents.tmTitle }}</h2> <!-- cliquable : donne accès au topic en question = v-bind:href="topic.vue" + {{ topic_messages.tm_title }} + parent 0 -->
     <!--  <p class="forum__topics--content">{{ topic_messages.tm_content }}</p> -->
       <div class="forum__topics--details">
