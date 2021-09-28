@@ -3,29 +3,19 @@
         <section class="login">
             <h1>Signup</h1>
             <div class="login__content">
-                <form @submit.prevent="createAccount">
-                    <input type="text" name="pseudo" v-model="input.pseudo" placeholder="Pseudonyme" />                
-                    <p class="erreur" v-if="!validations.pseudo.required && submitStatus === 'ERROR'">Champ requis</p>
-                    <p class="erreur" v-if="!validations.pseudo.alpha">Le pseudo ne doit contenir que des chiffres et des lettres sans caractères spéciaux</p>
-                    <p class="erreur" v-if="!validations.pseudo.maxLength">Maximum {{ validations.pseudo.$params.maxLength.max }} lettres</p>
-                
-                    <input type="email" name="email" v-model="input.email" placeholder="Email" />
-                    <p class="erreur" v-if="!validations.email.required && submitStatus === 'ERROR'">Champ requis</p>
-                    <p class="erreur" v-if="!validations.email.maxLength">Maximum {{ validations.email.$params.maxLength.max }} lettres</p>
-                    <p class="erreur" v-if="!validations.email.email">L'email doit être valide et sans majuscules : exemple@domaine.fr</p>
-                
-                    <input type="password" name="password" v-model="input.password" placeholder="Password" />                
-                    <p class="error" v-if="!validations.password.required && submitStatus === 'ERROR'">Champ requis</p>
-                    <p class="error" v-if="!validations.password.maxLength">Maximum {{ validations.password.$params.maxLength.max }} lettres</p>
-                    <p class="error" v-if="!validations.password.minLength">Minimum {{ validations.password.$params.minLength.min }} lettres</p>
-                    <p class="error" v-if="!validations.password.alphaNum">Uniquement chiffres, lettres et pas de caractères spéciaux</p>
-                    <p class="error" v-if="!validations.password.strongPassword && submitStatus === 'ERROR'">Le mot de passe doit contenir des chiffres et lettres sans espace</p>
-                
+                <form @submit.prevent="createAccount" @submit="checkFormSignup" method="post" novalidate="true">
+                    <div v-if="errors.length">
+                        <p class="error">Merci de corriger les erreurs suivantes :</p>
+                        <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                    </div>
+                    <input id="pseudo" type="text" name="pseudo" v-model="input.pseudo" placeholder="Pseudonyme" />
+                    <input id="email" type="email" name="email" v-model="input.email" placeholder="Email" />
+                    <input id="password" type="password" name="password" v-model="input.password" placeholder="Password" />
                     <!-- voir si utile
                     <input type="hidden" name="level" v-model="moderationLevel" />
                     <input type="hidden" name="registration_date" v-model="input.registrationDate" />
                     -->
-                <button type="submit" :disabled="submitStatus === 'PENDING'">Signup</button>
+                <button type="submit" :disabled="submitStatus === 'PENDING'" v-on:click="createAccount">Signup</button>
                 </form>
             </div>
         </section>
@@ -33,40 +23,54 @@
 </template>
 
 <script>
-import { required, minLength, email, maxLength, alphaNum, } from "vuelidate/lib/validators";
+// import { required, minLength, email, maxLength, alphaNum, } from "vuelidate/lib/validators";
 import axios from "axios";
 
 export default {
     name: 'Signup',
     data() {
         return {
+            errors: [],
             input: {
-                pseudo: "",
-                email: "",
-                password: "",
+                pseudo: null,
+                email: null,
+                password: null,
             },
             submitStatus: null
         };
     },
-    validations: {
-        pseudo: { required, alphaNum, maxLength: maxLength(30) },
-        email: { required, email, maxLength: maxLength(30) },
-        password: { 
-            required, 
-            maxLength: maxLength(30), 
-            minLength: minLength(8), 
-            alphaNum, 
-            strongPassword(password) {
-                return (
-                    /[a-zA-Z]/.test(password) && // checks for a-z
-                    /^\S+$/.test(password) &&
-                    /[0-9]/.test(password) && // checks for 0-9
-                    password.length >= 8
-                );
-            },
-        },
-    },
     methods: {
+        checkFormSignup(e) {
+            this.errors = [];
+            if (!this.pseudo) { this.errors.push("Pseudo requis"); }
+            if (!this.email) { 
+                this.errors.push('Email requis'); 
+            } else if (!this.validEmail(this.email)) { 
+                this.errors.push('Email valide requis');
+            }
+            if (!this.password) { 
+                this.errors.push('Mot de passe requis'); 
+            } else if (!this.validPassword(this.password)) {
+                this.errors.push('Mot de passe : lettres minuscules')
+            }
+            if (!this.errors.length) { return true; }
+            e.preventDefault();
+        },
+        validEmail (email) {
+            var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+            return (
+                re.test(email) &&
+                email.length <= 50
+            );
+        },
+        valilPassword (password) {
+            var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+/;
+            return (
+                re.test(password) &&
+                password.length >= 8 &&
+                password.length <= 100
+            );
+        },
         createAccount() {
             if (this.$v.$invalid) {
                 this.submitStatus = "ERROR";
@@ -80,9 +84,9 @@ export default {
                 .then(
                     (response) => (
                         (this.submitStatus = "OK"), 
-                        console.log(response), 
-                        this.$router.push("/Home"),
-                        this.$emit("identified", true)
+                        console.log(response),
+                        this.$emit("identified", true),
+                        this.$router.push("/Home")
                     )
                 )
                 .catch(

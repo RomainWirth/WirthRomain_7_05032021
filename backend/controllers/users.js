@@ -26,8 +26,14 @@ const user = require("../models/usersModel");
 // Get Single User 
 exports.showUserById = (req, res) => {
     user.getUserById(req.params.u_id, (err, results) => { // u_id ou id ?
-        if (err){res.send(err);}
-        else{res.json(results);}
+        if (err){
+            console.log("getUserById ne fonctionne pas");
+            res.send(err);
+        }
+        else{
+            console.log("getUserById OK");
+            res.json(results);
+        }
     });
 }
 
@@ -35,9 +41,15 @@ exports.showUserById = (req, res) => {
 exports.updateUser = (req, res) => {
     const data = req.body;
     const id = req.params.u_id;
-    user.deleteUserByIdupdateUserById(data, id, (err, results) => {
-        if (err){res.send(err);}
-        else{res.json(results);}
+    user.updateUserById(data, id, (err, results) => {
+        if (err){
+            console.log("updateUserById ne fonctionne pas");
+            res.send(err);
+        }
+        else{
+            console.log("updateUserById OK");
+            res.json(results);
+        }
     });
 }
  
@@ -45,7 +57,13 @@ exports.updateUser = (req, res) => {
 exports.deleteUser = (req, res) => {
     const id = req.params.u_id;
     user.deleteUserById(id, (err, results) => {
-        if (err){res.send(err);}
-        else{res.json(results);}
+        if (err){
+            console.log("deleteUserById ne fonctionne pas");
+            res.send(err);
+        }
+        else{
+            console.log("deleteUserById OK");
+            res.json(results);
+        }
     });
 }
