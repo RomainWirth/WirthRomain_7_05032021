@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
     }
 };
 
-// exports.signup = (req, res) => {
+// exports.signup = (req, res, next) => {
 //     bcrypt.hash(req.body.password, 10)
 //     .then(hash => {
 //         userData.insertUsers({
@@ -70,3 +70,8 @@ exports.login = async (req, res) => {
         res.status(400).json({ error: 'requête non autorisée'});
     }
 };
+
+// exports.login = (req, res, next) => {
+//     userData.getUserByEmail({ u_email: req.body.email })
+//     .then()
+// }

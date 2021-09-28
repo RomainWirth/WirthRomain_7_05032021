@@ -80,17 +80,16 @@ export default {
       }
     },
     // get messages
-    async getMessages() {
-      try {
-        const response = await axios.get("http://localhost:/5000/topic_messages");
-        this.tmId
+    getMessages() {
+      axios.get("http://localhost:/5000/topic_messages")
+      .then(response => (
+        this.tmId = response.tm_id,
         this.tmTitle = response.topic_messages.tm_title,
         this.tmContent = response.topic_messages.tm_content,
         this.tmIdParent = response.topic_messages.tm_parent,
         this.tmUserId = response.topic_messages.tm_user_id
-      } catch (err) {
-        console.log(err);
-      }
+      ))
+      .catch(error => console.log(error))
     },
     // update messages
     async updateMessage() {

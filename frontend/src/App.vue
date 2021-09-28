@@ -29,12 +29,15 @@
 export default {
   data() {
     return {
-      identified: Boolean
+      identified: false
     }
   },
   methods: {
     Logout() {
       this.identified = false;
+    },
+    setIdentified() {
+      
     }
   }
 };

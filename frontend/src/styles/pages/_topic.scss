@@ -2,12 +2,25 @@
     border: 1px solid #CCC;
     border-radius: 15px;
     background-color: #FFF;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     width: 90%;
     margin: auto;
     &__title {
         border-bottom: 1px solid #CCC;
         padding: 10px;
+        &--content {
+            text-align: justify;
+        }
+        &--details {
+            font-size: 0.75em;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        & textarea {
+            width: 100%;
+            resize: none;
+        }
     }
     &__content {
         border-bottom: 1px solid #CCC;

@@ -63,7 +63,7 @@ export default {
                 email.length <= 50
             );
         },
-        valilPassword (password) {
+        validPassword (password) {
             var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+/;
             return (
                 re.test(password) &&
@@ -72,7 +72,7 @@ export default {
             );
         },
         createAccount() {
-            if (this.$v.$invalid) {
+            if (!this.checkFormSignup) {
                 this.submitStatus = "ERROR";
             } else {
                 this.submitStatus = "PENDING";

@@ -8,13 +8,13 @@
 <script>
 // @ is an alias to /src
 import forum from '@/components/forum.vue'
-// import topic from '@/components/topic.vue'
+import topic from '@/components/topic.vue'
 
 export default {
   name: 'Forum',
   components: {
     forum,
-    // topic
+    topic
   }
 }
 </script>
