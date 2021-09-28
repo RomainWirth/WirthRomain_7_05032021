@@ -37,7 +37,7 @@ export default {
       this.identified = false;
     },
     setIdentified() {
-      
+      this.identified = true;
     }
   }
 };

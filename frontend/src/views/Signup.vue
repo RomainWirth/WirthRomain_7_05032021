@@ -41,6 +41,7 @@ export default {
     },
     methods: {
         checkFormSignup(e) {
+            if (this.pseudo && this.email && this.password) { return true; }
             this.errors = [];
             if (!this.pseudo) { this.errors.push("Pseudo requis"); }
             if (!this.email) { 

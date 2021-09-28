@@ -33,6 +33,7 @@ export default {
     },
     methods: {
         checkFormLogin(e) {
+            if (this.email && this.password) { return true; }
             this.errors = [];
             if (!this.email) { this.errors.push('Email requis'); }
             if (!this.password) { this.errors.push('Mot de passe requis'); }
