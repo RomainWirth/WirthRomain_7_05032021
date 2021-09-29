@@ -3,7 +3,7 @@
         <section class="login">
             <h1>Signup</h1>
             <div class="login__content">
-                <form @submit.prevent="createAccount" @submit="checkFormSignup" method="post" novalidate="true">
+                <form @submit.prevent="createAccount()" @submit="checkFormSignup()" method="post" novalidate="true">
                     <div v-if="errors.length">
                         <p class="error">Merci de corriger les erreurs suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -15,7 +15,7 @@
                     <input type="hidden" name="level" v-model="moderationLevel" />
                     <input type="hidden" name="registration_date" v-model="input.registrationDate" />
                     -->
-                <button type="submit" v-on:click="createAccount" :disabled="submitStatus === 'PENDING'">Signup</button>
+                <button type="submit" v-on:click="createAccount()" :disabled="submitStatus === 'PENDING'">Signup</button>
                 </form>
             </div>
         </section>
@@ -39,6 +39,21 @@ export default {
         };
     },
     methods: {
+        validEmail (email) {
+            var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+            return (
+                re.test(email) &&
+                email.length <= 50
+            );
+        },
+        validPassword (password) {
+            var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+/;
+            return (
+                re.test(password) &&
+                password.length >= 8 &&
+                password.length <= 100
+            );
+        },
         checkFormSignup(e) {
             if (this.pseudo && this.email && this.password) { return true; }
             this.errors = [];
@@ -56,49 +71,20 @@ export default {
             if (!this.errors.length) { return true; }
             e.preventDefault();
         },
-        validEmail (email) {
-            var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-            return (
-                re.test(email) &&
-                email.length <= 50
-            );
-        },
-        validPassword (password) {
-            var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+/;
-            return (
-                re.test(password) &&
-                password.length >= 8 &&
-                password.length <= 100
-            );
-        },
         createAccount() {
-            if (!this.checkFormSignup) {
-                this.submitStatus = "ERROR";
-            } else {
-                this.submitStatus = "PENDING";
-                axios.post("http://localhost:5000/users/signup", {
-                    u_pseudo: this.pseudo,
-                    u_email: this.email,
-                    u_password: this.password,
-                })
-                .then(
-                    (response) => (
-                        (this.submitStatus = "OK"), 
-                        console.log(response),
-                        this.$router.push("/Login")
-                    )
-                )
-                .catch(
-                    (error) => (
-                        (this.submitStatus = "ERROR SERVER"), console.log(error)
-                    )
-                );
-            }
-            // this.$emit("submit", {
-            //     pseudo: this.input.pseudo,
-            //     email: this.input.email,
-            //     password: this.input.password
-            // });
+            axios.post("http://localhost:5000/api/auth", {
+                u_pseudo: this.pseudo,
+                u_email: this.email,
+                u_password: this.password,
+                // u_id, u_registration_date et u_level sont automatiquement générés dans la BDD
+            })
+            .then((response) => (
+                console.log(response),
+                this.$router.push("/Login")
+            ))
+            .catch(
+                (error) => (console.log(error))
+            );
         }
     }
 };

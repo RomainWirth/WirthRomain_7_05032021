@@ -3,7 +3,7 @@
         <section class="login">
             <h1>Login</h1>
             <div class="login__content">
-                <form @submit.prevent="connect">
+                <form @submit.prevent="connect()" @submit="checkFormLogin(e)">
                     <div v-if="errors.length">
                         <p class="error">Merci d'apporter les corrections suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -27,9 +27,9 @@ export default {
             errors: [],
             input: {
                 email: "",
-                password: "",
-                token: localStorage.getItem("acces_token") || null,
-            }
+                password: ""
+            },
+            token: localStorage.getItem("access_token") || null
         };
     },
     methods: {
@@ -40,21 +40,26 @@ export default {
             if (!this.password) { this.errors.push('Mot de passe requis'); }
             e.preventDefault();
         },
-
-        async connect() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
-            try {
-                const response = await axios.post("http://localhost:5000/users/login");
-                if(this.input.email != "" && this.input.password != "") {
-                    if(this.input.email == response.u_email && this.input.password == response.u_password) {
-                        this.$emit("identified", true);
-                    } else {
-                    console.Log("email et mot de passe incorrects");
-                    }
-                } else {
-                    console.Log("email et mot de passe requis");
-                }
-            } catch (err) {
-                console.log(err);
+        connect() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
+            if(this.input.email != "" && this.input.password != "") {
+                axios.post("http://localhost:5000/api/auth", {
+                    u_email: this.input.email,
+                    u_password: this.input.password,
+                })
+                .then((response) => {
+                    const token = (this.token == response.data.token);
+                    const u_id = response.data.u_id;
+                    localStorage.setItem("access_token", token),
+                    localStorage.setItem("u_id", u_id),
+                    this.$emit("identified", true),
+                    console.log(response),
+                    this.$router.go("/Home");
+                })
+                .catch((error) => (
+                    console.Log(error, "email et mot de passe incorrects")
+                ));
+            } else {
+                console.Log("email et mot de passe requis");
             }
         }
     }

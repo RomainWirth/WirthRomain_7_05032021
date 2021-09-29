@@ -66,7 +66,7 @@ export default {
     // create messages
     async createMessage() {
       try {
-        await axios.post("http://localhost:/5000/topic_messages", {
+        await axios.post("http://localhost:/5000/api/topic_messages", {
           tm_parent: this.tmIdParent,
           tm_title: this.tmTitle,
           tm_content: this.tmContent,
@@ -81,7 +81,7 @@ export default {
     },
     // get messages
     getMessages() {
-      axios.get("http://localhost:/5000/topic_messages")
+      axios.get("http://localhost:/5000/api/topic_messages")
       .then(response => (
         this.tmId = response.tm_id,
         this.tmTitle = response.topic_messages.tm_title,
@@ -94,7 +94,7 @@ export default {
     // update messages
     async updateMessage() {
       try {
-        await axios.update("http://localhost:/5000/topic_messages", {
+        await axios.update("http://localhost:/5000/api/topic_messages", {
 
         });
         
