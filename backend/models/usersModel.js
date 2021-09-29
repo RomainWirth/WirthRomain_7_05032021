@@ -17,6 +17,14 @@ exports.insertUsers = (data, result) => {
     });   
 }
 
+// fonction findOne
+exports.getUserByEmail = (email, result) => {
+    connection.query("SELECT * FROM users WHERE u_email = ?", [email], (err, results) => {
+        if(err) {console.log(err); result(err, null);} 
+        else {result(null, results);}
+    })
+}
+
 // Get Single User from Database table users
 exports.getUserById = (id, result) => {
     connection.query("SELECT * FROM users WHERE u_id = ?", [id], (err, results) => {             
@@ -40,12 +48,4 @@ exports.deleteUserById = (id, result) => {
         if(err) {console.log(err); result(err, null);} 
         else {result(null, results);}
     });   
-}
-
-// fonction findOne
-exports.getUserByEmail = (email, result) => {
-    connection.query("SELECT * FROM users WHERE u_email = ?", [email], (err, results) => {
-        if(err) {console.log(err); result(err, null);} 
-        else {result(null, results);}
-    })
 }

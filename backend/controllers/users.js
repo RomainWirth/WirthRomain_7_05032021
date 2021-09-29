@@ -30,7 +30,7 @@ exports.showUserById = (req, res) => {
             console.log("getUserById ne fonctionne pas");
             res.send(err);
         }
-        else{
+        else {
             console.log("getUserById OK");
             res.json(results);
         }

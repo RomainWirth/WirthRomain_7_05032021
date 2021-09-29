@@ -26,8 +26,9 @@ export default {
         return {
             errors: [],
             input: {
-                email: null,
-                password: null
+                email: "",
+                password: "",
+                token: localStorage.getItem("acces_token") || null,
             }
         };
     },
@@ -42,7 +43,7 @@ export default {
 
         async connect() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
             try {
-                const response = await axios.post("http://localhost:5000/users");
+                const response = await axios.post("http://localhost:5000/users/login");
                 if(this.input.email != "" && this.input.password != "") {
                     if(this.input.email == response.u_email && this.input.password == response.u_password) {
                         this.$emit("identified", true);

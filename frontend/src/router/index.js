@@ -12,22 +12,31 @@ const routes = [
     component: () => import('../views/Signup.vue'),
     meta : {
       requiresVisitor: true,
-    },
+    }
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login.vue'),
+    meta : {
+      requiresVisitor: true,
+    }
   },
   {
     path: '/home',
     name: 'Home',
-    component: () => import('../views/Home.vue')
+    component: () => import('../views/Home.vue'),
+    meta : {
+      requiresAuth: true,
+    }
   },
   {
     path: '/profile',
     name: 'Profil',
-    component: () => import('../views/Profile.vue')
+    component: () => import('../views/Profile.vue'),
+    meta : {
+      requiresAuth: true,
+    }
   },
 ];
 
@@ -41,7 +50,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((routes) => routes.meta.requiresAuth)) {
     if (!Data.taka.token) {
       next({ 
-        name: "Login" || "Accueil",
+        name: "Signup" || "Login",
       });
     } else {
       next();

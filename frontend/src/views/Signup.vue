@@ -15,7 +15,7 @@
                     <input type="hidden" name="level" v-model="moderationLevel" />
                     <input type="hidden" name="registration_date" v-model="input.registrationDate" />
                     -->
-                <button type="submit" :disabled="submitStatus === 'PENDING'" v-on:click="createAccount">Signup</button>
+                <button type="submit" v-on:click="createAccount" :disabled="submitStatus === 'PENDING'">Signup</button>
                 </form>
             </div>
         </section>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-// import { required, minLength, email, maxLength, alphaNum, } from "vuelidate/lib/validators";
 import axios from "axios";
 
 export default {
@@ -32,9 +31,9 @@ export default {
         return {
             errors: [],
             input: {
-                pseudo: null,
-                email: null,
-                password: null,
+                pseudo: "",
+                email: "",
+                password: "",
             },
             submitStatus: null
         };
@@ -77,7 +76,7 @@ export default {
                 this.submitStatus = "ERROR";
             } else {
                 this.submitStatus = "PENDING";
-                axios.post("http://localhost:5000/users", {
+                axios.post("http://localhost:5000/users/signup", {
                     u_pseudo: this.pseudo,
                     u_email: this.email,
                     u_password: this.password,
@@ -86,8 +85,7 @@ export default {
                     (response) => (
                         (this.submitStatus = "OK"), 
                         console.log(response),
-                        this.$emit("identified", true),
-                        this.$router.push("/Home")
+                        this.$router.push("/Login")
                     )
                 )
                 .catch(

@@ -19,7 +19,7 @@ exports.signup = async (req, res) => {
             u_password: hash // le mot de passe est stocké crypté
             // date et id générés automatiquement et level default = 1
         });
-        res.status(200).json('Utilisateur créé');
+        res.status(201).json('Utilisateur créé');
     } catch (error) {
         if (error.errno === 19) {
             res.status(400).json('utilisateur déjà existant');
