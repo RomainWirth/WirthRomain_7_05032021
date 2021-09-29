@@ -1,3 +1,5 @@
+console.log('le serveur fonctionne');
+
 const http = require('http');
 const app = require('./index');
 
