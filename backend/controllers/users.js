@@ -4,7 +4,7 @@
 // const getUserById = require("../models/usersModel.js");
 // const updateUserById = require("../models/usersModel.js");
 // const deleteUserById = require("../models/usersModel.js");
-const user = require("../models/usersModel");
+const user = require("../models/usersModel.js");
  
 // // Get All Users
 // export const showUsers = (req, res) => {

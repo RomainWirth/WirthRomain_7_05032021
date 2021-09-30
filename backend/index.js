@@ -6,9 +6,9 @@ const helmet = require('helmet');
 const cookieSession = require ('cookie-session');
 
 // import routes
-const loginRoutes = require('./routes/login');
-const usersRoutes = require('./routes/users');
-const topicMessageRoutes = require('./routes/topic_messages');
+const loginRoutes = require('./routes/login.js');
+const usersRoutes = require('./routes/users.js');
+const topicMessageRoutes = require('./routes/topic_messages.js');
  
 const app = express();
 app.use(helmet());

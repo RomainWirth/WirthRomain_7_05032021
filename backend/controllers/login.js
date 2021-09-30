@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt'); // Algorythme de hachage = package de chiffrement
 const jwt = require('jsonwebtoken'); // standard qui permet l'échange de jetons
 
-const userData = require('../models/usersModel');
+const userData = require('../models/usersModel.js');
 const user = userData.getUserByEmail;
 
 // signup
@@ -52,10 +52,10 @@ exports.login = async (req, res) => {
         if (!email || !pwd) { res.status(400).json(`${!email ? "email" : "pwd"} manquant`); }
 
         if (user) {
-            const validPwd = await bcrypt.compare(req.body.password, user.u_password);
+            const validPwd = await bcrypt.compare(req.body.password, u_password);
             if (validPwd) {
                 const token = jwt.sign(
-                    { userId: user.u_id }, 
+                    { userId: u_id }, 
                     'RANDOM_TOKEN_SECRET', 
                     {expiresIn: "24h"}
                 );
