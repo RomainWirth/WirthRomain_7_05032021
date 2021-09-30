@@ -38,9 +38,9 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.get('/', function(req,res) {res.send('Hello World');});
 
 // use routers
-app.use('/api/auth', loginRoutes);
-app.use('/api/users', usersRoutes);
-app.use('/api/topic_messages', topicMessageRoutes); 
+app.use('/api', loginRoutes);
+app.use('/api', usersRoutes);
+app.use('/api', topicMessageRoutes); 
 
 app.listen(3000, () => console.log('Server running at http://localhost:3000'));
 

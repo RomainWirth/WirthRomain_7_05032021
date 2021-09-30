@@ -72,7 +72,7 @@ export default {
             e.preventDefault();
         },
         createAccount: function() {
-            axios.post("http://localhost:3000/api/auth", {
+            axios.post("http://localhost:3000/api/signup", {
                 u_pseudo: this.pseudo,
                 u_email: this.email,
                 u_password: this.password,
