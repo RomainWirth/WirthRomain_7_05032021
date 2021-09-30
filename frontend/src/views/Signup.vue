@@ -35,7 +35,6 @@ export default {
                 email: "",
                 password: "",
             },
-            submitStatus: null
         };
     },
     methods: {
