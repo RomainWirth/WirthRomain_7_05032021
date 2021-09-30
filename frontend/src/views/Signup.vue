@@ -38,7 +38,7 @@ export default {
         };
     },
     methods: {
-        validEmail: function (email) {
+        validEmail: function(email) {
             var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
             return (
                 re.test(email) &&
@@ -54,17 +54,17 @@ export default {
             );
         },
         checkFormSignup: function(e) {
-            if (this.pseudo && this.email && this.password) { return true; }
+            if (this.input.pseudo && this.input.email && this.input.password) { return true; }
             this.errors = [];
-            if (!this.pseudo) { this.errors.push("Pseudo requis"); }
-            if (!this.email) { 
+            if (!this.input.pseudo) { this.errors.push("Pseudo requis"); }
+            if (!this.input.email) { 
                 this.errors.push('Email requis'); 
             } else if (!this.validEmail(this.email)) { 
                 this.errors.push('Email valide requis');
             }
-            if (!this.password) { 
+            if (!this.input.password) { 
                 this.errors.push('Mot de passe requis'); 
-            } else if (!this.validPassword(this.password)) {
+            } else if (!this.validPassword(this.input.password)) {
                 this.errors.push('Mot de passe : lettres minuscules')
             }
             if (!this.errors.length) { return true; }
@@ -72,9 +72,9 @@ export default {
         },
         createAccount: function() {
             axios.post("http://localhost:3000/api/signup", {
-                u_pseudo: this.pseudo,
-                u_email: this.email,
-                u_password: this.password,
+                u_pseudo: this.input.pseudo,
+                u_email: this.input.email,
+                u_password: this.input.password,
                 // u_id, u_registration_date et u_level sont automatiquement générés dans la BDD
             })
             .then((response) => (
@@ -82,7 +82,7 @@ export default {
                 this.$router.push("/Login")
             ))
             .catch(
-                (error) => (this.errors.push("pseudo ou email déjà existant"), console.log(error))
+                (error) => (console.log(error))
             );
         }
     }

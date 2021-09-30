@@ -34,10 +34,10 @@ export default {
     },
     methods: {
         checkFormLogin: function(e) {
-            if (this.email && this.password) { return true; }
+            if (this.input.email && this.input.password) { return true; }
             this.errors = [];
-            if (!this.email) { this.errors.push('Email requis'); }
-            if (!this.password) { this.errors.push('Mot de passe requis'); }
+            if (!this.input.email) { this.errors.push('Email requis'); }
+            if (!this.input.password) { this.errors.push('Mot de passe requis'); }
             e.preventDefault();
         },
         connect: function() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite

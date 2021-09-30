@@ -1,5 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
+import Signup from '../views/Signup.vue';
+import Login from '../views/Login.vue';
+import Home from '../views/Home.vue';
+import Profil from '../views/Profile.vue';
+
 import Data from '../views/Login.vue';
 
 Vue.use(VueRouter);
@@ -9,7 +15,7 @@ const routes = [
   {
     path: '/',
     name: 'Signup',
-    component: () => import('../views/Signup.vue'),
+    component: Signup,
     meta : {
       requiresVisitor: true,
     }
@@ -17,7 +23,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue'),
+    component: Login,
     meta : {
       requiresVisitor: true,
     }
@@ -25,7 +31,7 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: () => import('../views/Home.vue'),
+    component: Home,
     meta : {
       requiresAuth: true,
     }
@@ -33,7 +39,7 @@ const routes = [
   {
     path: '/profile',
     name: 'Profil',
-    component: () => import('../views/Profile.vue'),
+    component: Profil,
     meta : {
       requiresAuth: true,
     }
@@ -43,13 +49,13 @@ const routes = [
 // router
 const router = new VueRouter({
   mode: "history",
-  routes
+  routes,
 });
 
 // voir si cette section est essentielle
 router.beforeEach((to, from, next) => {
   if (to.matched.some((routes) => routes.meta.requiresAuth)) {
-    if (!Data.taka.token) {
+    if (!Data.data.token) {
       next({ 
         name: "Signup" || "Login",
       });

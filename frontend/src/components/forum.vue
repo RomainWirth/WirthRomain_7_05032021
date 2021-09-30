@@ -94,7 +94,7 @@ export default {
     // update messages
     async updateMessage() {
       try {
-        await axios.update("http://localhost:3000/api/topic_messages", {
+        await axios.put("http://localhost:3000/api/topic_messages", {
 
         });
         
@@ -102,6 +102,7 @@ export default {
         console.log(err);
       }
     }
+    // delete message
   },
 };
 </script>

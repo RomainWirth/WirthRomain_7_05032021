@@ -16,7 +16,7 @@
         </div>
       </div>
     </header>
-    <router-view /> <!-- @identified="setIdentified" -->
+    <router-view @identified="setIdentified"/> <!-- @identified="setIdentified" -->
     <footer>
     </footer>
   </body>
@@ -34,10 +34,13 @@ export default {
   },
   methods: {
     Logout() {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("u_d");
+      this.$router.push("/Login");
       this.identified = false;
     },
     setIdentified() {
-      this.identified = true;
+      this.identified = status;
     }
   }
 };
