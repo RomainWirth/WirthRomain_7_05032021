@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 // Routes
 const routes = [
   {
-    path: '/signup',
+    path: '/',
     name: 'Signup',
     component: () => import('../views/Signup.vue'),
     meta : {

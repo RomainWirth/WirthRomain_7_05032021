@@ -3,14 +3,14 @@
         <section class="login">
             <h1>Login</h1>
             <div class="login__content">
-                <form @submit.prevent="connect()" @submit="checkFormLogin(e)">
+                <form @submit.prevent="connect" @submit="checkFormLogin">
                     <div v-if="errors.length">
                         <p class="error">Merci d'apporter les corrections suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
                     </div>
                     <input type="email" name="email" placeholder="Email" v-model="input.email"/> <!-- v-model="input.email" -->
                     <input type="password" name="password" placeholder="Password" v-model="input.password"/> <!-- v-model="input.password" -->
-                    <button type="submit" v-on:click="connect()">Login</button> <!-- v-on:click="connect()" -->
+                    <button type="submit" v-on:click="connect">Login</button> <!-- v-on:click="connect()" -->
                 </form>
             </div>
         </section>
@@ -33,16 +33,16 @@ export default {
         };
     },
     methods: {
-        checkFormLogin(e) {
+        checkFormLogin: function(e) {
             if (this.email && this.password) { return true; }
             this.errors = [];
             if (!this.email) { this.errors.push('Email requis'); }
             if (!this.password) { this.errors.push('Mot de passe requis'); }
             e.preventDefault();
         },
-        connect() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
+        connect: function() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
             if(this.input.email != "" && this.input.password != "") {
-                axios.post("http://localhost:5000/api/auth", {
+                axios.post("http://localhost:3000/api/auth", {
                     u_email: this.input.email,
                     u_password: this.input.password,
                 })

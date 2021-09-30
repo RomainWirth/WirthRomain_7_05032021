@@ -2,17 +2,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
+const helmet = require('helmet');
+const cookieSession = require ('cookie-session');
 
 // import routes
 const loginRoutes = require('./routes/login');
 const usersRoutes = require('./routes/users');
 const topicMessageRoutes = require('./routes/topic_messages');
  
-// init express
 const app = express();
-// use express json
+app.use(helmet());
 app.use(express.json());
-// use cors
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -22,14 +22,26 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cookieSession({
+    name: "session",
+    secret: "SeCuRe",
+    cookie: {
+        secure: true,
+        httpOnly: true,
+        domain: "http://localhost:3000/",
+    },
+}));
+
 app.use(bodyParser.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+app.get('/', function(req,res) {res.send('Hello World');});
 
 // use routers
 app.use('/api/auth', loginRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/topic_messages', topicMessageRoutes); 
 
-app.listen(5000, () => console.log('Server running at http://localhost:5000'));
+app.listen(3000, () => console.log('Server running at http://localhost:3000'));
 
 module.exports = app;

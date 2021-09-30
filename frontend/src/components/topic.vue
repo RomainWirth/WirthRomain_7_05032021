@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     displayMessage() {
-      axios.get("http://localhost:/5000/api/topic_messages")
+      axios.get("http://localhost:3000/api/topic_messages")
         .then(response => (
           this.tmId = response.tm_id,
           this.tmTitle = response.topic_messages.tm_title,

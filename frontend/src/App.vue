@@ -11,7 +11,7 @@
           <router-link to="/Login" v-on:click.native="Logout()">Logout</router-link> <!-- voir pour mettre un composant logout avec fonction pour mettre fin à la session v-on:click.native="Logout()" -->
         </div>
         <div class="nav__navigation" v-else> <!-- disparaît quand user identifié : v-else --> 
-          <router-link to="/Signup">Signup</router-link> |
+          <router-link to="/">Signup</router-link> |
           <router-link to="/Login">Login</router-link>
         </div>
       </div>

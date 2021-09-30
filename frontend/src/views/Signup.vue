@@ -3,7 +3,7 @@
         <section class="login">
             <h1>Signup</h1>
             <div class="login__content">
-                <form @submit.prevent="createAccount()" @submit="checkFormSignup()" method="post" novalidate="true">
+                <form @submit.prevent="createAccount" @submit="checkFormSignup" method="post" novalidate="true">
                     <div v-if="errors.length">
                         <p class="error">Merci de corriger les erreurs suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -15,7 +15,7 @@
                     <input type="hidden" name="level" v-model="moderationLevel" />
                     <input type="hidden" name="registration_date" v-model="input.registrationDate" />
                     -->
-                <button type="submit" v-on:click="createAccount()" :disabled="submitStatus === 'PENDING'">Signup</button>
+                    <button type="submit" v-on:click="createAccount">Signup</button>
                 </form>
             </div>
         </section>
@@ -39,14 +39,14 @@ export default {
         };
     },
     methods: {
-        validEmail (email) {
+        validEmail: function (email) {
             var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
             return (
                 re.test(email) &&
                 email.length <= 50
             );
         },
-        validPassword (password) {
+        validPassword: function(password) {
             var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+/;
             return (
                 re.test(password) &&
@@ -54,7 +54,7 @@ export default {
                 password.length <= 100
             );
         },
-        checkFormSignup(e) {
+        checkFormSignup: function(e) {
             if (this.pseudo && this.email && this.password) { return true; }
             this.errors = [];
             if (!this.pseudo) { this.errors.push("Pseudo requis"); }
@@ -71,8 +71,8 @@ export default {
             if (!this.errors.length) { return true; }
             e.preventDefault();
         },
-        createAccount() {
-            axios.post("http://localhost:5000/api/auth", {
+        createAccount: function() {
+            axios.post("http://localhost:3000/api/auth", {
                 u_pseudo: this.pseudo,
                 u_email: this.email,
                 u_password: this.password,
@@ -83,7 +83,7 @@ export default {
                 this.$router.push("/Login")
             ))
             .catch(
-                (error) => (console.log(error))
+                (error) => (this.errors.push("pseudo ou email déjà existant"), console.log(error))
             );
         }
     }
