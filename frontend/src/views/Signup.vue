@@ -3,7 +3,7 @@
         <section class="login">
             <h1>Signup</h1>
             <div class="login__content">
-                <form @submit.prevent="createAccount" @submit="checkFormSignup" method="post" novalidate="true">
+                <form @submit.prevent="createAccount()" @submit="checkFormSignup()" method="post" novalidate="true">
                     <div v-if="errors.length">
                         <p class="error">Merci de corriger les erreurs suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -15,7 +15,7 @@
                     <input type="hidden" name="level" v-model="moderationLevel" />
                     <input type="hidden" name="registration_date" v-model="input.registrationDate" />
                     -->
-                    <button type="submit" v-on:click="createAccount">Signup</button>
+                    <button type="submit" v-on:click="createAccount()">Signup</button>
                 </form>
             </div>
         </section>
@@ -53,13 +53,13 @@ export default {
                 password.length <= 100
             );
         },
-        checkFormSignup: function(e) {
+        checkFormSignup(e) {
             if (this.input.pseudo && this.input.email && this.input.password) { return true; }
             this.errors = [];
             if (!this.input.pseudo) { this.errors.push("Pseudo requis"); }
             if (!this.input.email) { 
                 this.errors.push('Email requis'); 
-            } else if (!this.validEmail(this.email)) { 
+            } else if (!this.validEmail(this.input.email)) { 
                 this.errors.push('Email valide requis');
             }
             if (!this.input.password) { 
@@ -70,20 +70,21 @@ export default {
             if (!this.errors.length) { return true; }
             e.preventDefault();
         },
-        createAccount: function() {
+        createAccount() {
+            console.log("requête vers le serveur");
             axios.post("http://localhost:3000/api/signup", {
-                u_pseudo: this.input.pseudo,
-                u_email: this.input.email,
-                u_password: this.input.password,
+                front_pseudo: this.input.pseudo,
+                front_email: this.input.email,
+                front_password: this.input.password,
                 // u_id, u_registration_date et u_level sont automatiquement générés dans la BDD
             })
             .then((response) => (
                 console.log(response),
-                this.$router.push("/Login")
+                this.$router.push("/login")
             ))
             .catch(
-                (error) => (console.log(error))
-            );
+                (error) => {(console.log(error + " : Erreur requête vers le serveur"))}
+            );                
         }
     }
 };

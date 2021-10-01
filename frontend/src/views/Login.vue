@@ -3,14 +3,14 @@
         <section class="login">
             <h1>Login</h1>
             <div class="login__content">
-                <form @submit.prevent="connect" @submit="checkFormLogin">
+                <form @submit.prevent="connect()" @submit="checkFormLogin()">
                     <div v-if="errors.length">
                         <p class="error">Merci d'apporter les corrections suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
                     </div>
                     <input type="email" name="email" placeholder="Email" v-model="input.email"/> <!-- v-model="input.email" -->
                     <input type="password" name="password" placeholder="Password" v-model="input.password"/> <!-- v-model="input.password" -->
-                    <button type="submit" v-on:click="connect">Login</button> <!-- v-on:click="connect()" -->
+                    <button type="submit" v-on:click="connect()">Login</button> <!-- v-on:click="connect()" -->
                 </form>
             </div>
         </section>
@@ -33,18 +33,43 @@ export default {
         };
     },
     methods: {
-        checkFormLogin: function(e) {
-            if (this.input.email && this.input.password) { return true; }
+        validEmail: function(email) {
+            var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+            return (
+                re.test(email) &&
+                email.length <= 50
+            );
+        },
+        validPassword: function(password) {
+            var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+/;
+            return (
+                re.test(password) &&
+                password.length >= 8 &&
+                password.length <= 100
+            );
+        },
+        checkFormSignup(e) {
+            if (this.input.pseudo && this.input.email && this.input.password) { return true; }
             this.errors = [];
-            if (!this.input.email) { this.errors.push('Email requis'); }
-            if (!this.input.password) { this.errors.push('Mot de passe requis'); }
+            if (!this.input.pseudo) { this.errors.push("Pseudo requis"); }
+            if (!this.input.email) { 
+                this.errors.push('Email requis'); 
+            } else if (!this.validEmail(this.input.email)) { 
+                this.errors.push('Email valide requis');
+            }
+            if (!this.input.password) { 
+                this.errors.push('Mot de passe requis'); 
+            } else if (!this.validPassword(this.input.password)) {
+                this.errors.push('Mot de passe : lettres minuscules')
+            }
+            if (!this.errors.length) { return true; }
             e.preventDefault();
         },
-        connect: function() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
+        connect() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
             if(this.input.email != "" && this.input.password != "") {
-                axios.post("http://localhost:3000/api/auth", {
-                    u_email: this.input.email,
-                    u_password: this.input.password,
+                axios.post("http://localhost:3000/api/login", {
+                    front_email: this.input.email,
+                    front_password: this.input.password,
                 })
                 .then((response) => {
                     const token = (this.token == response.data.token);
@@ -53,7 +78,7 @@ export default {
                     localStorage.setItem("u_id", u_id),
                     this.$emit("identified", true),
                     console.log(response),
-                    this.$router.go("/Home");
+                    this.$router.go("/home");
                 })
                 .catch((error) => (
                     console.Log(error, "email et mot de passe incorrects")

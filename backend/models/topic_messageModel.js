@@ -5,7 +5,7 @@ const connection = require("../config/database.js");
 // Insert Topic_message to Database = création d'un message
 exports.insertTopicMessages = (data, result) => {
     connection.query("INSERT INTO topic_messages SET ?", [data], (err, results) => {             
-        if(err) {console.log(err); result(err, null);} 
+        if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results);}
     });   
 }
@@ -46,14 +46,14 @@ exports.deleteMessageById = (data, result) => {
 // Get one topic
 exports.getMessageByTitle = (title, result) => {
     connection.query("SELECT * FROM topic_messages WHERE tm_title = ?", [title], (err, results) => {             
-        if(err) {console.log(err); result(err, null);} 
+        if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results[0]);}
     });   
 }
 // Delete conversation
 exports.deleteConversationByTitle = (title, result) => {
     connection.query("DELETE FROM topic_messages WHERE tm_title = ?", [title], (err, results) => {             
-        if(err) {console.log(err); result(err, null);} 
+        if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results[0]);}
     });   
 }

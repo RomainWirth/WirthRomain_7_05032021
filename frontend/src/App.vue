@@ -6,17 +6,17 @@
       </div>
       <div class="nav">
         <div class="nav__navigation" v-if="identified"> <!-- v-show condition user identifié : v-if="identified" to="/login"-->
-          <router-link to="/Home">Home</router-link> |
-          <router-link to="/Profile">Profil Utilisateur</router-link> |
-          <router-link to="/Login" v-on:click.native="Logout()">Logout</router-link> <!-- voir pour mettre un composant logout avec fonction pour mettre fin à la session v-on:click.native="Logout()" -->
+          <router-link to="/home">Home</router-link> |
+          <router-link to="/profile">Profil Utilisateur</router-link> |
+          <router-link to="/login" v-on:click.native="Logout()">Logout</router-link> <!-- voir pour mettre un composant logout avec fonction pour mettre fin à la session v-on:click.native="Logout()" -->
         </div>
         <div class="nav__navigation" v-else> <!-- disparaît quand user identifié : v-else --> 
           <router-link to="/">Signup</router-link> |
-          <router-link to="/Login">Login</router-link>
+          <router-link to="/login">Login</router-link>
         </div>
       </div>
     </header>
-    <router-view @identified="setIdentified"/> <!-- @identified="setIdentified" -->
+    <router-view /> <!-- @identified="setIdentified" -->
     <footer>
     </footer>
   </body>
@@ -36,12 +36,12 @@ export default {
     Logout() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("u_id");
-      this.$router.push("/Login");
+      this.$router.push("/login");
       this.identified = false;
     },
-    setIdentified() {
-      this.identified = status;
-    }
+    // setIdentified(status) {
+    //   this.identified = status;
+    // }
   }
 };
 </script>
