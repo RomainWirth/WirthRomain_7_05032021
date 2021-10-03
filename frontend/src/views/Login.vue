@@ -70,11 +70,11 @@ export default {
                     front_password: this.input.password,
                 })
                 .then((response) => {
+                    console.log(response);
                     const token = (this.token == response.data.token);
-                    const userId = response.data.u_id;
+                    const userId = response.data.userId;
                     localStorage.setItem("access_token", token),
                     localStorage.setItem("userId", userId),
-                    console.log(response),
                     this.$emit("identified", true),
                     this.$router.go("/home");
                 })
