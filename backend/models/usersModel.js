@@ -21,7 +21,7 @@ exports.insertUsers = (data, result) => {
 exports.getUserByEmail = (data, result) => {
     connection.query("SELECT * FROM users WHERE u_email = ?", [data], (err, results) => {
         if(err) {console.log("error: ", err); result = {err};} 
-        else {console.log('data: ', data); console.log('results query: ', results); result = [results];}
+        else {console.log('data: ', data); console.log('results query: ', results); result = results; console.log('result: ', result);}
     })
 }
 

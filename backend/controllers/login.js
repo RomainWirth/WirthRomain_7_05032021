@@ -40,15 +40,17 @@ exports.login = (req, res) => {
             if (err) {res.send(err);}
             else {
                 console.log('result fct login: ', result);
-                bcrypt.compare(pwd, result.u_password)
+                let textRow = [result.TextRow];
+                console.log('textRow: ', textRow);
+                bcrypt.compare(pwd, textRow.u_password)
                 .then(valid => {
                     if (!valid) {
                         return res.status(401).json({error: "Mot de passe incorrect"});
                     }
                     res.status(200).json({ 
-                        userId: result.u_id,
+                        userId: textRow.u_id,
                         token: jwt.sign (
-                            { userId: result.u_id },
+                            { userId: textRow.u_id },
                             'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
                             { expiresIn: '24h' }
                         )
