@@ -12,16 +12,16 @@ const connection = require("../config/database.js");
 // Insert into Users in Database table users
 exports.insertUsers = (data, result) => {
     connection.query("INSERT INTO users SET u_pseudo = ?, u_email = ?, u_password = ?", [data.u_pseudo, data.u_email, data.u_password], (err, results) => {             
-        if(err) {console.log("error: ", err); result(err, null);} 
-        else {result(null, results);}
+        if(err) {console.log("error: ", err); result = {err};} 
+        else {console.log('last insert: ', results); result = {results};}
     });
 }
 
-// fonction findOne
-exports.getUserByEmail = (email, result) => {
-    connection.query("SELECT * FROM users WHERE u_email = ?", [email], (err, results) => {
-        if(err) {console.log("error: ", err); result(err, null);} 
-        else {result(null, results);}
+// fonction find user by email
+exports.getUserByEmail = (data, result) => {
+    connection.query("SELECT * FROM users WHERE u_email = ?", [data], (err, results) => {
+        if(err) {console.log("error: ", err); result = {err};} 
+        else {console.log('data: ', data); console.log('results query: ', results); result = [results];}
     })
 }
 

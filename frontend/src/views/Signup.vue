@@ -15,7 +15,7 @@
                     <input type="hidden" name="level" v-model="moderationLevel" />
                     <input type="hidden" name="registration_date" v-model="input.registrationDate" />
                     -->
-                    <button type="submit" v-on:click="createAccount()">Signup</button>
+                    <button type="submit">Signup</button>
                 </form>
             </div>
         </section>
@@ -82,9 +82,7 @@ export default {
                 console.log(response),
                 this.$router.push("/login")
             ))
-            .catch(
-                (error) => {(console.log(error + " : Erreur requête vers le serveur"))}
-            );                
+            .catch((error) => {(console.log(error + " : Erreur requête vers le serveur"))});                
         }
     }
 };

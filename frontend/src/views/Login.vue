@@ -10,7 +10,7 @@
                     </div>
                     <input type="email" name="email" placeholder="Email" v-model="input.email"/> <!-- v-model="input.email" -->
                     <input type="password" name="password" placeholder="Password" v-model="input.password"/> <!-- v-model="input.password" -->
-                    <button type="submit" v-on:click="connect()">Login</button> <!-- v-on:click="connect()" -->
+                    <button type="submit">Login</button> <!-- v-on:click="connect()" -->
                 </form>
             </div>
         </section>
@@ -48,10 +48,9 @@ export default {
                 password.length <= 100
             );
         },
-        checkFormSignup(e) {
-            if (this.input.pseudo && this.input.email && this.input.password) { return true; }
+        checkFormLogin() {
+            if (this.input.email && this.input.password) { return true; }
             this.errors = [];
-            if (!this.input.pseudo) { this.errors.push("Pseudo requis"); }
             if (!this.input.email) { 
                 this.errors.push('Email requis'); 
             } else if (!this.validEmail(this.input.email)) { 
@@ -63,7 +62,6 @@ export default {
                 this.errors.push('Mot de passe : lettres minuscules')
             }
             if (!this.errors.length) { return true; }
-            e.preventDefault();
         },
         connect() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
             if(this.input.email != "" && this.input.password != "") {
@@ -73,16 +71,14 @@ export default {
                 })
                 .then((response) => {
                     const token = (this.token == response.data.token);
-                    const u_id = response.data.u_id;
+                    const userId = response.data.u_id;
                     localStorage.setItem("access_token", token),
-                    localStorage.setItem("u_id", u_id),
-                    this.$emit("identified", true),
+                    localStorage.setItem("userId", userId),
                     console.log(response),
+                    this.$emit("identified", true),
                     this.$router.go("/home");
                 })
-                .catch((error) => (
-                    console.Log(error, "email et mot de passe incorrects")
-                ));
+                .catch((error) => {(console.log(error + "email et mot de passe incorrects"))});
             } else {
                 console.Log("email et mot de passe requis");
             }
