@@ -16,7 +16,7 @@
         </div>
       </div>
     </header>
-    <router-view /> <!-- @identified="setIdentified" -->
+    <router-view @identified="setIdentified"/> <!-- @identified="setIdentified" -->
     <footer>
     </footer>
   </body>
@@ -29,7 +29,7 @@
 export default {
   data() {
     return {
-      identified: false
+      identified: true
     }
   },
   methods: {
@@ -39,9 +39,9 @@ export default {
       this.$router.push("/login");
       this.identified = false;
     },
-    // setIdentified(status) {
-    //   this.identified = status;
-    // }
+    setIdentified(status) {
+      this.identified = status;
+    }
   }
 };
 </script>
