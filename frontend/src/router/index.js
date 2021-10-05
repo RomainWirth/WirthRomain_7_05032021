@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import Signup from '../views/Signup.vue';
 import Login from '../views/Login.vue';
 import Home from '../views/Home.vue';
-import Profil from '../views/Profile.vue';
+import Profile from '../views/Profile.vue';
 
 import Data from '../views/Login.vue';
 
@@ -38,8 +38,8 @@ const routes = [
   },
   {
     path: '/profile',
-    name: 'Profil',
-    component: Profil,
+    name: 'Profile',
+    component: Profile,
     meta : {
       requiresAuth: true,
     }

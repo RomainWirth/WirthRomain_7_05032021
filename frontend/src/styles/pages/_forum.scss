@@ -5,6 +5,7 @@
     padding: 20px;
     width: 90%;
     margin: auto;
+    margin-bottom: 5px;
     &__title {
         border-bottom: 1px solid #CCC;
         padding: 10px;
@@ -20,7 +21,7 @@
             & textarea {
                 width: 100%;
                 resize: none;
-            }    
+            }   
         }
     }
     &__topics {
@@ -51,4 +52,3 @@
         }
     }
 }
-  

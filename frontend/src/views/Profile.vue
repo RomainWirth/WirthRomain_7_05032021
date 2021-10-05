@@ -51,12 +51,18 @@
 
 export default {
   name: 'Profile',
+  data() {
+    return {
+      token: localStorage.getItem("access_token"),
+      user_id: localStorage.getItem("userId")
+    }
+  },
   methods: {
     Logout() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("userId");
       this.$router.push("/login");
-      this.identified = false;
+      // this.identified = false;
     },
   }
 }

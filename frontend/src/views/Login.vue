@@ -5,11 +5,6 @@
                 <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania">
             </div>
             <div class="nav">
-                <!-- <div class="nav__navigation" v-if="identified"> 
-                    <router-link to="/home">Home</router-link> |
-                    <router-link to="/profile">Profil Utilisateur</router-link> |
-                    <router-link to="/login" v-on:click.native="Logout()">Logout</router-link> 
-                </div> -->
                 <div class="nav__navigation"> <!-- disparaît quand user identifié : v-else --> 
                     <router-link to="/">Signup</router-link> |
                     <router-link to="/login">Login</router-link>
@@ -45,7 +40,6 @@ export default {
                 email: "",
                 password: ""
             },
-            token: localStorage.getItem("access_token") || null
         };
     },
     methods: {
@@ -87,11 +81,12 @@ export default {
                 })
                 .then((response) => {
                     console.log(response);
-                    const token = (this.token == response.data.token);
+                    const token =  response.data.token;
+                    // const token = (this.token == response.data.token);
                     const userId = response.data.userId;
                     localStorage.setItem("access_token", token),
                     localStorage.setItem("userId", userId),
-                    this.$emit("identified", true),
+                    // this.$emit("identified", true),
                     this.$router.go("/home");
                 })
                 .catch((error) => {(console.log(error + "email et mot de passe incorrects"))});

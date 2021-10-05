@@ -4,7 +4,7 @@ const connection = require("../config/database.js");
 
 // Insert Topic_message to Database = création d'un message
 exports.insertTopicMessages = (data, result) => {
-    connection.query("INSERT INTO topic_messages SET ?", [data], (err, results) => {             
+    connection.query("INSERT INTO topic_messages (tm_parent, tm_user_id, tm_title, tm_content, tm_picture_url, tm_moderation) VALUES (?, ?, ?, ?, ?, ?)", [0,data.user_id,data.title,data.content,data.picture_url,data.moderation], (err, results) => {             
         if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results);}
     });   
@@ -17,7 +17,18 @@ exports.getMessages = (result) => {
         else {result(null, results);}
     });   
 }
-
+exports.getParentMessages = (result) => {
+    connection.query("SELECT * FROM topic_messages t WHERE t.tm_id in (SELECT t2.tm_parent FROM topic_messages t2)", (err, results) => {             
+        if(err) {console.log("error: ", err); result(err, null);} 
+        else {result(null, results);}
+    });   
+}
+exports.getAllMessages = (result) => {
+    connection.query("SELECT * FROM topic_messages", (err, results) => {             
+        if(err) {console.log("error: ", err); result(err, null);} 
+        else {result(null, results);}
+    });   
+}
 // Update Topic_message to Database = modifier un message
 exports.updateMessageById = (data, id, result) => {
     connection.query("UPDATE topic_messages SET tm_title = ?, tm_content = ?, tm_picture_url = ?, tm_moderation = ? WHERE tm_id = ?", 

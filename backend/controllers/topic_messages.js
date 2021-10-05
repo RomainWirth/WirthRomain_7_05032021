@@ -7,8 +7,7 @@
 // Get one topic : getMessageByTitle
 // Delete conversation : deleteConversationByTitle
 
-const topic_message_path = "../models/topic_messageModel.js";
-const topicMessages = require(topic_message_path);
+const topicMessages = require("../models/topic_messageModel.js");
 
 // Créer un message (parent 0) : INSERT Topic_message to Database
 exports.createMessage = (req, res) => {
@@ -21,11 +20,19 @@ exports.createMessage = (req, res) => {
 };
 
 // Voir tous les topics (message titre) : SELECT tm_id, tm_title, tm_posting_date (parents 0) from Database
+// exports.showTopicMessages = (req, res) => {
+//     const id = req.params.tm_id;
+//     const title = req.params.tm_title;
+//     const posting_date = req.params.tm_posting_date;
+//     topicMessages.getMessages(id, title, posting_date, (err, results) => {
+//         if (err){res.send(err);}
+//         else{res.json(results);}
+//     });
+// };
+
+
 exports.showTopicMessages = (req, res) => {
-    const id = req.params.tm_id;
-    const title = req.params.tm_title;
-    const posting_date = req.params.tm_posting_date;
-    topicMessages.getMessages(id, title, posting_date, (err, results) => {
+    topicMessages.getParentMessages((err, results) => {
         if (err){res.send(err);}
         else{res.json(results);}
     });

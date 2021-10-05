@@ -18,14 +18,14 @@ exports.insertUsers = (data, result) => {
 }
 
 // fonction find user by email
-exports.getUserByEmail = (data, result) => {
-    connection.query("SELECT * FROM users WHERE u_email = ?", [data], (err, results) => {
-        if(err) {console.log("error: ", err); result = {err};} 
+exports.getUserByEmail = async (data, result) => {
+    connection.query("SELECT * FROM users WHERE u_email = ?", ["userCCC@gmail.com"], (err, results) => {
+        if(err) {
+            result(err,null);
+        } 
         else {
-            console.log('data: ', data); 
-            console.log('results query: ', results); 
-            result = results;
-            console.log('result: ', result);
+            result(null,results);
+            return results;
         }
     })
 }

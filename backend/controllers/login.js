@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken'); // standard qui permet l'échange de jetons
 
 const userData = require('../models/usersModel.js');
 const connection = require("../config/database.js");
+const { createPool } = require('mysql2/promise');
 
 // signup
 exports.signup = (req, res) => { // async = (req, res) => {
@@ -30,81 +31,70 @@ exports.signup = (req, res) => { // async = (req, res) => {
 };
 
 // login
-// exports.login = async (req, res) => {
-//     try {
-//         const email = req.body.front_email;
-//         const pwd = req.body.front_password;
-//         if (!email || !pwd) { res.status(400).json(`${!email ? "email" : "pwd"} manquant`); }
-            
-//         userData.getUserByEmail({email});
-//             const returnUserByEmail = userData.getUserByEmail(result);
-//             console.log('result fct login: ', returnUserByEmail);
-        
-//         const returnUserByEmail = userData.getUserByEmail(result=[]);
-//         console.log('result fct login: ', returnUserByEmail);
-
-//         connect(email, (err, result) => {
-//             getUserByEmail
-//             if (err) {res.send(err);}
-//             else {
-//                 console.log('result fct login: ', result);
-//                 let textRow = [result.TextRow];
-//                 console.log('textRow: ', textRow);
-//                 bcrypt.compare(pwd, textRow.u_password)
-//                 .then(valid => {
-//                     if (!valid) {
-//                         return res.status(401).json({error: "Mot de passe incorrect"});
-//                     }
-//                     res.status(200).json({ 
-//                         userId: textRow.u_id,
-//                         token: jwt.sign (
-//                             { userId: textRow.u_id },
-//                             'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
-//                             { expiresIn: '24h' }
-//                         )
-//                     });
-//                 })
-//                 .catch(error => res.status(500).json({ error }));
-//             }
-//         });
-//     } catch (error) {
-//         res.status(403).json({ error: 'requête non autorisée'});
-//     }
-// };
-
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
     try {
         const email = req.body.front_email;
         const pwd = req.body.front_password;
-        if (email) {
-            connection.query("SELECT * FROM users WHERE u_email = ?", [email], (err, results) => { 
-                if(err) {console.log("error: ", err);} 
-                else {
-                    console.log('results: ', results);
-                    const user = results[0];
-                    console.log(user);
-                    bcrypt.compare(pwd, user.u_password)
-                    .then(valid => {
-                        if (!valid) {
-                            return res.status(401).json({error: "Mot de passe incorrect"});
-                        }
-                        res.status(200).json({ 
-                            userId: user.u_id,
-                            token: jwt.sign (
-                                { userId: user.u_id },
-                                'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
-                                { expiresIn: '24h' }
-                            )
-                        });
-                    })
-                    .catch(error => res.status(500).json({ error }));
-                }
-            });
-        } else {res.status(400).json(`${!email ? "email" : "pwd"} manquant`);}
+        if (!email || !pwd) { res.status(400).json(`${!email ? "email" : "pwd"} manquant`); }
+            
+        userData.getUserByEmail(null,(err,results)=>{
+                
+                 bcrypt.compare(pwd, results[0].u_password)
+                         .then(valid => {
+                             if (!valid) {
+                                 return res.status(401).json({error: "Mot de passe incorrect"});
+                             }
+                             res.status(200).json({ 
+                                 userId: results[0].u_id,
+                                 token: jwt.sign (
+                                     { userId: results[0].u_id },
+                                     'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
+                                     { expiresIn: '24h' }
+                                 )
+                             });
+                         })
+                         .catch(error => res.status(500).json({ error }));
+                     
+        });
     } catch (error) {
         res.status(403).json({ error: 'requête non autorisée'});
     }
-}
+};
+
+// exports.login = (req, res) => {
+//     try {
+//         const email = req.body.front_email;
+//         const pwd = req.body.front_password;
+
+//         if (email) {
+//             connection.query("SELECT * FROM users WHERE u_email = ?", [email], (err, results) => { 
+//                 if(err) {console.log("error: ", err);} 
+//                 else {
+//                     console.log('results: ', results);
+//                     const user = results[0];
+//                     console.log(user);
+//                     bcrypt.compare(pwd, user.u_password)
+//                     .then(valid => {
+//                         if (!valid) {
+//                             return res.status(401).json({error: "Mot de passe incorrect"});
+//                         }
+//                         res.status(200).json({ 
+//                             userId: user.u_id,
+//                             token: jwt.sign (
+//                                 { userId: user.u_id },
+//                                 'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
+//                                 { expiresIn: '24h' }
+//                             )
+//                         });
+//                     })
+//                     .catch(error => res.status(500).json({ error }));
+//                 }
+//             });
+//         } else {res.status(400).json(`${!email ? "email" : "pwd"} manquant`);}
+//     } catch (error) {
+//         res.status(403).json({ error: 'requête non autorisée'});
+//     }
+// }
 
 
 // connect(email, (err, result) => {
