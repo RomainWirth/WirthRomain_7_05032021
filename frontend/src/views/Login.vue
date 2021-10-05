@@ -1,5 +1,21 @@
 <template>
     <body>
+        <header>
+            <div class="image">
+                <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania">
+            </div>
+            <div class="nav">
+                <!-- <div class="nav__navigation" v-if="identified"> 
+                    <router-link to="/home">Home</router-link> |
+                    <router-link to="/profile">Profil Utilisateur</router-link> |
+                    <router-link to="/login" v-on:click.native="Logout()">Logout</router-link> 
+                </div> -->
+                <div class="nav__navigation"> <!-- disparaît quand user identifié : v-else --> 
+                    <router-link to="/">Signup</router-link> |
+                    <router-link to="/login">Login</router-link>
+                </div>
+            </div>
+        </header>        
         <section class="login">
             <h1>Login</h1>
             <div class="login__content">

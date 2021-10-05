@@ -1,5 +1,17 @@
 <template>
   <section class="profile">
+    <header>
+      <div class="image">
+        <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania">
+      </div>
+      <div class="nav">
+        <div class="nav__navigation" >
+          <router-link to="/home">Home</router-link> |
+          <router-link to="/profile">Profil Utilisateur</router-link> |
+          <router-link to="/login" v-on:click.native="Logout()">Logout</router-link>
+        </div>
+      </div>
+    </header>
     <div class="loggedin">
       <h1>PROFIL UTILISATEUR</h1>
       <section class="loggedin__content">
@@ -39,6 +51,14 @@
 
 export default {
   name: 'Profile',
+  methods: {
+    Logout() {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("userId");
+      this.$router.push("/login");
+      this.identified = false;
+    },
+  }
 }
 </script>
 
