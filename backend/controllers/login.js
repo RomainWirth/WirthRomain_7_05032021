@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt'); // Algorythme de hachage = package de chiffrem
 const jwt = require('jsonwebtoken'); // standard qui permet l'échange de jetons
 
 const userData = require('../models/usersModel.js');
-const connection = require("../config/database.js");
 const { createPool } = require('mysql2/promise');
 
 // signup
@@ -38,23 +37,21 @@ exports.login = async (req, res) => {
         if (!email || !pwd) { res.status(400).json(`${!email ? "email" : "pwd"} manquant`); }
             
         userData.getUserByEmail(null,(err,results)=>{
-                
-                 bcrypt.compare(pwd, results[0].u_password)
-                         .then(valid => {
-                             if (!valid) {
-                                 return res.status(401).json({error: "Mot de passe incorrect"});
-                             }
-                             res.status(200).json({ 
-                                 userId: results[0].u_id,
-                                 token: jwt.sign (
-                                     { userId: results[0].u_id },
-                                     'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
-                                     { expiresIn: '24h' }
-                                 )
-                             });
-                         })
-                         .catch(error => res.status(500).json({ error }));
-                     
+            bcrypt.compare(pwd, results[0].u_password)
+            .then(valid => {
+            if (!valid) {
+                return res.status(401).json({error: "Mot de passe incorrect"});
+            }
+            res.status(200).json({ 
+                userId: results[0].u_id,
+                token: jwt.sign (
+                    { userId: results[0].u_id },
+                    'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
+                    { expiresIn: '24h' }
+                    )
+                });
+            })
+            .catch(error => res.status(500).json({ error }));         
         });
     } catch (error) {
         res.status(403).json({ error: 'requête non autorisée'});
@@ -95,48 +92,3 @@ exports.login = async (req, res) => {
 //         res.status(403).json({ error: 'requête non autorisée'});
 //     }
 // }
-
-
-// connect(email, (err, result) => {
-//     if (err) {res.send(err);}
-//     else {
-//         console.log('result fct login: ', result);
-//         let textRow = [result.TextRow];
-//         console.log('textRow: ', textRow);
-//         bcrypt.compare(pwd, textRow.u_password)
-//         .then(valid => {
-//             if (!valid) {
-//                 return res.status(401).json({error: "Mot de passe incorrect"});
-//             }
-//             res.status(200).json({ 
-//                 userId: textRow.u_id,
-//                 token: jwt.sign (
-//                     { userId: textRow.u_id },
-//                     'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
-//                     { expiresIn: '24h' }
-//                 )
-//             });
-//         })
-//         .catch(error => res.status(500).json({ error }));
-//     }
-// });
-
-// app.post('/auth', function(request, response) {
-// 	var username = request.body.username;
-// 	var password = request.body.password;
-// 	if (username && password) {
-// 		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
-// 			if (results.length > 0) {
-// 				request.session.loggedin = true;
-// 				request.session.username = username;
-// 				response.redirect('/home');
-// 			} else {
-// 				response.send('Incorrect Username and/or Password!');
-// 			}			
-// 			response.end();
-// 		});
-// 	} else {
-// 		response.send('Please enter Username and Password!');
-// 		response.end();
-// 	}
-// });

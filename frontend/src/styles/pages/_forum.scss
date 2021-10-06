@@ -32,12 +32,30 @@
         align-items: center;
         border-top: 1px solid #CCC;
         border-bottom: 1px solid #CCC;
+        & input {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        & textarea {
+            width: 100%;
+            resize: none;
+        } 
         &--title {
             margin: 0px;
             padding: 10px 10px 5px 10px;
         }
         &--content {
             text-align: justify;
+        }
+        &--picture {
+            min-width: 100%;
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            & img {
+                max-height: 150px; /* à modififier*/
+            }
         }
         &--details {
             width: 50%;

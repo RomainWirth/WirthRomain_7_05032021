@@ -31,7 +31,20 @@
         }
     }
 }
-  
+
+.champs-info {
+    display: flex;
+    flex-direction: column;
+    &__line {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        &--content {
+            width: 50%;
+        }
+    }
+}
+
 label {
     width: 50%;
     display: inline-block;
