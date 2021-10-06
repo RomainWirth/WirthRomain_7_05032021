@@ -22,10 +22,6 @@
                     <input id="pseudo" type="text" name="pseudo" v-model="input.pseudo" placeholder="Pseudonyme" />
                     <input id="email" type="email" name="email" v-model="input.email" placeholder="Email" />
                     <input id="password" type="password" name="password" v-model="input.password" placeholder="Password" />
-                    <!-- voir si utile
-                    <input type="hidden" name="level" v-model="moderationLevel" />
-                    <input type="hidden" name="registration_date" v-model="input.registrationDate" />
-                    -->
                     <button type="submit">Signup</button>
                 </form>
             </div>

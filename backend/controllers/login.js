@@ -19,8 +19,11 @@ exports.signup = (req, res) => { // async = (req, res) => {
                     u_email: req.body.front_email, // adresse email du corps de la requête
                     u_password: hash // le mot de passe est stocké crypté
                     // date et id générés automatiquement et level default = 1
+                },(err,results)=>{
+                    if(err) res.status(500).json({err})
+                    else res.status(201).json('Utilisateur créé');
                 });
-                res.status(201).json('Utilisateur créé');
+               
             })
             .catch(error => res.status(500).json({ error }));
         }
@@ -36,7 +39,7 @@ exports.login = async (req, res) => {
         const pwd = req.body.front_password;
         if (!email || !pwd) { res.status(400).json(`${!email ? "email" : "pwd"} manquant`); }
             
-        userData.getUserByEmail(null,(err,results)=>{
+        userData.getUserByEmail(email,(err,results)=>{
             bcrypt.compare(pwd, results[0].u_password)
             .then(valid => {
             if (!valid) {

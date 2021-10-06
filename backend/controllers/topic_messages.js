@@ -12,7 +12,8 @@ const topicMessages = require("../models/topic_messageModel.js");
 // Créer un message (parent 0) : INSERT Topic_message to Database
 exports.createMessage = (req, res) => {
     console.log(req);
-    const data = req.body; // JSON.parse(req.body.message)
+    const data = JSON.parse(req.body.topic); // JSON.parse(req.body.message)
+    data['picture_url']=req.file.path;
     topicMessages.insertTopicMessages(data, (err, results) => {
         if (err){res.send(err);} 
         else {res.json(results);}
@@ -29,10 +30,25 @@ exports.createMessage = (req, res) => {
 //         else{res.json(results);}
 //     });
 // };
+exports.showChildTopicMessages = (req, res) => {
+    const parent_id = req.params.parent_id;
+    console.log('hello world');
+    topicMessages.getChildMessages(parent_id,(err, results) => {
+        if (err){res.send(err);}
+        else{res.json(results);}
+    });
+};
+exports.showParentTopicMessages = (req, res) => {
+  
+    topicMessages.getParentMessages((err, results) => {
+        if (err){res.send(err);}
+        else{res.json(results);}
+    });
+};
 
 
 exports.showTopicMessages = (req, res) => {
-    topicMessages.getParentMessages((err, results) => {
+    topicMessages.getAllMessages((err, results) => {
         if (err){res.send(err);}
         else{res.json(results);}
     });

@@ -10,7 +10,7 @@ const MIME_TYPES = {
 const storage = multer.diskStorage({
     // désignation du fichier de destination des images ajoutées
     destination: (req, file, callback) => {
-        callback(null, 'images'); 
+        callback(null, './images'); 
     },
     filename: (req, file, callback) => {
         // suppression des espaces et remplace par '_' dans le nom du fichier original

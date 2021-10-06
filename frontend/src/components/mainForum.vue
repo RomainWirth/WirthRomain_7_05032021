@@ -2,17 +2,18 @@
   <div class="forum">
     <div class="forum__topics" > <!-- boucle v-for selon le nombre de sujets créés : v-for="getTopic in getTopics" :key="getTopic.getTmId" -->
       <input type="hidden" value="" v-model="getTmId"> <!-- valeur de l'id du message -->
-      <h2 class="forum__topics--title" >titre 1{{getTmTitle}}</h2> <!-- cliquable : donne accès au topic en question = v-bind:href="topic.vue" + {{getTopic.getTmTitle}} + parent 0 -->
+      <h2 class="forum__topics--title">{{mainTitle}}</h2> <!-- cliquable : donne accès au topic en question = v-bind:href="topic.vue" + {{getTopic.getTmTitle}} + parent 0 -->
       <input name="modifyTmTitle" cols="120" rows="1" placeholder="titre" v-if="show"> <!-- value = même titre que parent v-model="tmTitle" -->
-      <p class="forum__topics--content">Lorem Ipsum is simply dummy text of the printing and typesetting industry.{{getTopic.getTmContent}}</p>
+      <p class="forum__topics--content">{{mainContent}}</p>
       <textarea name="modifyTmContent" id="" cols="120" rows="5" placeholder="contenu du message à modifier" maxlength="600" v-if="show"></textarea> <!-- afficher le contenu du message à modifier -->
       <p class="forum__topics--picture">
         <img src="" alt="">
+        <input type="file" @click="updateImage()" v-if="show">
       </p>
       <div class="forum__topics--details">
-        <p>pseudo utilisateur{{getTmPseudo}}</p>
-        <p>date de post{{getTmPostingDate}}</p>
-        <p>modération : modéré ou non{{getTmModeration}}</p> <!-- manipuler la donnée pour afficher : non modéré | accepté | refusé -->
+        <p>{{mainPseudo}}</p>
+        <p>{{mainDate}}</p>
+        <p>{{mainModeration}}</p> <!-- manipuler la donnée pour afficher : non modéré | accepté | refusé -->
       </div>
       <button type="submit" v-on:click="showModify()" v-if="!show">Modifier</button> <!-- @clic update @click="updateMessage()" -->
       <p v-if="show">
@@ -29,10 +30,11 @@ import axios from "axios";
 export default {
   name: 'forum',
   props: {
-    getTmTitle: String,
-    content: String,
-    user: String,
-    date: String
+    mainTitle: String,
+    mainContent: String,
+    mainPseudo: String,
+    mainDate: String,
+    mainModeration: String
   },
   data() {
     return {
@@ -93,6 +95,9 @@ export default {
         console.log(err);
       });
     // delete message
+    },
+    updateImage() {
+
     },
     deleteMessage() {
 

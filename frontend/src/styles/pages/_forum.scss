@@ -21,7 +21,7 @@
             & textarea {
                 width: 100%;
                 resize: none;
-            }   
+            }
         }
     }
     &__topics {
@@ -50,11 +50,12 @@
         &--picture {
             min-width: 100%;
             max-width: 100%;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             & img {
-                max-height: 150px; /* à modififier*/
+                max-height: 250px; /* à modififier*/
             }
         }
         &--details {

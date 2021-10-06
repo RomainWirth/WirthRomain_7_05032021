@@ -1,4 +1,5 @@
 // import connection
+const { getMaxListeners } = require("../config/database.js");
 const connection = require("../config/database.js");
 
 // // Get All Users
@@ -12,14 +13,19 @@ const connection = require("../config/database.js");
 // Insert into Users in Database table users
 exports.insertUsers = (data, result) => {
     connection.query("INSERT INTO users SET u_pseudo = ?, u_email = ?, u_password = ?", [data.u_pseudo, data.u_email, data.u_password], (err, results) => {             
-        if(err) {console.log("error: ", err); result = {err};} 
-        else {console.log('last insert: ', results); result = {results};}
+        if(err) {
+            result(err,null);
+        } 
+        else {
+            result(null,results);
+            return results;
+        }
     });
 }
 
 // fonction find user by email
 exports.getUserByEmail = async (data, result) => {
-    connection.query("SELECT * FROM users WHERE u_email = ?", ["userCCC@gmail.com"], (err, results) => {
+    connection.query("SELECT * FROM users WHERE u_email = ?", [data], (err, results) => {
         if(err) {
             result(err,null);
         } 

@@ -11,14 +11,20 @@ exports.insertTopicMessages = (data, result) => {
 }
 
 // Get All Topics = trouver tous les messages parents = 0 (titre principal)
-exports.getMessages = (result) => {
-    connection.query("SELECT tm_id, tm_title, tm_posting_date FROM topic_messages WHERE tm_parent = 0", (err, results) => {             
+exports.getParentMessages = (result) => {
+    connection.query("SELECT tm.*, u.u_pseudo FROM topic_messages tm INNER JOIN users u ON tm.tm_user_id = u.u_id WHERE tm.tm_parent= 0 ", (err, results) => {             
         if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results);}
     });   
 }
-exports.getParentMessages = (result) => {
-    connection.query("SELECT * FROM topic_messages t WHERE t.tm_id in (SELECT t2.tm_parent FROM topic_messages t2)", (err, results) => {             
+// exports.getParentMessages = (result) => {
+//     connection.query("SELECT * FROM topic_messages t WHERE t.tm_id in (SELECT t2.tm_parent FROM topic_messages t2)", (err, results) => {             
+//         if(err) {console.log("error: ", err); result(err, null);} 
+//         else {result(null, results);}
+//     });   
+// }
+exports.getChildMessages = (parent_id,result) => {
+    connection.query("SELECT * FROM topic_messages WHERE tm_parent = ?",[parent_id], (err, results) => {             
         if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results);}
     });   

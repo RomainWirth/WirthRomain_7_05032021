@@ -16,6 +16,13 @@ router.post('/topic_messages', auth, multer, topic_messagesCtrl.createMessage)
 // Get all topics (parent 0)
 router.get('/topic_messages', auth, topic_messagesCtrl.showTopicMessages);
 
+
+// Get all topics (parent 0)
+router.get('/topic_messages/child/:parent_id', auth, topic_messagesCtrl.showChildTopicMessages);
+
+// Get all topics (parent 0)
+router.get('/topic_messages/parent', auth, topic_messagesCtrl.showParentTopicMessages);
+
 // Update Topic_message to Database
 router.put('/topic_messages', auth, topic_messagesCtrl.updateMessage);
 

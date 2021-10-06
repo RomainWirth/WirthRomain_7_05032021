@@ -16,14 +16,14 @@ UPDATE users SET u_level = 0 WHERE u_id = 7; -- ou u_email = '...'
 INSERT INTO topic_messages (tm_id, tm_parent, tm_title, tm_content, tm_posting_date, tm_user_id, tm_moderation, tm_picture_url)
 VALUES
 (1, 0, 'titre n1', 'contenu texte numéro 1.0', CURRENT_TIMESTAMP, 1, 0, ''), -- topic n°1 - nouveau parent 0
-(2, 1, 'titre n1', 'contenu texte numéro 1.1', CURRENT_TIMESTAMP, 2, 0, ''),
-(3, 2, 'titre n1', 'contenu texte numéro 1.2', CURRENT_TIMESTAMP, 4, 0, ''),
-(4, 3, 'titre n1', 'contenu texte numéro 1.3', CURRENT_TIMESTAMP, 6, 0, ''),
-(5, 4, 'titre n1', 'contenu texte numéro 1.4', CURRENT_TIMESTAMP, 3, 0, ''),
-(6, 0, 'titre n2', 'contenu texte numéro 2.0', CURRENT_TIMESTAMP, 6, 0, ''), -- topic n°2 - nouveau parent 0
+(2, 1, 'titre n1', 'contenu texte numéro 1.1', CURRENT_TIMESTAMP, 1, 0, ''),
+(3, 1, 'titre n1', 'contenu texte numéro 1.2', CURRENT_TIMESTAMP, 1, 0, ''),
+(4, 1, 'titre n1', 'contenu texte numéro 1.3', CURRENT_TIMESTAMP, 1, 0, ''),
+(5, 1, 'titre n1', 'contenu texte numéro 1.4', CURRENT_TIMESTAMP, 1, 0, ''),
+(6, 0, 'titre n2', 'contenu texte numéro 2.0', CURRENT_TIMESTAMP, 1, 0, ''), -- topic n°2 - nouveau parent 0
 (7, 6, 'titre n2', 'contenu texte numéro 2.1', CURRENT_TIMESTAMP, 1, 0, ''),
-(8, 7, 'titre n2', 'contenu texte numéro 2.2', CURRENT_TIMESTAMP, 3, 0, ''),
-(9, 8, 'titre n2', 'contenu texte numéro 2.3', CURRENT_TIMESTAMP, 2, 0, '');
+(8, 6, 'titre n2', 'contenu texte numéro 2.2', CURRENT_TIMESTAMP, 1, 0, ''),
+(9, 6, 'titre n2', 'contenu texte numéro 2.3', CURRENT_TIMESTAMP, 1, 0, '');
 
 SELECT * FROM users;
 SELECT * FROM topic_messages;
