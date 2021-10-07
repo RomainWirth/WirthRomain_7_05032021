@@ -82,7 +82,6 @@ export default {
       //     tmId: 6,
       //     tmTitle: "Titre 1",
       //     tmContent: "Lorem Ipsum",
-
       //     tmImage:
       //       "https://www.ecoletremplin.ch/wp-content/uploads/2020/06/social_media_conversation_graphic.jpg",
       //     tmPseudo: "userAAA",
@@ -121,7 +120,7 @@ export default {
     };
   },
   async mounted() {
-    const access_token =localStorage.getItem("access_token");
+    const access_token = localStorage.getItem("access_token");
     console.log(access_token);
     var config = {
       method: "get",

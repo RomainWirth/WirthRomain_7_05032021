@@ -4,6 +4,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 0 15px #CECECE;
     @media (max-width: 425px) {
         flex-direction: column;
     }

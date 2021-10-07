@@ -12,8 +12,15 @@
         &--information {
             width: 90%;
             align-items: flex-start;
-            border: #2c3e50 1px solid;
+            border: #CECECE 1px solid;
+            box-shadow: 0 0 15px #CECECE;
             border-radius: 15px;
+            & h2 {
+                margin: 10px;
+                padding: 10px;
+                border-top: 1px solid #CCC;
+                border-bottom: 1px solid #CCC;
+            }
             & p {
                 padding: 2%;
                 display: flex;

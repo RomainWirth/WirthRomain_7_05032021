@@ -40,11 +40,11 @@ export default {
     },
     methods: {
         showForm() {this.unhide = true;},
-        addImage(e) {this.newTmPictureUrl=e.target.files[0]},
+        addImage(e) {this.newTmPictureUrl = e.target.files[0]},
         createMessage(e) {
             e.preventDefault();
-            const access_token =localStorage.getItem("access_token");
-            const user_id =localStorage.getItem("userId");
+            const access_token = localStorage.getItem("access_token");
+            const user_id = localStorage.getItem("userId");
             const data = new FormData();
             data.append("image", this.newTmPictureUrl);
             const body = {user_id:user_id, tm_parent:0, title:this.newTmTitle, content:this.newTmContent, moderation:0}
