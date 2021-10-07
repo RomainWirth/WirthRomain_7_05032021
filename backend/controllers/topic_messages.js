@@ -33,13 +33,13 @@ exports.createMessage = (req, res) => {
 exports.showChildTopicMessages = (req, res) => {
     const parent_id = req.params.parent_id;
     console.log('hello world');
-    topicMessages.getChildMessages(parent_id,(err, results) => {
+    topicMessages.getChildMessages(parent_id, (err, results) => {
         if (err){res.send(err);}
         else{res.json(results);}
     });
 };
+
 exports.showParentTopicMessages = (req, res) => {
-  
     topicMessages.getParentMessages((err, results) => {
         if (err){res.send(err);}
         else{res.json(results);}

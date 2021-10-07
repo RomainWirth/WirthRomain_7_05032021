@@ -1,5 +1,4 @@
 // import connection
-const { getMaxListeners } = require("../config/database.js");
 const connection = require("../config/database.js");
 
 // // Get All Users
@@ -37,8 +36,9 @@ exports.getUserByEmail = async (data, result) => {
 }
 
 // Get Single User from Database table users
-exports.getUserById = (id, result) => {
-    connection.query("SELECT * FROM users WHERE u_id = ?", [id], (err, results) => {             
+exports.getUserById = (user_id, result) => {
+    connection.query("SELECT * FROM users WHERE u_id = ?", [user_id], (err, results) => {
+        console.log(results);         
         if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results[0]);}
     });
@@ -59,4 +59,12 @@ exports.deleteUserById = (id, result) => {
         if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results);}
     });   
+}
+
+// Query pour accès moderation
+exports.getUserLevel = (user_id, result) => {
+    connection.query("GET u_level FROM users WHERE u_id = ?", [user_id], (err, results) => {
+        if(err) {console.log("error: ", err); result(err, null);}
+        else {result(null, results); return results}
+    });
 }

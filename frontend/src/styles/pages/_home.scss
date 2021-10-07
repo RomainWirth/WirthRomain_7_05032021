@@ -15,6 +15,9 @@
     &__title {
         border-top: 1px solid #CCC;
         padding: 10px;
+        & h2.pointer {
+            cursor: pointer;
+        }
     }
     &__new-topic {
         display: flex;

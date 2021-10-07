@@ -23,7 +23,7 @@ exports.getParentMessages = (result) => {
 //         else {result(null, results);}
 //     });   
 // }
-exports.getChildMessages = (parent_id,result) => {
+exports.getChildMessages = (parent_id, result) => {
     connection.query("SELECT * FROM topic_messages WHERE tm_parent = ?",[parent_id], (err, results) => {             
         if(err) {console.log("error: ", err); result(err, null);} 
         else {result(null, results);}

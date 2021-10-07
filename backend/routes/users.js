@@ -9,12 +9,12 @@ const auth = require('../middleware/auth.js');
 // Get All Users
 // router.get('/users', showUsers);
 // Get Single User
-router.get('/users/:u_id', auth, users.showUserById);
+router.get('/users/:user_id', auth, users.showUserById);
 // Create New User
 // router.post('/users', users.createUsers); // doublon avec login et signup
 // Update User
-router.put('/users/:u_id', auth, users.updateUser);
+router.put('/users/:user_id', auth, users.updateUser);
 // Delete User
-router.delete('/users/:u_id', auth, users.deleteUser);
+router.delete('/users/:user_id', auth, users.deleteUser);
 
 module.exports = router;

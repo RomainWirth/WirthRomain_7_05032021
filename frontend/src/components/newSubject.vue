@@ -47,12 +47,12 @@ export default {
             const user_id = localStorage.getItem("userId");
             const data = new FormData();
             data.append("image", this.newTmPictureUrl);
-            const body = {user_id:user_id, tm_parent:0, title:this.newTmTitle, content:this.newTmContent, moderation:0}
+            const body = {user_id: user_id, tm_parent: 0, title: this.newTmTitle, content: this.newTmContent, moderation: 0}
             data.append("topic", JSON.stringify(body));
             var config = {
                 method: "post",
                 url: "http://localhost:3000/api/topic_messages",
-                headers: {Authorization: "Bearer" + access_token, "Content-Type":"multipart/form-data"},
+                headers: {Authorization: "Bearer " + access_token, "Content-Type":"multipart/form-data"},
                 data: data,
             };
             axios(config)

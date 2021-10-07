@@ -2,19 +2,13 @@
   <body>
     <header>
       <div class="image">
-        <img
-          class="image__logo"
-          src="../assets/logo.png"
-          alt="Logo Groupomania"
-        />
+        <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania"/>
       </div>
       <div class="nav">
         <div class="nav__navigation">
           <router-link to="/home">Home</router-link> |
           <router-link to="/profile">Profil Utilisateur</router-link> |
-          <router-link to="/login" v-on:click.native="Logout()"
-            >Logout</router-link
-          >
+          <router-link to="/login" v-on:click.native="Logout()">Logout</router-link>
         </div>
       </div>
     </header>
@@ -43,12 +37,14 @@
         v-bind:mainImage="mainTopic.tmImage"
         v-bind:mainTmId="mainTopic.tmId"
       -->
-      <!-- <specificTopic v-for="topic in topics" :key="topic"
+      <!-- <specificTopic 
+        
+      /> -->
+      <!-- v-for="topic in topics" :key="topic"
         v-bind:title="topic.title" 
         v-bind:content="topic.content" 
         v-bind:user="topic.user" 
-        v-bind:date="topic.date" 
-      /> -->
+        v-bind:date="topic.date"  -->
     </section>
   </body>
 </template>
@@ -58,16 +54,15 @@
 import axios from "axios";
 
 import newSubject from "@/components/newSubject.vue";
+import parentTopic from "../components/parentTopic.vue";
 // import mainForum from '@/components/mainForum.vue';
 // import specificTopic from '@/components/specificTopic.vue';
-// import parentTopic from "@/components/parentTopic.vue";
-import parentTopic from "../components/parentTopic.vue";
 
 export default {
   name: "home",
   components: {
-    parentTopic,
     newSubject,
+    parentTopic,
     // mainForum,
     // specificTopic,
     // ParentTopic,
@@ -126,25 +121,24 @@ export default {
       method: "get",
       url: "http://localhost:3000/api/topic_messages/parent",
       headers: {Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTYzMzU0MDk5OCwiZXhwIjoxNjMzNjI3Mzk4fQ.NbzG4qDNbsmjkp9Zpc5POePoYDkl9pGhxfy89Eb64yk",
+          "Bearer " + access_token,
       },
     };
-
     const response = await axios(config);
     console.log(response);
     this.serverTopic = response.data;
-      // .then(function (response) {
+      // .then((response) => {
       //   this.serverTopic = response.data;
       //   console.log(JSON.stringify(response.data));
       // })
-      // .catch(function (error) {
+      // .catch((error) => {
       //   console.log(error);
       // });
   },
   methods: {
-    getParentMessages() {
-      this.topics = []; // recuprer cette list apartir du backend
-    },
+    // getParentMessages() {
+    //   this.topics = []; // recuprer cette list apartir du backend
+    // },
     Logout() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("userId");

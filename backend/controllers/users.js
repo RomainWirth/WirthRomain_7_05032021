@@ -25,7 +25,8 @@ const user = require("../models/usersModel.js");
 
 // Get Single User 
 exports.showUserById = (req, res) => {
-    user.getUserById(req.params.u_id, (err, results) => { // u_id ou id ?
+    const user_id = req.params.user_id;
+    user.getUserById(user_id, (err, results) => { // u_id ou id ?
         if (err){
             console.log("getUserById ne fonctionne pas");
             res.send(err);
@@ -67,3 +68,4 @@ exports.deleteUser = (req, res) => {
         }
     });
 }
+

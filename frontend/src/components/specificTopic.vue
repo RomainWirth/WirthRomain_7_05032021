@@ -26,6 +26,21 @@
       <div class="topic__content--details">
         <p>abcdefghijklmnopqrstuvwxyz</p>
         <p>10/10/2010 00:00:00</p>
+        <p>modération</p>
+        <p> <!-- montrer ce paragraphe uniquement si l'utilisateur est un modérateur : v-if u_level = 0 -->
+          <select name="validation" id="validation" v-if="validateTopic">
+            <option value="0">non modéré</option>
+            <option value="1">validé</option>
+            <option value="2">Refusé</option>
+          </select>
+        </p>
+        <div> <!-- montrer ce paragraphe uniquement si l'utilisateur est un modérateur : v-if u_level = 0 -->         
+          <button type="submit" v-on:click="showModeration()">Modération</button>
+          <p v-if="validateTopic">
+            <button type="submit" v-on:click="updateModeraton()">Valider</button>
+            <button type="submit" v-on:click="validateTopic = !validateTopic">Annuler</button>
+          </p>
+        </div>
         <button type="submit" v-on:click="showModifyAnswer()" v-if="!showAnswer">Modifier</button>
       </div>
       <div class="topic__content--modify" v-if="showAnswer">
@@ -73,6 +88,7 @@ export default {
       showMain: false,
       showAnswer: false,
       answerBox: false,
+      validateTopic: false,
       answerContent: {
         tmId: "",
         tmIdParent: "",        
@@ -86,15 +102,11 @@ export default {
     }
   },
   methods: {
-    showModifyMain(){
-      this.showMain=true;
-    },
-    showModifyAnswer(){
-      this.showAnswer=true;
-    },
-    showAnswerBox(){
-      this.answerBox=true
-    },
+    showModifyMain(){this.showMain=true;},
+    showModifyAnswer(){this.showAnswer=true;},
+    showAnswerBox(){this.answerBox=true},
+    showModeration(){this.validateTopic=true},
+
     addImadge(){
 
     },
