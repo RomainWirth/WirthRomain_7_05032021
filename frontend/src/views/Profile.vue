@@ -28,10 +28,10 @@
               <p class="champs-info__line--content">email :</p>
               <p class="champs-info__line--content">Untel@domaine.fr{{email}}</p>
             </div>
-            <div class="champs-info__line">
+            <!-- <div class="champs-info__line">
               <p class="champs-info__line--content">Mot de passe :</p>
               <p class="champs-info__line--content">crypté{{password}}</p>
-            </div>
+            </div> -->
           </div>
           <div class="champs-info" v-if="unhideFields">
             <p class="champs-info__line">
@@ -42,10 +42,10 @@
               <label for="email">Email : </label>
               <input type="text" name="email" id="email" :placeholder="email">
             </p>
-            <p class="champs-info__line">
+            <!-- <p class="champs-info__line">
               <label for="password">Mot de passe : </label>
-              <input type="text" name="password" id="password" :placeholder="password"> <!-- mot de passe crypté -->
-            </p>
+              <input type="text" name="password" id="password" :placeholder="password"> 
+            </p> -->
           </div>
           <p>niveau d'autorisation : utilisateur {{level}}</p> <!-- modifié si admin (0) ou user (1) -->
           <p>date d'enreristrement : 01/01/2001 00:00:00{{dateRegistered}}</p> <!-- affiche la date d'enregistrement -->
@@ -72,7 +72,7 @@ export default {
     userId: Number,
     pseudo: String,
     email: String,
-    password: String, // montrer des astérisques
+    // password: String, // montrer des astérisques
     level: Number, // montrer soit "utilisateur" (= 1) soit "modérateur" (= 0)
     dateRegistered: String
   },

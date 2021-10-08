@@ -84,8 +84,10 @@ export default {
                     const token =  response.data.token;
                     // const token = (this.token == response.data.token);
                     const userId = response.data.userId;
+                    const level = response.data.level;
                     localStorage.setItem("access_token", token),
                     localStorage.setItem("userId", userId),
+                    localStorage.setItem("level", level),
                     // this.$emit("identified", true),
                     this.$router.go("/home");
                 })

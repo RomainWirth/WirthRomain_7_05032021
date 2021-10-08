@@ -13,7 +13,7 @@ const topicMessages = require("../models/topic_messageModel.js");
 exports.createMessage = (req, res) => {
     console.log(req);
     const data = JSON.parse(req.body.topic); // JSON.parse(req.body.message)
-    data['picture_url']=req.file.path;
+    data['picture_url']= req.hasOwnProperty('file') ? req.file.path : null;
     topicMessages.insertTopicMessages(data, (err, results) => {
         if (err){res.send(err);} 
         else {res.json(results);}
@@ -82,6 +82,13 @@ exports.deleteMessage = (req, res) => {
         else{res.json(results);}
     });
 };
+// exports.deleteMessage = (req, res) => {
+//     const id = req.params.tm_id;
+//     topicMessages.deleteMessageById(id, (err, results) => {
+//         if (err){res.send(err);}
+//         else{res.json(results);}
+//     });
+// };
 
 // Voir un seul message (parent 0) + affichage de ses enfants (réponses)
 exports.showMessageByTitle = (req, res) => {

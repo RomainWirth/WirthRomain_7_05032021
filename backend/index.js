@@ -22,13 +22,14 @@ app.use((req, res, next) => {
     next();
 });
 
+const port = 3000;
 app.use(cookieSession({
     name: "session",
     secret: "SeCuRe",
     cookie: {
         secure: true,
         httpOnly: true,
-        domain: "http://localhost:3000/",
+        domain: "http://localhost:" + port + "/",
     },
 }));
 
@@ -42,6 +43,6 @@ app.use('/api', loginRoutes);
 app.use('/api', usersRoutes);
 app.use('/api', topicMessageRoutes); 
 
-app.listen(3000, () => console.log('Server running at http://localhost:3000'));
+app.listen(port, () => console.log('Server running at http://localhost:' + port));
 
 module.exports = app;

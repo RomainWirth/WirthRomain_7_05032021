@@ -1,73 +1,50 @@
 <template>
-  <div class="topic">
-    <div class="topic__title">
-      <h3 class="topic__title--title">{{title}}</h3>
-      <p class="topic__title--content">
-        {{content}}
-      </p>
-      <div class="topic__title--details">
-        <p>{{user}}</p>
-        <p>{{date}}</p>
-        <p>modération</p>
+  <div class="forum">
+<!-- au clic sur titre du topic : affichage de la div -->        
+    <div class="forum__topics"> 
+      <p class="forum__topics--content">Answer</p>
+      <textarea name="réponse" id="" cols="120" rows="5" placeholder="modifiez votre réponse ici" maxlength="600" v-if="showAnswer"></textarea>
+      <div class="forum__topics--picture">
+        <img :src="'http://localhost:3000/'" alt="conversation" >
       </div>
-      <button type="submit" v-on:click="showModifyMain()" v-if="!showMain">Modifier</button>
-      <div class="topic__title--modify" v-if="showMain">
-        <textarea name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600" v-model="answerContent.tmContent" v-if="showMain"></textarea>            
-        <p>
-          <button type="submit" v-on:click="updateMain()">Valider</button>
-          <button type="submit" v-on:click="showMain = !showMain">Annuler</button>
-        </p>           
+      <div class="forum__topics--upload">
+        <input class="forum__topics--upload" type="file" @click="updateImage()" v-if="showAnswer">
       </div>
-    </div>
-    <div class="topic__content"> <!-- boucle v-for -->
-      <p class="topic__content--answers">
-        Answer
-      </p>
-      <div class="topic__content--details">
+      <div class="forum__topics--details">
         <p>abcdefghijklmnopqrstuvwxyz</p>
         <p>10/10/2010 00:00:00</p>
-        <p>modération</p>
-        <p> <!-- montrer ce paragraphe uniquement si l'utilisateur est un modérateur : v-if u_level = 0 -->
-          <select name="validation" id="validation" v-if="validateTopic">
-            <option value="0">non modéré</option>
-            <option value="1">validé</option>
-            <option value="2">Refusé</option>
-          </select>
-        </p>
-        <div> <!-- montrer ce paragraphe uniquement si l'utilisateur est un modérateur : v-if u_level = 0 -->         
-          <button type="submit" v-on:click="showModeration()">Modération</button>
-          <p v-if="validateTopic">
-            <button type="submit" v-on:click="updateModeraton()">Valider</button>
-            <button type="submit" v-on:click="validateTopic = !validateTopic">Annuler</button>
-          </p>
-        </div>
-        <button type="submit" v-on:click="showModifyAnswer()" v-if="!showAnswer">Modifier</button>
+        <p>Modération</p>
       </div>
-      <div class="topic__content--modify" v-if="showAnswer">
-        <textarea name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600" ></textarea>
-        <p>
-          <button type="submit" v-on:click="updateAnswer()">Valider</button> <!-- fonction v-on:click="createAnswer()" -->
-          <button type="submit" v-on:click="showAnswer = !showAnswer">Annuler</button>
-        </p>           
+      <div v-if="!showAnswer"> <!-- afficher si auteur du message : comparer avec user_id -->
+        <button type="submit" v-on:click="showModifyAnswer()">Modifier</button>
+        <button type="submit" v-on:click="deleteAnswer()">Supprimer</button>
+      </div>
+      <div v-if="showAnswer">
+        <button type="submit" v-on:click="updateAnswer()">Valider</button>
+        <button type="submit" v-on:click="showAnswer = !showAnswer">Annuler</button>
       </div>
     </div>
-    <div class="topic__answer-area">
+<!-- au clic sur titre du topic : affichage de la div -->
+    <div class="forum__topics"> 
       <button type="submit" v-on:click="showAnswerBox()" v-if="!answerBox">répondre</button>
       <form action="" v-if="answerBox">
-        <textarea class="topic__anwser-area--field" name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600"></textarea>
-        <input type="hidden" value="" name="tm_parent"> <!-- value = id du poste parent -->
-        <input type="hidden" value="" name="tm_titre"> <!-- value = même titre que parent -->
-        <input type="hidden" value="" name="tm_user_id"> <!-- value = id de l'usager identifié -->
+        <textarea name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600"></textarea>
+        <input type="hidden" value="" name="tm_parent"> 
+        <input type="hidden" value="" name="tm_titre"> 
+        <input type="hidden" value="" name="tm_user_id">
       </form>
       <div class="topic__anwser-area--button" v-if="answerBox">
-        <p class="media">
+        <div class="media">
           <input type="file" @click="addImage()">
-        </p>
+        </div>
         <div>
           <button type="submit"  v-on:click="createAnswer()">Valider</button>
           <button type="submit" v-on:click="answerBox = !answerBox">Annuler</button>
         </div>
       </div>
+    </div>
+    <div class="forum__topics">
+      <button type="submit" v-on:click="answers = !answers">Fermer</button>
     </div>
   </div>
 </template>

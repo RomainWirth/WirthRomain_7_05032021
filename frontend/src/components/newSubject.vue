@@ -41,6 +41,9 @@ export default {
     methods: {
         showForm() {this.unhide = true;},
         addImage(e) {this.newTmPictureUrl = e.target.files[0]},
+        //FIXME:
+        // * fix the this.$router.push('/home') problem  
+        
         createMessage(e) {
             e.preventDefault();
             const access_token = localStorage.getItem("access_token");
@@ -58,8 +61,8 @@ export default {
             axios(config)
             .then( (response) => {
                 console.log(JSON.stringify(response.data));
-                this.$router.push('/')
-                this.$forceUpdate();
+                this.$router.push('/home');
+                this.forceUpdate();
             })
             .catch((error) => {console.log(error);});
         },

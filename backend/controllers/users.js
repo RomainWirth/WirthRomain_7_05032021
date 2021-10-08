@@ -14,15 +14,6 @@ const user = require("../models/usersModel.js");
 //     });
 // }
 
-// Create New User
-// exports.createUsers = (req, res) => {
-//     const data = req.body;
-//     insertUsers(data, (err, results) => {
-//         if (err){res.send(err);}
-//         else{res.json(results);}
-//     });
-// }
-
 // Get Single User 
 exports.showUserById = (req, res) => {
     const user_id = req.params.user_id;
@@ -41,8 +32,8 @@ exports.showUserById = (req, res) => {
 // Update User
 exports.updateUser = (req, res) => {
     const data = req.body;
-    const id = req.params.u_id;
-    user.updateUserById(data, id, (err, results) => {
+    const user_id = req.params.user_id;
+    user.updateUserById(data, user_id, (err, results) => {
         if (err){
             console.log("updateUserById ne fonctionne pas");
             res.send(err);

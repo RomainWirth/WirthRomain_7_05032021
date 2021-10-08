@@ -6,6 +6,7 @@
       </div>
       <div class="nav">
         <div class="nav__navigation">
+          <span v-if="level===0" style="color:green;font-weight: bold;">Admin</span> |
           <router-link to="/home">Home</router-link> |
           <router-link to="/profile">Profil Utilisateur</router-link> |
           <router-link to="/login" v-on:click.native="Logout()">Logout</router-link>
@@ -15,7 +16,7 @@
     <section class="home">
       <h1>Bienvenue sur le forum de discussion de Groupomania</h1>
       <newSubject />
-      <parent-topic
+      <parentTopic
         v-for="mainTopic in serverTopic"
         :key="mainTopic.tm_id"
         v-bind:Id="mainTopic.tm_id"
@@ -25,6 +26,7 @@
         v-bind:Pseudo="mainTopic.u_pseudo"
         v-bind:date="mainTopic.tm_posting_date"
         v-bind:Moderation="mainTopic.tm_moderation"
+        v-bind:userId="mainTopic.tm_user_id"
       />
       <!-- <mainForum v-for="mainTopic in mainTopics" :key="mainTopic"
         v-bind:mainTitle="mainTopic.tmTitle"
@@ -64,57 +66,16 @@ export default {
     newSubject,
     parentTopic,
     // mainForum,
-    // specificTopic,
-    // ParentTopic,
+    // specificTopic
   },
   data() {
     return {
-      token: localStorage.getItem("access_token"),
-      user_id: localStorage.getItem("userId"),
+      level: Number,
       serverTopic: null,
-      // mainTopics: [
-      //   {
-      //     tmId: 6,
-      //     tmTitle: "Titre 1",
-      //     tmContent: "Lorem Ipsum",
-      //     tmImage:
-      //       "https://www.ecoletremplin.ch/wp-content/uploads/2020/06/social_media_conversation_graphic.jpg",
-      //     tmPseudo: "userAAA",
-      //     tmDate: "06/10/2021",
-      //     tmModeration: 0,
-      //   },
-      //   {
-      //     tmId: 1,
-      //     tmTitle: "Titre 2",
-      //     tmContent: "Lorem Ipsum",
-      //     tmImage:
-      //       "https://www.ecoletremplin.ch/wp-content/uploads/2020/06/social_media_conversation_graphic.jpg",
-      //     tmPseudo: "userBBB",
-      //     tmDate: "06/10/2021",
-      //     tmModeration: 1,
-      //   },
-      // ],
-      // topics: [
-      //   {
-      //     title: "title 1",
-      //     content:
-      //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      //     user: "me",
-      //     date: "05/10/2021",
-      //     moderation: "non modéré",
-      //   },
-      //   {
-      //     title: "title 2",
-      //     content:
-      //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      //     user: "me",
-      //     date: "05/10/2021",
-      //     moderation: "non modéré",
-      //   },
-      // ],
     };
   },
   async mounted() {
+    this.level = Number(localStorage.getItem("level"));
     const access_token = localStorage.getItem("access_token");
     console.log(access_token);
     var config = {
