@@ -12,8 +12,8 @@ const auth = require('../middleware/auth.js');
 // Get Single User
 router.get('/users/:user_id', auth, users.showUserById);
 // Update User
-router.put('/users/:user_id', auth, users.updateUser);
+router.put('/users', auth, users.updateUser);
 // Delete User
-router.delete('/users/:user_id', auth, users.deleteUser);
+router.delete('/users/:u_id', auth, users.deleteUser);
 
 module.exports = router;

@@ -14,16 +14,16 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Signup',
-    component: Signup,
+    name: 'Login',
+    component: Login,
     meta : {
       requiresVisitor: true,
     }
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login,
+    path: '/signup',
+    name: 'Signup',
+    component: Signup,
     meta : {
       requiresVisitor: true,
     }
@@ -57,7 +57,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((routes) => routes.meta.requiresAuth)) {
     if (!Data.data.token) {
       next({ 
-        name: "Signup" || "Login",
+        name: "Login" || "Signup",
       });
     } else {
       next();
@@ -76,4 +76,3 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
-

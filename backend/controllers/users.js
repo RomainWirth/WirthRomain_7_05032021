@@ -5,14 +5,9 @@
 // const updateUserById = require("../models/usersModel.js");
 // const deleteUserById = require("../models/usersModel.js");
 const user = require("../models/usersModel.js");
+const message = require("../models/topic_messageModel");
  
-// // Get All Users
-// export const showUsers = (req, res) => {
-//     getUsers((err, results) => {
-//         if (err){res.send(err);}
-//         else{res.json(results);}
-//     });
-// }
+
 
 // Get Single User 
 exports.showUserById = (req, res) => {
@@ -32,8 +27,7 @@ exports.showUserById = (req, res) => {
 // Update User
 exports.updateUser = (req, res) => {
     const data = req.body;
-    const user_id = req.params.user_id;
-    user.updateUserById(data, user_id, (err, results) => {
+    user.updateUserById(data, (err, results) => {
         if (err){
             console.log("updateUserById ne fonctionne pas");
             res.send(err);
@@ -48,15 +42,23 @@ exports.updateUser = (req, res) => {
 // Delete User
 exports.deleteUser = (req, res) => {
     const id = req.params.u_id;
-    user.deleteUserById(id, (err, results) => {
+    message.deleteTopicByUserId(id, (err, results) => {
         if (err){
-            console.log("deleteUserById ne fonctionne pas");
             res.send(err);
         }
         else{
-            console.log("deleteUserById OK");
-            res.json(results);
+            user.deleteUserById(id, (err, results) => {
+                if (err){
+                    console.log("deleteUserById ne fonctionne pas");
+                    res.send(err);
+                }
+                else{
+                    console.log("deleteUserById OK");
+                    res.json(results);
+                }
+            });
         }
-    });
+    })
+  
 }
 

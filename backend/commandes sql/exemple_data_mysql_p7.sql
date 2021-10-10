@@ -10,20 +10,20 @@ VALUES
 (7, 'pseudo_Admin', 'email_Admin@exemple.com', 'MDP_AAA', 0, CURRENT_TIMESTAMP);
 
 -- update le niveau d'autorisation
-UPDATE users SET u_level = 0 WHERE u_id = 7; -- ou u_email = '...'
+UPDATE users SET u_level = 0 WHERE u_id = 1; -- ou u_email = '...'
 
 -- tm_id, tm_parent, tm_titre, tm_content, tm_posting_date, tm_user_id, tm_moderation, tm_picture_url
 INSERT INTO topic_messages (tm_id, tm_parent, tm_title, tm_content, tm_posting_date, tm_user_id, tm_moderation, tm_picture_url)
 VALUES
-(1, 0, 'titre n1', 'contenu texte numéro 1.0', CURRENT_TIMESTAMP, 1, 0, ''), -- topic n°1 - nouveau parent 0
-(2, 1, 'titre n1', 'contenu texte numéro 1.1', CURRENT_TIMESTAMP, 1, 0, ''),
-(3, 1, 'titre n1', 'contenu texte numéro 1.2', CURRENT_TIMESTAMP, 1, 0, ''),
-(4, 1, 'titre n1', 'contenu texte numéro 1.3', CURRENT_TIMESTAMP, 1, 0, ''),
-(5, 1, 'titre n1', 'contenu texte numéro 1.4', CURRENT_TIMESTAMP, 1, 0, ''),
-(6, 0, 'titre n2', 'contenu texte numéro 2.0', CURRENT_TIMESTAMP, 1, 0, ''), -- topic n°2 - nouveau parent 0
-(7, 6, 'titre n2', 'contenu texte numéro 2.1', CURRENT_TIMESTAMP, 1, 0, ''),
-(8, 6, 'titre n2', 'contenu texte numéro 2.2', CURRENT_TIMESTAMP, 1, 0, ''),
-(9, 6, 'titre n2', 'contenu texte numéro 2.3', CURRENT_TIMESTAMP, 1, 0, '');
+(1, 0, 'titre n1', 'contenu texte numéro 1.0', CURRENT_TIMESTAMP, 1, 0, null), -- topic n°1 - nouveau parent 0
+(2, 1, 'titre n1', 'contenu texte numéro 1.1', CURRENT_TIMESTAMP, 1, 0, null),
+(3, 1, 'titre n1', 'contenu texte numéro 1.2', CURRENT_TIMESTAMP, 1, 0, null),
+(4, 1, 'titre n1', 'contenu texte numéro 1.3', CURRENT_TIMESTAMP, 1, 0, null),
+(5, 1, 'titre n1', 'contenu texte numéro 1.4', CURRENT_TIMESTAMP, 1, 0, null),
+(6, 0, 'titre n2', 'contenu texte numéro 2.0', CURRENT_TIMESTAMP, 1, 0, null), -- topic n°2 - nouveau parent 0
+(7, 6, 'titre n2', 'contenu texte numéro 2.1', CURRENT_TIMESTAMP, 1, 0, null),
+(8, 6, 'titre n2', 'contenu texte numéro 2.2', CURRENT_TIMESTAMP, 1, 0, null),
+(9, 6, 'titre n2', 'contenu texte numéro 2.3', CURRENT_TIMESTAMP, 1, 0, null);
 
 SELECT * FROM users;
 SELECT * FROM topic_messages;

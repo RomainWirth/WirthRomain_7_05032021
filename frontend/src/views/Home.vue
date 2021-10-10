@@ -6,10 +6,10 @@
       </div>
       <div class="nav">
         <div class="nav__navigation">
-          <span v-if="level===0" style="color:green;font-weight: bold;">Admin</span> |
+          <span v-if="level === 0" style="color: green; font-weight: bold">Admin</span> | 
           <router-link to="/home">Home</router-link> |
           <router-link to="/profile">Profil Utilisateur</router-link> |
-          <router-link to="/login" v-on:click.native="Logout()">Logout</router-link>
+          <router-link to="/login" v-on:click:native="Logout">Logout</router-link>
         </div>
       </div>
     </header>
@@ -28,25 +28,6 @@
         v-bind:Moderation="mainTopic.tm_moderation"
         v-bind:userId="mainTopic.tm_user_id"
       />
-      <!-- <mainForum v-for="mainTopic in mainTopics" :key="mainTopic"
-        v-bind:mainTitle="mainTopic.tmTitle"
-        v-bind:mainContent="mainTopic.tmContent"
-        v-bind:mainPseudo="mainTopic.tmPseudo"
-        v-bind:mainDate="mainTopic.tmDate"
-        v-bind:mainModeration="mainTopic.tmModeration"
-      /> -->
-      <!-- 
-        v-bind:mainImage="mainTopic.tmImage"
-        v-bind:mainTmId="mainTopic.tmId"
-      -->
-      <!-- <specificTopic 
-        
-      /> -->
-      <!-- v-for="topic in topics" :key="topic"
-        v-bind:title="topic.title" 
-        v-bind:content="topic.content" 
-        v-bind:user="topic.user" 
-        v-bind:date="topic.date"  -->
     </section>
   </body>
 </template>
@@ -57,8 +38,6 @@ import axios from "axios";
 
 import newSubject from "@/components/newSubject.vue";
 import parentTopic from "../components/parentTopic.vue";
-// import mainForum from '@/components/mainForum.vue';
-// import specificTopic from '@/components/specificTopic.vue';
 
 export default {
   name: "home",
@@ -81,25 +60,24 @@ export default {
     var config = {
       method: "get",
       url: "http://localhost:3000/api/topic_messages/parent",
-      headers: {Authorization:
-          "Bearer " + access_token,
-      },
+      headers: { Authorization: "Bearer " + access_token },
     };
     const response = await axios(config);
     console.log(response);
-    this.serverTopic = response.data;
-      // .then((response) => {
-      //   this.serverTopic = response.data;
-      //   console.log(JSON.stringify(response.data));
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
+    this.serverTopic = response.data.sort((a, b) => {
+      if (new Date(a.tm_posting_date) > new Date(b.tm_posting_date)) return -1;
+      if (new Date(a.tm_posting_date) < new Date(b.tm_posting_date)) return 1;
+      return 0;
+    });
+    // .then((response) => {
+    //   this.serverTopic = response.data;
+    //   console.log(JSON.stringify(response.data));
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
   },
   methods: {
-    // getParentMessages() {
-    //   this.topics = []; // recuprer cette list apartir du backend
-    // },
     Logout() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("userId");

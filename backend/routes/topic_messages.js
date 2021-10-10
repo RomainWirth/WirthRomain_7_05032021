@@ -14,7 +14,7 @@ const topic_messagesCtrl = require("../controllers/topic_messages.js");
 router.post('/topic_messages', auth, multer, topic_messagesCtrl.createMessage)
 
 // Get all topics
-router.get('/topic_messages', auth, topic_messagesCtrl.showTopicMessages);
+// router.get('/topic_messages', auth, topic_messagesCtrl.showTopicMessages);
 
 // Get all topics (parent 0)
 router.get('/topic_messages/parent', auth, topic_messagesCtrl.showParentTopicMessages);
@@ -23,7 +23,7 @@ router.get('/topic_messages/parent', auth, topic_messagesCtrl.showParentTopicMes
 router.get('/topic_messages/child/:parent_id', auth, topic_messagesCtrl.showChildTopicMessages);
 
 // Update Topic_message to Database
-router.put('/topic_messages', auth, topic_messagesCtrl.updateMessage);
+router.put('/topic_messages', auth, multer, topic_messagesCtrl.updateMessage);
 
 // Update Moderation
 router.put('/topic_messages/moderation', auth, topic_messagesCtrl.updateModeration);
@@ -32,9 +32,9 @@ router.put('/topic_messages/moderation', auth, topic_messagesCtrl.updateModerati
 router.delete('/topic_messages/:tm_id', auth, topic_messagesCtrl.deleteMessage);
 
 // Get message by title
-router.get('/topic_messages', auth, topic_messagesCtrl.showMessageByTitle);
+// router.get('/topic_messages', auth, topic_messagesCtrl.showMessageByTitle);
 // Delete Message by title (all conversation : parent 0 +  children)
-router.delete('/topic_messages', auth, topic_messagesCtrl.deleteConversation);
+// router.delete('/topic_messages', auth, topic_messagesCtrl.deleteConversation);
 
 // export router
 module.exports = router;

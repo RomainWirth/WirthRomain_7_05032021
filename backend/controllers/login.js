@@ -19,11 +19,10 @@ exports.signup = (req, res) => { // async = (req, res) => {
                     u_email: req.body.front_email, // adresse email du corps de la requête
                     u_password: hash // le mot de passe est stocké crypté
                     // date et id générés automatiquement et level default = 1
-                },(err,results)=>{
+                },(err, results) => {
                     if(err) res.status(500).json({err})
                     else res.status(201).json('Utilisateur créé');
-                });
-               
+                });               
             })
             .catch(error => res.status(500).json({ error }));
         }

@@ -41,8 +41,6 @@ export default {
     methods: {
         showForm() {this.unhide = true;},
         addImage(e) {this.newTmPictureUrl = e.target.files[0]},
-        //FIXME:
-        // * fix the this.$router.push('/home') problem  
         
         createMessage(e) {
             e.preventDefault();
@@ -61,8 +59,7 @@ export default {
             axios(config)
             .then( (response) => {
                 console.log(JSON.stringify(response.data));
-                this.$router.push('/home');
-                this.forceUpdate();
+                this.$router.go();
             })
             .catch((error) => {console.log(error);});
         },

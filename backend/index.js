@@ -36,8 +36,6 @@ app.use(cookieSession({
 app.use(bodyParser.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.get('/', function(req,res) {res.send('Hello World');});
-
 // use routers
 app.use('/api', loginRoutes);
 app.use('/api', usersRoutes);

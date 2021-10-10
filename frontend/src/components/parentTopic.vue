@@ -1,78 +1,46 @@
 <template>
   <div class="forum">
     <div class="forum__topics">
-      <input type="hidden" value="" />
-      <!-- valeur de l'id du message -->
-      <h2 class="forum__topics--title" v-if="!show" v-on:click="showAnswers">
-        {{ Title }}
-      </h2>
+      <h2 class="forum__topics--title" v-if="!show" v-on:click="showAnswers">{{ Title }}</h2>
       <!-- cliquable : donne accès au topic en question = v-bind:href="topic.vue" + {{getTopic.getTmTitle}} + parent 0 -->
-      <input
-        name="modifyTmTitle"
-        cols="120"
-        rows="1"
-        :placeholder="Title"
-        v-if="show"
-      />
+      <input name="modifyTmTitle" cols="120" rows="1" :placeholder="Title" v-model="newTitle" v-if="show"/>
       <!-- value = même titre que parent v-model="tmTitle" -->
       <p class="forum__topics--content" v-if="!show">{{ Content }}</p>
-      <textarea
-        name="modifyTmContent"
-        id=""
-        cols="120"
-        rows="5"
-        :placeholder="Content"
-        maxlength="600"
-        v-if="show"
-      ></textarea>
+      <textarea name="modifyTmContent" id="" cols="120" rows="5" :placeholder="Content" v-model="newContent" maxlength="600" v-if="show"></textarea>
       <!-- afficher le contenu du message à modifier -->
       <div class="forum__topics--picture" v-if="Image && Image !== ''">
-        <img
-          class="myImg"
-          :src="'http://localhost:3000/' + Image"
-          alt="conversation"
-        />
+        <img class="myImg" :src="'http://localhost:3000/' + Image" alt="conversation"/>
       </div>
       <div class="forum__topics--upload">
-        <input
-          class="forum__topics--upload"
-          type="file"
-          @change="updateImage"
-          v-if="show"
-        />
+        <input class="forum__topics--upload" type="file" @change="updateImage" v-if="show"/>
       </div>
       <div class="forum__topics--details">
         <p>{{ Pseudo }}</p>
-        <p>{{ date }}</p>
-        <p>{{ Moderation }}</p>
-        <!-- manipuler la donnée pour afficher : non modéré | accepté | refusé -->
+        <p>{{ new Date(date).toString().split("+")[0] }}</p> <!-- travail sur l'affichage de la date -->
+        <!-- <p>{{  }}</p> -->
+        <span v-html="getmoderation(Moderation)"></span>
         <div>
           <!-- afficher si l'utilisateur est un modérateur : v-if u_level = 0 -->
-          <select name="validation" id="validation" v-if="validateTopic">
-            <option value="0">non modéré</option>
-            <option value="1">validé</option>
+          <select name="validation" id="validation" v-if="validateTopic" v-model="moderation">
+            <option value="0">Non modéré</option>
+            <option value="1">Validé</option>
             <option value="2">Refusé</option>
           </select>
         </div>
       </div>
       <div>
-        <button type="submit" v-on:click="showModeration()" v-if="level === 0">
-          Modération
-        </button>
+        <button type="submit" v-on:click="showModeration()" v-if="level === 0">Modération</button>
         <div v-if="validateTopic">
-          <button type="submit" v-on:click="updateModeraton()">Valider</button>
-          <button type="submit" v-on:click="validateTopic = !validateTopic">
-            Annuler
-          </button>
+          <button type="submit" v-on:click="updateModeraton">Valider</button>
+          <button type="submit" v-on:click="validateTopic = !validateTopic">Annuler</button>
         </div>
       </div>
       <div v-if="connected_id === userId && !show">
-        <!-- afficher si auteur du message : comparer avec user_id -->
         <button type="submit" v-on:click="showModify">Modifier</button>
         <button type="submit" @click="deleteMessage">Supprimer</button>
       </div>
       <div v-if="show">
-        <button type="submit" v-on:click="updateMessage()">Valider</button>
+        <button type="submit" v-on:click="updateTopic">Valider</button>
         <button type="submit" v-on:click="show = !show">Annuler</button>
       </div>
     </div>
@@ -82,32 +50,16 @@
         répondre
       </button>
       <form action="" v-if="answerBox">
-        <input
-          name="tmTitle"
-          cols="120"
-          rows="1"
-          placeholder="titre"
-          v-model="response_title"
-        />
-        <textarea
-          name="réponse"
-          id=""
-          cols="120"
-          rows="5"
-          placeholder="répondez ici"
-          maxlength="600"
-          v-model="response_content"
-        ></textarea>
+        <input name="tmTitle" cols="120" rows="1" placeholder="titre" v-model="response_title"/>
+        <textarea name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600" v-model="response_content"></textarea>
       </form>
       <div class="topic__anwser-area--button" v-if="answerBox">
         <div class="media">
-          <input type="file" @click="addImage" />
+          <input type="file" @change="addImage" />
         </div>
         <div>
           <button type="submit" @click="createAnswer">Valider</button>
-          <button type="submit" v-on:click="answerBox = !answerBox">
-            Annuler
-          </button>
+          <button type="submit" v-on:click="answerBox = !answerBox">Annuler</button>
         </div>
       </div>
     </div>
@@ -126,8 +78,6 @@
         v-bind:userId="mainTopic.tm_user_id"
       />
     </div>
-    <!-- au clic sur titre du topic : affichage de la div -->
-
     <div class="forum__topics" v-if="answers">
       <button type="submit" v-on:click="answers = !answers">Fermer</button>
     </div>
@@ -157,11 +107,17 @@ export default {
   data() {
     return {
       connected_id: Number,
-      //response state
+
+      // update state
+      newTitle: null,
+      newContent: null,
+      newPic: null,
+      moderation: 0,
+      // response state
       response_title: null,
       response_content: null,
       response_pic: null,
-      //component state
+      // component state
       serverTopic: null,
       level: Number,
       answers: false,
@@ -183,51 +139,21 @@ export default {
     };
     const response = await axios(config);
     console.log(response);
-    this.serverTopic = response.data;
+    this.serverTopic = response.data.sort((a, b) => {
+      if (new Date(a.tm_posting_date) > new Date(b.tm_posting_date)) return -1;
+      if (new Date(a.tm_posting_date) < new Date(b.tm_posting_date)) return 1;
+      return 0;
+    });
   },
   methods: {
     // hide/unhide elements
-    showAnswers() {
-      this.answers = !this.answers;
-    },
-    showModify() {
-      this.show = true;
-    },
-    showModifyAnswer() {
-      this.showAnswer = true;
-    },
-    showAnswerBox() {
-      this.answerBox = !this.answerBox;
-    },
-    showModeration() {
-      this.validateTopic = true;
-    },
+    showAnswers() {this.answers = !this.answers;},
+    showModify() {this.show = true;},
+    showModifyAnswer() {this.showAnswer = true;},
+    showAnswerBox() {this.answerBox = !this.answerBox;},
+    showModeration() {this.validateTopic = true;},
 
-    updateImage() {},
-    // delete message
-    deleteMessage() {
-         const access_token = localStorage.getItem("access_token");
-      var config = {
-        method: "delete",
-        url: "http://localhost:3000/api/topic_messages/"+this.Id,
-        headers: {
-          Authorization:
-            "Bearer "+access_token,
-        },
-      };
-
-      axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    updateModeration() {},
-    addImage(e) {
-      this.response_pic = e.target.files[0];
-    },
+    // création de réponse
     createAnswer(e) {
       e.preventDefault();
       const access_token = localStorage.getItem("access_token");
@@ -251,16 +177,108 @@ export default {
         },
         data: data_2,
       };
-
       axios(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
-          this.$router.push("/home");
-          this.forceUpdate();
+          this.$router.go();
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    addImage(e) {
+      this.response_pic = e.target.files[0];
+    },
+    // update message
+    updateTopic(e) {
+      e.preventDefault();
+      const access_token = localStorage.getItem("access_token");
+      var data = new FormData();
+      data.append("image", this.newPic);
+      data.append(
+        "topic",
+        JSON.stringify({
+          tm_id: this.Id,
+          user_id: this.userId,
+          title: this.newTitle ? this.newTitle : this.Title,
+          content: this.newContent ? this.newContent : this.Content, // si newContent == null return Content else return newContent
+        })
+      );
+      var config = {
+        method: "put",
+        url: "http://localhost:3000/api/topic_messages",
+        headers: {
+          Authorization: "Bearer " + access_token,
+          "Content-Type": "multipart/form-data",
+        },
+        data: data,
+      };
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          this.$router.go();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    updateImage(e) {
+      this.newPic = e.target.files[0];
+    },
+    // delete message
+    deleteMessage() {
+      const access_token = localStorage.getItem("access_token");
+      var config = {
+        method: "delete",
+        url: "http://localhost:3000/api/topic_messages/" + this.Id,
+        headers: {
+          Authorization: "Bearer " + access_token,
+        },
+      };
+      axios(config)
+        .then( (response) =>{
+          console.log(JSON.stringify(response.data));
+          this.$router.go();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    
+    getmoderation(moderation) {
+      switch (moderation) {
+        case 1:
+          return '<p style="color:green;">Validé</p>';
+        case 0:
+          return '<p style="color:orange;">Non modéré</p>';
+        case 2:
+          return '<p style="color:red;">Refusé</p>';
+        default:
+          return "not supported";
+      }
+    },
+    // modifier la modération
+    updateModeraton(e) {
+      e.preventDefault();
+      const access_token = localStorage.getItem("access_token");
+      var data = JSON.stringify({
+        tm_id: this.Id,
+        tm_moderation: Number(this.moderation),
+      });
+      var config = {
+        method: "put",
+        url: "http://localhost:3000/api/topic_messages/moderation",
+        headers: {Authorization: "Bearer "+access_token, "Content-Type": "application/json",},
+        data: data,
+      };
+      axios(config)
+      .then((response)=> {
+        console.log(JSON.stringify(response.data));
+        this.$router.go();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     },
   },
 };

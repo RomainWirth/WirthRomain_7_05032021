@@ -5,7 +5,7 @@
                 <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania">
             </div>
             <div class="nav">
-                <div class="nav__navigation">
+                <div class="nav__navigation"> 
                     <router-link to="/">Signup</router-link> |
                     <router-link to="/login">Login</router-link>
                 </div>
