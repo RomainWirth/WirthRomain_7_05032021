@@ -5,8 +5,6 @@ const connection = require("../config/database.js");
 const db_queries = require("../util/db_queries.js");
 // const { get_message_by_id, get_picture_url_by_id, delete_child_images_by_parent_id } = require('../util/db_queries.js');
 
-
-
 // Insert Topic_message to Database = création d'un message
 exports.insertTopicMessages = (data, result) => {
     connection.query("INSERT INTO topic_messages (tm_parent, tm_user_id, tm_title, tm_content, tm_picture_url, tm_moderation) VALUES (?, ?, ?, ?, ?, ?)", [data.tm_parent, data.user_id, data.title, data.content, data.picture_url, data.moderation], (err, results) => {
@@ -38,65 +36,60 @@ exports.getChildMessages = (parent_id, result) => {
 
 // Update Topic_message to Database = modifier un message
 exports.updateMessage = (data, result) => {
-    if (data.tm_picture_url) {
-        db_queries.get_picture_url_by_id(data.tm_id, (err, results) => {
-            console.log(results)
+    if (data.tm_picture_url) { // si on a une image dans le DOM
+        db_queries.get_picture_url_by_id(data.tm_id, (err, results) => { // appel de la querie de ../utils/db_queries
+            console.log(results) // vérif des résultats
             if (err) { result(err, null); }
             else {
-                if (results.length > 0 && results[0].tm_picture_url) {
-                    const pic_url = results[0].tm_picture_url;
+                if (results.length > 0 && results[0].tm_picture_url) { // si on a un résultat
+                    const pic_url = results[0].tm_picture_url; //on récupère l'url de l'image
                     try {
-                        fs.unlinkSync(pic_url);
+                        fs.unlinkSync(pic_url); // on supprime l'image de la bdd et du dossier images
                         console.log("image deleted");
                     } catch (err) {
                         result(err, null);
                         console.error(err);
                     }
-                }
+                } // puis on met à jour la base de données en insérant une nouvelle image
                 connection.query("UPDATE topic_messages SET tm_title = ?, tm_content = ?, tm_picture_url = ? WHERE tm_id = ?",
                     [data.title, data.content, data.tm_picture_url, data.tm_id], (err, results) => {
-                        if (err) { console.log("error: ", err); result(err, null); }
-                        else {
-
-                            connection.query("UPDATE topic_messages SET tm_title = ? WHERE tm_parent = ?",
-                                [data.title, data.tm_id], (err, results) => {
-                                    if (err) { console.log("error: ", err); result(err, null); }
-                                    else {
-                                        result(null, results);
-                                    }
-                                }
-                            );
-                        }
-                    }
-                );
-            }
-        })
-    } else {
-        connection.query("UPDATE topic_messages SET tm_title = ?, tm_content = ? WHERE tm_id = ?",
-            [data.title, data.content, data.tm_id], (err, results) => {
-                if (err) { console.log("error: ", err); result(err, null); }
-                else {
-                    connection.query("UPDATE topic_messages SET tm_title = ? WHERE tm_parent = ?",
-                        [data.title, data.tm_id], (err, results) => {
+                    if (err) { console.log("error: ", err); result(err, null); }
+                    else {
+                        connection.query("UPDATE topic_messages SET tm_title = ? WHERE tm_parent = ?",
+                            [data.title, data.tm_id], (err, results) => {
                             if (err) { console.log("error: ", err); result(err, null); }
                             else {
                                 result(null, results);
                             }
-                        }
-                    );
-                }
+                        });
+                    }
+                });
             }
-        );
+        })
+    } else { // gestion si on a pas d'image
+        connection.query("UPDATE topic_messages SET tm_title = ?, tm_content = ? WHERE tm_id = ?", // MAJ de la BDD (titre et contenu du message) selon l'ID du message
+            [data.title, data.content, data.tm_id], (err, results) => {
+            if (err) { console.log("error: ", err); result(err, null); }
+            else {
+                connection.query("UPDATE topic_messages SET tm_title = ? WHERE tm_parent = ?",
+                    [data.title, data.tm_id], (err, results) => {
+                    if (err) { console.log("error: ", err); result(err, null); }
+                    else {
+                        result(null, results);
+                    }
+                });
+            }
+        });
     }
 }
 
 // Delete Message via id utilisateur
-exports.deleteTopicByUserId = (data, result) => {
-    connection.query("DELETE FROM topic_messages WHERE tm_user_id = ?", [data], (err, results) => {
-        if (err) { result(err, null); }
-        else { result(null, results); }
-    })
-}
+// exports.deleteTopicByUserId = (data, result) => {
+//     connection.query("DELETE FROM topic_messages WHERE tm_user_id = ?", [data], (err, results) => {
+//         if (err) { result(err, null); }
+//         else { result(null, results); }
+//     })
+// }
 
 // Delete Message from Database + gestion des fichiers images de la bdd
 exports.deleteMessageById = (id, result) => {
