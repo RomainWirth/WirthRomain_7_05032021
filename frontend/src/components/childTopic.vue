@@ -1,8 +1,8 @@
 <template>
   <div class="forum">
     <div class="forum__topics">
-      <h2 class="forum__topics--title" v-if="!show" v-on:click="showAnswers">{{ Title }}</h2>
-      <input name="modifyTmTitle" cols="120" rows="1" :placeholder="Title" v-model="newTitle" v-if="show"/>
+      <!-- <h2 class="forum__topics--title" v-if="!show">{{ Title }}</h2> -->
+      <!-- <input name="modifyTmTitle" cols="120" rows="1" :placeholder="Title" v-model="newTitle" v-if="show"/> -->
       <p class="forum__topics--content" v-if="!show">{{ Content }}</p>
       <textarea name="modifyTmContent" id="" cols="120" rows="5" :placeholder="Content" v-model="newContent" maxlength="600" v-if="show"></textarea>
       <div class="forum__topics--picture" v-if="Image">

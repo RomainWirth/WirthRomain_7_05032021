@@ -11,7 +11,7 @@ import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js'; // o
 // include the default style
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
  
-// Tell Vue to install the plugin.
+// Tell Vue to install the plugin. plugin dialog box quand modif infos profile user
 Vue.use(VuejsDialog);
 Vue.use(VuejsDialogMixin);
 new Vue({

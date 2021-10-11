@@ -31,7 +31,7 @@ exports.getUserByEmail = async (user_id, result) => {
 // Get Single User from Database table users
 exports.getUserById = (user_id, result) => {
     connection.query("SELECT u_pseudo, u_email, u_registration_date FROM users WHERE u_id = ?", [user_id], (err, results) => {
-        console.log(results);
+        // console.log(results);
         if (err) {
             console.log("error: ", err);
             result(err, null);

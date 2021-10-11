@@ -51,10 +51,9 @@
             </p>
           </div>
           <p>
-            niveau d'autorisation : <span v-if="level === 1"> Utilisateur</span><span v-if="level === 0"> Modérateur</span>
+            niveau d'autorisation :&nbsp;<span v-if="level === 1">Utilisateur</span><span v-if="level === 0">Modérateur</span>
           </p>
-          <p> date d'enregistrement : {{ dateRegistered.toString().split("+")[0] }}</p>
-          <!-- affiche la date d'enregistrement -->
+          <p>date d'enregistrement : {{ dateRegistered.toString().split("+")[0] }}</p>
         </div>
         <div class="loggedin__content--buttons" v-if="!unhideFields">
           <button type="submit" v-on:click="showFields()">MODIFIER PROFIL</button>
@@ -64,9 +63,7 @@
         </div>
         <div class="loggedin__content--buttons" v-if="unhideFields">
           <button type="submit" v-on:click="updateProfile">Valider Modifications</button>
-          <!-- v-show quand @clic sur bouton modifier -->
           <button type="submit" v-on:click="unhideFields = !unhideFields">Annuler Modifications</button>
-          <!-- v-show quand @clic sur bouton modifier -->
         </div>
       </section>
     </div>
@@ -111,7 +108,7 @@ export default {
     };
     axios(config)
     .then((response) => {
-      console.log(JSON.stringify(response.data));
+      // console.log(JSON.stringify(response.data));
       this.pseudo = response.data.u_pseudo;
       this.email = response.data.u_email;
       this.dateRegistered = new Date(response.data.u_registration_date);

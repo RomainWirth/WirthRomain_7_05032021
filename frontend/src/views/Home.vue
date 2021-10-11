@@ -39,7 +39,7 @@ import axios from "axios";
 
 // import headerNav from "@/components/headerNav.vue";
 import newSubject from "@/components/newSubject.vue";
-import parentTopic from "../components/parentTopic.vue";
+import parentTopic from "@/components/parentTopic.vue";
 
 export default {
   name: "home",
@@ -57,14 +57,14 @@ export default {
   async mounted() {
     this.level = Number(localStorage.getItem("level"));
     const access_token = localStorage.getItem("access_token");
-    console.log(access_token);
+    // console.log(access_token);
     var config = {
       method: "get",
       url: "http://localhost:3000/api/topic_messages/parent",
       headers: { Authorization: "Bearer " + access_token },
     };
     const response = await axios(config);
-    console.log(response);
+    // console.log(response);
     this.serverTopic = response.data.sort((a, b) => {
       if (new Date(a.tm_posting_date) > new Date(b.tm_posting_date)) return -1;
       if (new Date(a.tm_posting_date) < new Date(b.tm_posting_date)) return 1;

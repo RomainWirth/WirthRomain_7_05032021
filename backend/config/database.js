@@ -6,7 +6,8 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'p7_main_user',
   password: 'p7_main_mdp',
-  database: 'p7_bdd'
+  database: 'p7_bdd',
+  multipleStatements: true
 });
  
 // export default connection;

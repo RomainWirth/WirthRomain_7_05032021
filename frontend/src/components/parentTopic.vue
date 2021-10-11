@@ -2,7 +2,6 @@
   <div class="forum">
     <div class="forum__topics">
       <h2 class="forum__topics--title" v-if="!show" v-on:click="showAnswers">{{ Title }}</h2>
-      <!-- cliquable : donne accès au topic en question = v-bind:href="topic.vue" + {{getTopic.getTmTitle}} + parent 0 -->
       <input name="modifyTmTitle" cols="120" rows="1" :placeholder="Title" v-model="newTitle" v-if="show"/>
       <!-- value = même titre que parent v-model="tmTitle" -->
       <p class="forum__topics--content" v-if="!show">{{ Content }}</p>
@@ -20,7 +19,6 @@
         <!-- <p>{{  }}</p> -->
         <span v-html="getmoderation(Moderation)"></span>
         <div>
-          <!-- afficher si l'utilisateur est un modérateur : v-if u_level = 0 -->
           <select name="validation" id="validation" v-if="validateTopic" v-model="moderation">
             <option value="0">Non modéré</option>
             <option value="1">Validé</option>
@@ -46,11 +44,8 @@
     </div>
     <!-- add response bloc -->
     <div class="forum__topics" v-if="answers">
-      <button type="submit" v-on:click="showAnswerBox()" v-if="!answerBox">
-        répondre
-      </button>
+      <button type="submit" v-on:click="showAnswerBox()" v-if="!answerBox">répondre</button>
       <form action="" v-if="answerBox">
-        <input name="tmTitle" cols="120" rows="1" placeholder="titre" v-model="response_title"/>
         <textarea name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600" v-model="response_content"></textarea>
       </form>
       <div class="topic__anwser-area--button" v-if="answerBox">
@@ -114,12 +109,13 @@ export default {
       newPic: null,
       moderation: 0,
       // response state
-      response_title: null,
+      response_title: this.Title,
       response_content: null,
       response_pic: null,
       // component state
       serverTopic: null,
       level: Number,
+      // components affichage
       answers: false,
       show: false,
       showAnswer: false,
@@ -215,7 +211,7 @@ export default {
         data: data,
       };
       axios(config)
-        .then(function (response) {
+        .then((response) => {
           console.log(JSON.stringify(response.data));
           this.$router.go();
         })
@@ -237,7 +233,7 @@ export default {
         },
       };
       axios(config)
-        .then( (response) =>{
+        .then((response) => {
           console.log(JSON.stringify(response.data));
           this.$router.go();
         })
@@ -245,7 +241,7 @@ export default {
           console.log(error);
         });
     },
-    
+    // gestion modération
     getmoderation(moderation) {
       switch (moderation) {
         case 1:

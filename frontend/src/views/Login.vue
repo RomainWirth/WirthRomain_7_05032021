@@ -6,7 +6,7 @@
                 <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania">
             </div>
             <div class="nav">
-                <div class="nav__navigation">
+                <div class="nav__navigation"> |
                     <router-link to="/signup">Signup</router-link> |
                     <router-link to="/">Login</router-link>
                 </div>
@@ -90,16 +90,17 @@ export default {
                 .then((response) => {
                     console.log(response);
                     const token =  response.data.token;
-                    // const token = (this.token == response.data.token);
                     const userId = response.data.userId;
                     const level = response.data.level;
                     localStorage.setItem("access_token", token),
                     localStorage.setItem("userId", userId),
                     localStorage.setItem("level", level),
-                    // this.$emit("identified", true),
                     this.$router.go("/home");
                 })
-                .catch((error) => {(console.log(error + "email et mot de passe incorrects"))});
+                .catch((error) => {
+                    // if this.input.password != u_passwor : erreur mot de passe incorrect
+                    (console.log(error + "email et mot de passe incorrects"))
+                    });
             } else {
                 console.Log("email et mot de passe requis");
             }
