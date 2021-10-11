@@ -1,20 +1,24 @@
 <template>
     <body>
+        <!-- <headerIdentification/> -->
         <header>
             <div class="image">
                 <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania">
             </div>
             <div class="nav">
                 <div class="nav__navigation">
-                    <router-link to="/">Signup</router-link> |
-                    <router-link to="/login">Login</router-link>
+                    <router-link to="/signup">Signup</router-link> |
+                    <router-link to="/">Login</router-link>
                 </div>
             </div>
-        </header>        
+        </header>
+        <section>
+            <h1>Bienvenue sur le forum de discussion de Groupomania. <br/>Merci de vous identifier</h1>
+        </section> 
         <section class="login">
-            <h1>Login</h1>
+            <h2>Login</h2>
             <div class="login__content">
-                <form @submit.prevent="connect()" @submit="checkFormLogin()">
+                <form @submit.prevent="connect" @submit="checkFormLogin">
                     <div v-if="errors.length">
                         <p class="error">Merci d'apporter les corrections suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -30,6 +34,7 @@
 
 <script>
 import axios from "axios";
+// import headerIdentification from "@/components/headerIdentification.vue";
 
 export default {
     name: 'Login',
@@ -41,6 +46,9 @@ export default {
                 password: ""
             },
         };
+    },
+    components: {
+        // headerIdentification
     },
     methods: {
         validEmail: function(email) {

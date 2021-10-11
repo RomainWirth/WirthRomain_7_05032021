@@ -1,16 +1,20 @@
 <template>
     <body>
+        <!-- <headerIdentification/> -->
         <header>
             <div class="image">
                 <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania">
             </div>
             <div class="nav">
                 <div class="nav__navigation"> 
-                    <router-link to="/">Signup</router-link> |
-                    <router-link to="/login">Login</router-link>
+                    <router-link to="/signup">Signup</router-link> |
+                    <router-link to="/">Login</router-link>
                 </div>
             </div>
         </header>
+        <section class="login">
+            <p>Bienvenue sur le forum de discussion de Groupomania. Merci de vous identifier</p>
+        </section> 
         <section class="login">
             <h1>Signup</h1>
             <div class="login__content">
@@ -31,6 +35,7 @@
 
 <script>
 import axios from "axios";
+// import headerIdentification from "@/components/headerIdentification.vue";
 
 export default {
     name: 'Signup',
@@ -43,6 +48,9 @@ export default {
                 password: "",
             },
         };
+    },
+    components: {
+        // headerIdentification
     },
     methods: {
         validEmail: function(email) {
@@ -87,7 +95,7 @@ export default {
             })
             .then((response) => (
                 console.log(response),
-                this.$router.push("/login")
+                this.$router.push("/")
             ))
             .catch((error) => {(console.log(error + " : Erreur requête vers le serveur"))});                
         }

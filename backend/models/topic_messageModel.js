@@ -2,14 +2,15 @@
 // import connection
 const fs = require('fs');
 const connection = require("../config/database.js");
-const { get_message_by_id, get_picture_url_by_id, delete_child_images_by_parent_id } = require('../util/db_querys.js');
+const db_queries = require("../util/db_queries.js");
+// const { get_message_by_id, get_picture_url_by_id, delete_child_images_by_parent_id } = require('../util/db_queries.js');
 
 // Insert Topic_message to Database = création d'un message
 exports.insertTopicMessages = (data, result) => {
     connection.query("INSERT INTO topic_messages (tm_parent, tm_user_id, tm_title, tm_content, tm_picture_url, tm_moderation) VALUES (?, ?, ?, ?, ?, ?)", [data.tm_parent, data.user_id, data.title, data.content, data.picture_url, data.moderation], (err, results) => {
         if (err) { console.log("error: ", err); result(err, null); }
         else {
-            get_message_by_id(results.insertId, (err, res) => {
+            db_queries.get_message_by_id(results.insertId, (err, res) => {
                 if (err) result(err, null);
                 else result(null, res);
             })
@@ -36,7 +37,7 @@ exports.getChildMessages = (parent_id, result) => {
 // Update Topic_message to Database = modifier un message
 exports.updateMessage = (data, result) => {
     if (data.tm_picture_url) {
-        get_picture_url_by_id(data.tm_id, (err, results) => {
+        db_queries.get_picture_url_by_id(data.tm_id, (err, results) => {
             console.log(results)
             if (err) {result(err, null);}
             else {
@@ -78,29 +79,29 @@ exports.deleteTopicByUserId = (data, result) => {
     })
 }
 
-// Delete Message to Database
+// Delete Message from Database + gestion des fichiers images de la bdd
 exports.deleteMessageById = (id, result) => {
-    get_picture_url_by_id(id, (err, results) => {
-        if (err) result(err, null);
+    db_queries.get_picture_url_by_id(id, (err, results) => { // récupération de l'image selon l'id du message
+        console.log(results);
+        if (err) { result(err, null); } // gestion de l'erreur
         else {
-            if (results.length > 0) {
+            if (results.length > 0) { // si on a une image : on obtient un tableau results contenant un objet dont on extrait l'url
                 const pic_url = results[0].tm_picture_url;
                 try {
-                    fs.unlinkSync(pic_url);
-                } catch (err) {
+                    fs.unlinkSync(pic_url); //FileSystem : on supprime l'image du "filesystem"
+                } catch (err) { // gestion de l'erreur
                     result(err, null);
                     console.error(err);
                 }
             }
-            //TODO:
-            // delete child images before deleting from table
+            //TODO: serveur crash quand message parent ne contient pas d'image.
             // test if id is a parent_id
-            delete_child_images_by_parent_id(id, (err, results) => {
+            db_queries.delete_child_images_by_parent_id(id, (err, results) => { // gestion de la suppression des images de l'enfant
                 if (err) {
                     result(err, null);
-
                 } else {
-                    connection.query("DELETE FROM topic_messages WHERE tm_parent = ? or tm_id = ? ", [id, id], (err, results) => {
+                    // suppresion de la table topic_message des lignes dont l'id = tm_parent ou tm_id
+                    connection.query("DELETE FROM topic_messages WHERE tm_parent = ? or tm_id = ? ", [id, id], (err, results) => { 
                         if (err) { console.log("error: ", err); result(err, null); }
                         else { result(null, results); }
                     });

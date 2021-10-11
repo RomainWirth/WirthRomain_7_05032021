@@ -1,5 +1,6 @@
 <template>
   <section class="profile">
+    <!-- <headerNav/> -->
     <header>
       <div class="image">
         <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania"/>
@@ -9,7 +10,7 @@
           <span v-if="level === 0" style="color: green; font-weight: bold">Admin</span> | 
           <router-link to="/home">Home</router-link> |
           <router-link to="/profile">Profil Utilisateur</router-link> |
-          <router-link to="/login" v-on:click:native="Logout">Logout</router-link>
+          <router-link to="/login" v-on:click.native="Logout()">Logout</router-link>
         </div>
       </div>
     </header>
@@ -74,6 +75,7 @@
 
 <script>
 import axios from "axios";
+// import headerNav from "@/components/headerNav.vue";
 
 export default {
   name: "Profile",
@@ -94,6 +96,9 @@ export default {
       newPassword: null,
     };
   },
+  components: {
+    // headerNav,
+  },
   mounted() {
     const access_token = localStorage.getItem("access_token");
     const user_id = localStorage.getItem("userId");
@@ -102,9 +107,7 @@ export default {
     var config = {
       method: "get",
       url: "http://localhost:3000/api/users/" + user_id,
-      headers: {
-        Authorization: "Bearer " + access_token,
-      },
+      headers: {Authorization: "Bearer " + access_token,},
     };
     axios(config)
     .then((response) => {
@@ -122,12 +125,11 @@ export default {
     Logout() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("userId");
-      this.$router.push("/login");
+      this.$router.push("/");
     },
     updateProfile(e) {
       e.preventDefault();
       const access_token = localStorage.getItem("access_token");
-
       var data = JSON.stringify({
         u_id: this.userId,
         u_pseudo: this.newPseudo ? this.newPseudo : this.pseudo,
@@ -162,7 +164,7 @@ export default {
       const access_token = localStorage.getItem("access_token");
       var config = {
         method: "delete",
-        url: "http://localhost:3000/api/users/"+this.userId,
+        url: "http://localhost:3000/api/users/" + this.userId,
         headers: {Authorization: "Bearer " + access_token,},
       };
       axios(config)

@@ -131,14 +131,15 @@ export default {
     this.level = Number(localStorage.getItem("level"));
     this.connected_id = Number(localStorage.getItem("userId"));
     const access_token = localStorage.getItem("access_token");
-    console.log(access_token);
+    // console.log(access_token);
     var config = {
       method: "get",
       url: "http://localhost:3000/api/topic_messages/child/" + this.Id,
       headers: { Authorization: "Bearer " + access_token },
     };
     const response = await axios(config);
-    console.log(response);
+    // console.log(response);
+    // classer les messages les plus récents en premier
     this.serverTopic = response.data.sort((a, b) => {
       if (new Date(a.tm_posting_date) > new Date(b.tm_posting_date)) return -1;
       if (new Date(a.tm_posting_date) < new Date(b.tm_posting_date)) return 1;

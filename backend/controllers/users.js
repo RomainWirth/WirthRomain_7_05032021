@@ -14,11 +14,9 @@ exports.showUserById = (req, res) => {
     const user_id = req.params.user_id;
     user.getUserById(user_id, (err, results) => { // u_id ou id ?
         if (err){
-            console.log("getUserById ne fonctionne pas");
             res.send(err);
         }
         else {
-            console.log("getUserById OK");
             res.json(results);
         }
     });
@@ -29,11 +27,9 @@ exports.updateUser = (req, res) => {
     const data = req.body;
     user.updateUserById(data, (err, results) => {
         if (err){
-            console.log("updateUserById ne fonctionne pas");
             res.send(err);
         }
         else{
-            console.log("updateUserById OK");
             res.json(results);
         }
     });
@@ -49,16 +45,13 @@ exports.deleteUser = (req, res) => {
         else{
             user.deleteUserById(id, (err, results) => {
                 if (err){
-                    console.log("deleteUserById ne fonctionne pas");
                     res.send(err);
                 }
                 else{
-                    console.log("deleteUserById OK");
                     res.json(results);
                 }
             });
         }
     })
-  
 }
 

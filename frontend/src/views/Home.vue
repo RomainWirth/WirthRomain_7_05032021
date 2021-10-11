@@ -1,5 +1,6 @@
 <template>
   <body>
+    <!-- <headerNav/> -->
     <header>
       <div class="image">
         <img class="image__logo" src="../assets/logo.png" alt="Logo Groupomania"/>
@@ -9,7 +10,7 @@
           <span v-if="level === 0" style="color: green; font-weight: bold">Admin</span> | 
           <router-link to="/home">Home</router-link> |
           <router-link to="/profile">Profil Utilisateur</router-link> |
-          <router-link to="/login" v-on:click:native="Logout">Logout</router-link>
+          <router-link to="/" v-on:click.native="Logout()">Logout</router-link>
         </div>
       </div>
     </header>
@@ -36,16 +37,16 @@
 // @ is an alias to /src
 import axios from "axios";
 
+// import headerNav from "@/components/headerNav.vue";
 import newSubject from "@/components/newSubject.vue";
 import parentTopic from "../components/parentTopic.vue";
 
 export default {
   name: "home",
   components: {
+    // headerNav,
     newSubject,
     parentTopic,
-    // mainForum,
-    // specificTopic
   },
   data() {
     return {
@@ -81,7 +82,7 @@ export default {
     Logout() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("userId");
-      this.$router.push("/login");
+      this.$router.push("/");
     },
   },
 };

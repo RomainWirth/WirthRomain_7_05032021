@@ -13,7 +13,7 @@
       </div>
       <div class="forum__topics--details">
         <p>{{ Pseudo }}</p>
-        <p>{{ date }}</p>
+        <p>{{ new Date(date).toString().split("+")[0] }}</p>
         <span v-html="getmoderation(Moderation)"></span>
         <div v-if="userlevel === 0 && validateTopic">
           <select name="validation" id="validation" v-model="moderation">
