@@ -47,7 +47,7 @@
             </p>
             <p class="champs-info__line">
               <label for="password">Mot de passe : </label>
-              <input type="text" name="password" id="password" placeholder="********" v-model="newPassword"/>
+              <input type="password" name="password" id="password" placeholder="********" v-model="newPassword"/>
             </p>
           </div>
           <p>
