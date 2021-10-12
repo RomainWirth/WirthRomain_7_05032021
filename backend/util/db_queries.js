@@ -30,7 +30,7 @@ exports.delete_child_images_by_parent_id = (parent_id, callback) => {
         if (err) { // gestion de l'erreur
             callback(err, null);
         } else {
-            for (let i = 0; i < results.length; i++) { // boucle for pour récupérer la totalité des images dont le parent = 0
+            for (let i = 0; i < results.length; i++) { // boucle for pour récupérer la totalité des images dont le parent_id = 0
                 const el = results[i];
                 if (el.tm_picture_url) { // si on obtient un résultat dans la boucle : il existe au moins une image
                     try {
