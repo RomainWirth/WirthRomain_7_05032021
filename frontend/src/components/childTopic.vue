@@ -47,7 +47,7 @@ import axios from "axios";
 
 export default {
   name: "child-topic",
-  props: {
+  props: { // props en référence aux v-bind sur parentTopic.vue
     Id: Number,
     Image: String,
     Title: String,

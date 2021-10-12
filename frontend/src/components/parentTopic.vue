@@ -89,7 +89,7 @@ export default {
   components: {
     childTopic,
   },
-  props: {
+  props: { // props en référence aux v-bind sur Home.vue
     Id: Number,
     Image: String,
     Title: String,
