@@ -36,8 +36,8 @@ exports.getChildMessages = (parent_id, result) => {
 
 // Update Topic_message to Database = modifier un message
 exports.updateMessage = (data, result) => {
-    if (data.tm_picture_url) { // si on a une image dans le DOM
-        db_queries.get_picture_url_by_id(data.tm_id, (err, results) => { // appel de la querie de ../utils/db_queries
+    if (data.tm_picture_url) { // si on update l'image depuis le DOM
+        db_queries.get_picture_url_by_tm_id(data.tm_id, (err, results) => { // appel de la querie de ../utils/db_queries
             console.log(results) // vérif des résultats
             if (err) { result(err, null); }
             else {
@@ -66,7 +66,7 @@ exports.updateMessage = (data, result) => {
                 });
             }
         })
-    } else { // gestion si on a pas d'image
+    } else { // gestion si on update pas l'image
         connection.query("UPDATE topic_messages SET tm_title = ?, tm_content = ? WHERE tm_id = ?", // MAJ de la BDD (titre et contenu du message) selon l'ID du message
             [data.title, data.content, data.tm_id], (err, results) => {
             if (err) { console.log("error: ", err); result(err, null); }
@@ -93,7 +93,7 @@ exports.updateMessage = (data, result) => {
 
 // Delete Message from Database + gestion des fichiers images de la bdd
 exports.deleteMessageById = (id, result) => {
-    db_queries.get_picture_url_by_id(id, (err, results) => { // récupération de l'image selon l'id du message
+    db_queries.get_picture_url_by_tm_id(id, (err, results) => { // récupération de l'image selon l'id du message
         // console.log(results); // URL de l'image parent si tm_parent = tm_id
         if (err) { result(err, null); } // gestion de l'erreur
         else { // gestion de la suppresion du message
