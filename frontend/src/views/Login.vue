@@ -98,11 +98,14 @@ export default {
                     this.$router.go("/home");
                 })
                 .catch((error) => {
-                    // if this.input.password != u_passwor : erreur mot de passe incorrect
-                    (console.log(error + "email et mot de passe incorrects"))
-                    });
+                    this.errors = [];
+                    console.log(error);
+                    this.errors.push('Vérifiez votre email ou votre mot de passe');
+                    (console.log(error + " : email ou mot de passe incorrects"));
+
+                });
             } else {
-                console.Log("email et mot de passe requis");
+                console.log("email et mot de passe requis");
             }
         }
     }

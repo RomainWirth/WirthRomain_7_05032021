@@ -32,29 +32,34 @@ exports.signup = (req, res) => { // async = (req, res) => {
 };
 
 // login
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
     try {
         const email = req.body.front_email;
         const pwd = req.body.front_password;
         if (!email || !pwd) { res.status(400).json(`${!email ? "email" : "pwd"} manquant`); }
-            
-        userData.getUserByEmail(email,(err,results)=>{
-            bcrypt.compare(pwd, results[0].u_password)
-            .then(valid => {
-            if (!valid) {
-                return res.status(401).json({error: "Mot de passe incorrect"});
+        
+        userData.getUserByEmail(email, (err, results) => {
+            try {
+                const u_password = results[0].u_password;
+                bcrypt.compare(pwd, u_password)
+                .then(valid => {
+                if (!valid) {
+                    return res.status(401).json({error: "Mot de passe incorrect"});
+                }
+                res.status(200).json({ 
+                    level: results[0].u_level,
+                    userId: results[0].u_id,
+                    token: jwt.sign (
+                        { userId: results[0].u_id },
+                        'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
+                        { expiresIn: '24h' }
+                        )
+                    });
+                })
+                .catch(err => res.status(500).json({ err }));
+            } catch (error) {
+                return res.status(404).json({error: "Utilisateur non trouvé"});
             }
-            res.status(200).json({ 
-                level:results[0].u_level,
-                userId: results[0].u_id,
-                token: jwt.sign (
-                    { userId: results[0].u_id },
-                    'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
-                    { expiresIn: '24h' }
-                    )
-                });
-            })
-            .catch(error => res.status(500).json({ error }));         
         });
     } catch (error) {
         res.status(403).json({ error: 'requête non autorisée'});

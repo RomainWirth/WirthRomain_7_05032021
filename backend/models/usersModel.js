@@ -16,10 +16,12 @@ exports.insertUsers = (data, result) => {
 }
 
 // fonction find user by email
-exports.getUserByEmail = async (user_id, result) => {
-    connection.query("SELECT * FROM users WHERE u_email = ?", [user_id], (err, results) => {
+exports.getUserByEmail = async (email, result) => {
+    connection.query("SELECT * FROM users WHERE u_email = ?", [email], (err, results) => {
         if (err) {
+            // console.log(err);
             result(err, null);
+            return err;
         }
         else {
             result(null, results);
@@ -59,7 +61,8 @@ exports.updateUserById = (data, result) => {
             });
         })
         .catch(error => result(error, null));
-    } else { // gestion de la modification si mot de passe inchangé
+    } else { 
+        // gestion de la modification si mot de passe inchangé
         connection.query("UPDATE users set u_pseudo = ?, u_email = ? WHERE u_id = ?",
         [data.u_pseudo, data.u_email, data.u_id], (err, results) => {
             if (err) {
