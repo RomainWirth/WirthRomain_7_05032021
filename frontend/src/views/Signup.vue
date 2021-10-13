@@ -12,9 +12,9 @@
                 </div>
             </div>
         </header>
-        <section class="login">
-            <p>Bienvenue sur le forum de discussion de Groupomania. Merci de vous identifier</p>
-        </section> 
+        <section>
+            <h1>Bienvenue sur le forum de discussion de Groupomania. <br/>Merci de vous identifier</h1>
+        </section>
         <section class="login">
             <h1>Signup</h1>
             <div class="login__content">
