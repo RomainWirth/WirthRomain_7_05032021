@@ -57,6 +57,8 @@ USE p7_bdd;
 SHOW TABLES;
 DESCRIBE topic_messages;
 DESCRIBE users;
+SELECT * FROM topic_messages;
+SELECT * FROM users;
 
 une fois un nouvel utilisateur créé depuis l'application (signup sur http://localhost:PORT/)
 sur mysql, pour faire d'un utilisateur un modérateur :
