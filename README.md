@@ -46,6 +46,12 @@ mysql -u root -p p7_bdd < "path_to_project_folder"/backend/"commandes sql"/p7_bd
 
 puis entrer votre mot de passe
 
+## utilisateur du projet :
+## user :
+p7_main_user
+## MDP :
+p7_main_mdp
+
 SHOW DATABASES;
 USE p7_bdd;
 SHOW TABLES;
