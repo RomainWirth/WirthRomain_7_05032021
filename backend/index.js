@@ -23,15 +23,15 @@ app.use((req, res, next) => {
 });
 
 const port = 3000;
-app.use(cookieSession({
-    name: "session",
-    secret: "SeCuRe",
-    cookie: {
-        secure: true,
-        httpOnly: true,
-        domain: "http://localhost:" + port + "/",
-    },
-}));
+// app.use(cookieSession({
+//     name: "session",
+//     secret: "SeCuRe",
+//     cookie: {
+//         secure: true,
+//         httpOnly: true,
+//         domain: "http://localhost:" + port + "/",
+//     },
+// }));
 
 app.use(bodyParser.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));

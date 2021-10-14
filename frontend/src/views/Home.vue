@@ -65,17 +65,11 @@ export default {
     };
     const response = await axios(config);
     // console.log(response);
-    this.serverTopic = response.data.sort((a, b) => {
-      if (new Date(a.tm_posting_date) > new Date(b.tm_posting_date)) return -1;
-      if (new Date(a.tm_posting_date) < new Date(b.tm_posting_date)) return 1;
-      return 0;
-    });
-    // .then((response) => {
-    //   this.serverTopic = response.data;
-    //   console.log(JSON.stringify(response.data));
-    // })
-    // .catch((error) => {
-    //   console.log(error);
+    this.serverTopic = response.data
+    // .sort((a, b) => { // classer les messages les plus récents en premier
+    //   if (new Date(a.tm_posting_date) > new Date(b.tm_posting_date)) return -1;
+    //   if (new Date(a.tm_posting_date) < new Date(b.tm_posting_date)) return 1;
+    //   return 0;
     // });
   },
   methods: {

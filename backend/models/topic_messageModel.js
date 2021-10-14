@@ -20,7 +20,7 @@ exports.insertTopicMessages = (data, result) => {
 
 // Get Parent Topics = trouver tous les messages parents = 0 (titre principal)
 exports.getParentMessages = (result) => {
-    connection.query("SELECT tm.*, u.u_pseudo FROM topic_messages tm INNER JOIN users u ON tm.tm_user_id = u.u_id WHERE tm.tm_parent= 0 ", (err, results) => {
+    connection.query("SELECT tm.*, u.u_pseudo FROM topic_messages tm INNER JOIN users u ON tm.tm_user_id = u.u_id WHERE tm.tm_parent= 0 ORDER BY tm_posting_date DESC", (err, results) => {
         if (err) { console.log("error: ", err); result(err, null); }
         else { result(null, results); }
     });
@@ -28,7 +28,7 @@ exports.getParentMessages = (result) => {
 
 // Get Child Topics = trouver tous les messages dont le parent = 0
 exports.getChildMessages = (parent_id, result) => {
-    connection.query("SELECT tm.*, u.u_pseudo FROM topic_messages tm INNER JOIN users u ON tm.tm_user_id = u.u_id WHERE tm.tm_parent = ?", [parent_id], (err, results) => {
+    connection.query("SELECT tm.*, u.u_pseudo FROM topic_messages tm INNER JOIN users u ON tm.tm_user_id = u.u_id WHERE tm.tm_parent = ? ORDER BY tm_posting_date DESC", [parent_id], (err, results) => {
         if (err) { console.log("error: ", err); result(err, null); }
         else { result(null, results); }
     });
@@ -84,12 +84,37 @@ exports.updateMessage = (data, result) => {
 }
 
 // Delete Message via id utilisateur
-// exports.deleteTopicByUserId = (data, result) => {
-//     connection.query("DELETE FROM topic_messages WHERE tm_user_id = ?", [data], (err, results) => {
-//         if (err) { result(err, null); }
-//         else { result(null, results); }
-//     })
-// }
+exports.deleteTopicByUserId = (id, result) => {
+    db_queries.get_picture_url_by_tm_id(id, (err, results) => { // récupération de l'image selon l'id du message
+        // console.log(results); // URL de l'image parent si tm_parent = tm_id
+        if (err) { result(err, null); } // gestion de l'erreur
+        else { // gestion de la suppresion du message
+            if (results.length > 0) { // si on a une image : on obtient un tableau results contenant un objet dont on extrait l'url
+                const picture_url = results[0].tm_picture_url;
+                try {
+                    if (fs.existsSync(picture_url)) { // vérification de l'existence du fichier
+                        fs.unlinkSync(picture_url) //FileSystem : suppression des images/liens du "filesystem"
+                    }
+                } catch (err) { // gestion de l'erreur
+                    result(err, null);
+                    console.error(err);
+                }
+            }
+            // et suppression de l'image de(s) l'élément(s) enfant(s) puis du(des) message(s) enfant(s)
+            db_queries.delete_child_images_by_parent_id(id, (err, results) => { // gestion de la suppression des images de l'enfant
+                if (err) {
+                    result(err, null);
+                } else {
+                    // une fois l'image supprimée, suppresion de la table topic_message des lignes dont l'id = tm_parent ou tm_id
+                    connection.query("DELETE FROM topic_messages WHERE tm_id = ? ", [id], (err, results) => {
+                        if (err) { console.log("error: ", err); result(err, null); }
+                        else { result(null, results); }
+                    });
+                }
+            })
+        }
+    })
+}
 
 // Delete Message from Database + gestion des fichiers images de la bdd
 exports.deleteMessageById = (id, result) => {

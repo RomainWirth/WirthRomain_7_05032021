@@ -80,9 +80,9 @@
 </template>
 
 <script>
-// import axios from "axios";
-import childTopic from "./childTopic.vue";
 import axios from "axios";
+import childTopic from "./childTopic.vue";
+// import axios from "axios";
 
 export default {
   name: "parent-topic",
@@ -135,12 +135,12 @@ export default {
     };
     const response = await axios(config);
     // console.log(response);
-    // classer les messages les plus récents en premier
-    this.serverTopic = response.data.sort((a, b) => {
-      if (new Date(a.tm_posting_date) > new Date(b.tm_posting_date)) return -1;
-      if (new Date(a.tm_posting_date) < new Date(b.tm_posting_date)) return 1;
-      return 0;
-    });
+    this.serverTopic = response.data
+    // .sort((a, b) => { // classer les messages les plus récents en premier
+    //   if (new Date(a.tm_posting_date) > new Date(b.tm_posting_date)) return -1;
+    //   if (new Date(a.tm_posting_date) < new Date(b.tm_posting_date)) return 1;
+    //   return 0;
+    // });
   },
   methods: {
     // hide/unhide elements

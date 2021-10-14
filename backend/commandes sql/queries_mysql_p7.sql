@@ -39,3 +39,13 @@ CREATE TABLE p7_bdd.topic_messages (
     tm_moderation INT NOT NULL DEFAULT 0 COMMENT '0 = non modéré, 1 = accepté, 2 = refusé',
     PRIMARY KEY (tm_id)
 ) ENGINE = InnoDB;
+
+-- récupération de la BDD mysqldump
+
+-- copie sur un fichier
+SET PATH=%PATH%;C:/"Program Files"/MySQL/"MySQL Server 8.0"/bin
+mysqldump -u root -p p7_bdd > PATH -- PATH = E:/Web_Dev/p7_bdd.sql
+-- puis enter password => bdd copiée en local
+
+-- récupération de la BDD 
+mysql -u root -p p7_bdd < "PATH"/backend/"commandes sql"/p7_bdd.sql
