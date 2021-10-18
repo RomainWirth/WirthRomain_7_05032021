@@ -85,33 +85,29 @@ exports.updateMessage = (data, result) => {
 
 // Delete Message via id utilisateur
 exports.deleteTopicByUserId = (id, result) => {
-    db_queries.get_picture_url_by_tm_id(id, (err, results) => { // récupération de l'image selon l'id du message
+    db_queries.get_picture_url_by_tm_user_id(id, (err, results) => { // récupération de l'image selon l'id du message
         // console.log(results); // URL de l'image parent si tm_parent = tm_id
         if (err) { result(err, null); } // gestion de l'erreur
         else { // gestion de la suppresion du message
+            // console.log(results);
             if (results.length > 0) { // si on a une image : on obtient un tableau results contenant un objet dont on extrait l'url
-                const picture_url = results[0].tm_picture_url;
                 try {
-                    if (fs.existsSync(picture_url)) { // vérification de l'existence du fichier
-                        fs.unlinkSync(picture_url) //FileSystem : suppression des images/liens du "filesystem"
+                    for (let i = 0; i < results.length; i++) {
+                        const picture_url = results[i].tm_picture_url;
+                        console.log("picture_url : ", picture_url);
+                        if (fs.existsSync(picture_url)) { // vérification de l'existence du fichier
+                            fs.unlinkSync(picture_url) //FileSystem : suppression des images/liens du "filesystem"
+                        }
+                        connection.query("DELETE FROM topic_messages WHERE tm_user_id = ? ", [id], (err, results) => {
+                            if (err) { console.log("error: ", err); result(err, null); }
+                            else { result(null, results); }
+                        });
                     }
                 } catch (err) { // gestion de l'erreur
                     result(err, null);
                     console.error(err);
-                }
+                }   
             }
-            // et suppression de l'image de(s) l'élément(s) enfant(s) puis du(des) message(s) enfant(s)
-            db_queries.delete_child_images_by_parent_id(id, (err, results) => { // gestion de la suppression des images de l'enfant
-                if (err) {
-                    result(err, null);
-                } else {
-                    // une fois l'image supprimée, suppresion de la table topic_message des lignes dont l'id = tm_parent ou tm_id
-                    connection.query("DELETE FROM topic_messages WHERE tm_id = ? ", [id], (err, results) => {
-                        if (err) { console.log("error: ", err); result(err, null); }
-                        else { result(null, results); }
-                    });
-                }
-            })
         }
     })
 }

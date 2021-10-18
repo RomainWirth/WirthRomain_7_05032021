@@ -12,6 +12,14 @@ exports.get_message_by_id = (id, callback) => {
     });
 }
 
+// récupération de l'image selon l'id de l'utilisateur
+exports.get_picture_url_by_tm_user_id = (id, callback) => {
+    connection.query('SELECT tm_picture_url FROM topic_messages WHERE tm_user_id =?', [id], (err, results) => {
+        if (err) { callback(err, null); }
+        else { callback(null, results); }
+    });
+}
+
 // récupération de l'image selon l'id du message
 exports.get_picture_url_by_tm_id = (id, callback) => {
     connection.query('SELECT tm_picture_url FROM topic_messages WHERE tm_id = ?', [id], (err, results) => {
