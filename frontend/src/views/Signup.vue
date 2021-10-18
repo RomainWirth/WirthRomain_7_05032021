@@ -97,7 +97,11 @@ export default {
                 console.log(response),
                 this.$router.push("/")
             ))
-            .catch((error) => {(console.log(error + " : Erreur requête vers le serveur"))});                
+            .catch((error) => {
+                this.errors=[];
+                this.errors.push('email ou pseudo existants');
+                (console.log(error + " : Erreur requête vers le serveur"))
+            });                
         }
     }
 };
