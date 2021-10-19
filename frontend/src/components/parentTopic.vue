@@ -45,8 +45,12 @@
     <!-- add response bloc -->
     <div class="forum__topics" v-if="answers">
       <button type="submit" v-on:click="showAnswerBox()" v-if="!answerBox">répondre</button>
-      <form action="" v-if="answerBox">
+      <form action="" v-if="answerBox" @submit.prevent="checkAnswer()">
         <textarea name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600" v-model="response_content"></textarea>
+        <div v-if="errors.length">
+          <p class="error">Merci de corriger les erreurs suivantes :</p>
+          <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
+        </div>
       </form>
       <div class="topic__anwser-area--button" v-if="answerBox">
         <div class="media">
@@ -102,7 +106,7 @@ export default {
   data() {
     return {
       connected_id: Number,
-
+      errors: [],
       // update state
       newTitle: null,
       newContent: null,
@@ -149,7 +153,12 @@ export default {
     showModifyAnswer() {this.showAnswer = true;},
     showAnswerBox() {this.answerBox = !this.answerBox;},
     showModeration() {this.validateTopic = true;},
-
+    checkAnswer(e) {
+      if (this.response_content) { return true}
+      this.errors = [];
+      if (!this.response_content) { this.errors.push("Veuillez ajouter un contenu à votre réponse"); }
+      e.preventDefault();
+    },
     // création de réponse
     createAnswer(e) {
       e.preventDefault();

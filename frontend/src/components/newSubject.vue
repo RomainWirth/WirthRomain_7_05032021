@@ -5,7 +5,11 @@
                 <button type="submit" v-on:click="showForm()">Nouveau Sujet</button>
             </div>
             <div class="forum__new-topic--field" v-if="unhide">
-                <form>
+                <form @submit="validationForm()">
+                    <div v-if="errors.length">
+                        <p class="error">Merci de corriger les erreurs suivantes :</p>
+                        <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                    </div>
                     <input name="tmTitle" cols="120" rows="1" placeholder="titre" v-model="newTmTitle"/><!-- value = même titre que parent v-model="newTmTitle" -->
                     <textarea name="tmContent" id="" cols="120" rows="5" placeholder="écrivez le contenu ici" maxlength="600" v-model="newTmContent"></textarea><!--  v-model="newTmContent" -->
                     <input type="hidden" value="0" name="tmIdParent" v-model="newTmParent"/><!-- value = id du poste parent v-model="newTmIdParent" -->
@@ -30,6 +34,7 @@ export default {
     name: "newSubject",
     data() {
         return {
+            errors: [],
             unhide: false,
             newTmTitle: "",
             newTmContent: "",
@@ -41,7 +46,13 @@ export default {
     methods: {
         showForm() {this.unhide = true;},
         addImage(e) {this.newTmPictureUrl = e.target.files[0]},
-        
+        validationForm(e) {
+            if (this.newTmTitle && this.newTmContent) { return true}
+            this.errors = [];
+            if (!this.newTmTitle) { this.errors.push("Veuillez ajouter un titre"); }
+            if (!this.newTmContent) { this.errors.push("Veuillez ajouter un contenu"); }
+            e.preventDefault();
+        },
         createMessage(e) {
             e.preventDefault();
             const access_token = localStorage.getItem("access_token");

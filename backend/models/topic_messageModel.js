@@ -98,11 +98,11 @@ exports.deleteTopicByUserId = (id, result) => {
                         if (fs.existsSync(picture_url)) { // vérification de l'existence du fichier
                             fs.unlinkSync(picture_url) //FileSystem : suppression des images/liens du "filesystem"
                         }
-                        connection.query("DELETE FROM topic_messages WHERE tm_user_id = ? ", [id], (err, results) => {
-                            if (err) { console.log("error: ", err); result(err, null); }
-                            else { result(null, results); }
-                        });
                     }
+                    connection.query("DELETE FROM topic_messages WHERE tm_user_id = ? ", [id], (err, results) => {
+                        if (err) { console.log("error: ", err); result(err, null); }
+                        else { result(null, results); }
+                    });
                 } catch (err) { // gestion de l'erreur
                     result(err, null);
                     console.error(err);

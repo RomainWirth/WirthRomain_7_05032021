@@ -30,7 +30,7 @@ exports.deleteUser = (req, res) => {
     const id = req.params.u_id;
     message.deleteTopicByUserId(id, (err, results) => {
         if (err){ res.send(err); }
-        else{
+        else {
             user.deleteUserById(id, (err, results) => {
                 if (err){ res.send(err); }
                 else{ res.json(results); }
