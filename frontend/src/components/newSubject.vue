@@ -10,9 +10,9 @@
                     <textarea name="tmContent" id="" cols="120" rows="5" placeholder="écrivez le contenu ici" maxlength="600" v-model="newTmContent"></textarea><!--  v-model="newTmContent" -->
                     <input type="hidden" value="0" name="tmIdParent" v-model="newTmParent"/><!-- value = id du poste parent v-model="newTmIdParent" -->
                     <input type="hidden" value="" name="tmUserId" v-model="newTmUserId" /><!-- value = id de l'usager identifié v-model="newTmUserId" -->
-                    <p class="media">
-                        <input type="file" @change="addImage" />
-                    </p>
+                    <div class="media">
+                        <p><input type="file" @change="addImage" /></p>
+                    </div>
                     <p>
                         <button type="submit" @click="createMessage">Poster</button>
                         <button type="submit" v-on:click="unhide = !unhide">Annuler</button>
