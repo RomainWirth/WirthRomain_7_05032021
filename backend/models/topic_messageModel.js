@@ -94,7 +94,7 @@ exports.deleteTopicByUserId = (id, result) => {
                 try {
                     for (let i = 0; i < results.length; i++) {
                         const picture_url = results[i].tm_picture_url;
-                        console.log("picture_url : ", picture_url);
+                        // console.log("picture_url : ", picture_url);
                         if (fs.existsSync(picture_url)) { // vérification de l'existence du fichier
                             fs.unlinkSync(picture_url) //FileSystem : suppression des images/liens du "filesystem"
                         }
