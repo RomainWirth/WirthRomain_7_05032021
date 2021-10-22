@@ -32,20 +32,6 @@ exports.deleteUser = (req, res) => {
         // console.log(results);
         if (err){ res.send(err); }
         else {
-<<<<<<< HEAD
-            if (results.length > 0) { // si on a une image : on obtient un tableau results contenant un objet dont on extrait l'url
-                const picture_url = results[0].tm_picture_url;
-                try {
-                    if (fs.existsSync(picture_url)) { // vérification de l'existence du fichier
-                        fs.unlinkSync(picture_url) //FileSystem : suppression des images/liens du "filesystem"
-                    }
-                } catch (err) { // gestion de l'erreur
-                    res(err, null);
-                    console.error(err);
-                }
-            }
-=======
->>>>>>> second_branch
             user.deleteUserById(id, (err, results) => {
                 if (err){ res.send(err); }
                 else{

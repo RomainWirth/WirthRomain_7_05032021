@@ -84,13 +84,6 @@ exports.updateMessage = (data, result) => {
 }
 
 // Delete Message via id utilisateur
-<<<<<<< HEAD
-exports.deleteTopicByUserId = (data, result) => {
-    connection.query("DELETE FROM topic_messages WHERE tm_user_id = ? ", [data], (err, results) => {
-        if (err) { console.log("error: ", err); result(err, null); }
-        else { result(null, results); }
-    });
-=======
 exports.deleteTopicByUserId = (id, result) => {
     db_queries.get_picture_url_by_tm_user_id(id, (err, results) => { // récupération de l'image selon l'id du message
         // console.log(results); // URL de l'image parent si tm_parent = tm_id
@@ -117,7 +110,6 @@ exports.deleteTopicByUserId = (id, result) => {
             }
         }
     })
->>>>>>> second_branch
 }
 
 // Delete Message from Database + gestion des fichiers images de la bdd
