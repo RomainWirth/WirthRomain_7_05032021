@@ -42,9 +42,21 @@ Il faudra la copier depuis le répertoire ../backend/"commandes sql"/p7_bdd.sql
 (modifier les ".." selon le chemin ou vous avez enregistré le repo git et le nom donné au dossier contenant l'application).
 
 SET PATH=%PATH%;"path_to_mysql"/MySQL/"MySQL Server 8.0"/bin
+
+Attention, il est possible de devoir créer la base de données en locale avant de copier le contenu. Exécuter les commandes suivantes :
+CREATE DATABASE p7_bdd CHARACTER SET 'utf8';
 mysql -u root -p p7_bdd < "path_to_project_folder"/backend/"commandes sql"/p7_bdd.sql
 
 puis entrer votre mot de passe
+
+afin de logger l'utilisateur déjà existant : 
+mysql --host=localhost --user=p7_main_user --password=p7_main_mdp
+
+ou créez l'utilisateur avec les commandes suivantes :
+CREATE USER 'p7_main_user'@'localhost' IDENTIFIED BY 'p7_main_mdp';
+GRANT ALL PRIVILEGES ON p7_bdd.* TO 'p7_main_user'@'localhost';
+
+mysql -u p7_main_user -p
 
 ## utilisateur du projet :
 ## user :
@@ -52,6 +64,7 @@ p7_main_user
 ## MDP :
 p7_main_mdp
 
+## Commandes communes
 SHOW DATABASES;
 USE p7_bdd;
 SHOW TABLES;
@@ -65,3 +78,20 @@ sur mysql, pour faire d'un utilisateur un modérateur :
 
 UPDATE users SET u_level = 0 WHERE u_id = ?; 
 ## ? = u_id correspondant à l'utilisateur à passer en modérateur
+
+## pour accéder aux profils utilisateurs déjà existants depuis le frontend sur http://localhost:8080/
+pseudo : userAAA
+email: userAAA@gmail.com
+mdp : pwduserAAA
+
+pseudo : userBBB
+email: userBBB@gmail.com
+mdp : pwduserBBB
+
+pseudo : userCCC
+email: userCCC@gmail.com
+mdp : pwduserCCC
+
+pseudo : userAdmin
+email: userAdmin@gmail.com
+mdp : pwduserAdmin
