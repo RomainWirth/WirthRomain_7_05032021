@@ -7,8 +7,6 @@ const users = require('../controllers/users.js');
 const auth = require('../middleware/auth.js');
 
 // routes get, update et delete one user voir controller users, requiert user authentifié
-// Get All Users
-// router.get('/users', showUsers);
 // Get Single User
 router.get('/users/:user_id', auth, users.showUserById);
 // Update User

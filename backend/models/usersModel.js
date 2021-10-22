@@ -87,17 +87,3 @@ exports.deleteUserById = (id, result) => {
         }
     });
 }
-
-// Query pour accès moderation
-// exports.getUserLevel = (user_id, result) => {
-//     connection.query("GET u_level FROM users WHERE u_id = ?", [user_id], (err, results) => {
-//         if (err) {
-//             console.log("error: ", err);
-//             result(err, null);
-//         }
-//         else {
-//             result(null, results);
-//             return results
-//         }
-//     });
-// }

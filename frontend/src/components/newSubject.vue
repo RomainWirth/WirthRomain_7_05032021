@@ -6,10 +6,10 @@
             </div>
             <div class="forum__new-topic--field" v-if="unhide">
                 <form>
-                    <input name="tmTitle" cols="120" rows="1" placeholder="titre" v-model="newTmTitle"/><!-- value = même titre que parent v-model="newTmTitle" -->
-                    <textarea name="tmContent" id="" cols="120" rows="5" placeholder="écrivez le contenu ici" maxlength="600" v-model="newTmContent"></textarea><!--  v-model="newTmContent" -->
-                    <input type="hidden" value="0" name="tmIdParent" v-model="newTmParent"/><!-- value = id du poste parent v-model="newTmIdParent" -->
-                    <input type="hidden" value="" name="tmUserId" v-model="newTmUserId" /><!-- value = id de l'usager identifié v-model="newTmUserId" -->
+                    <input name="tmTitle" cols="120" rows="1" placeholder="titre" v-model="newTmTitle"/>
+                    <textarea name="tmContent" id="" cols="120" rows="5" placeholder="écrivez le contenu ici" maxlength="600" v-model="newTmContent"></textarea>
+                    <input type="hidden" value="0" name="tmIdParent" v-model="newTmParent"/>
+                    <input type="hidden" value="" name="tmUserId" v-model="newTmUserId" />
                     <div class="media">
                         <p><input type="file" @change="addImage" /></p>
                     </div>

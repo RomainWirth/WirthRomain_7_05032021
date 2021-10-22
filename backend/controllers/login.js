@@ -65,38 +65,3 @@ exports.login = async (req, res, next) => {
         res.status(403).json({ error: 'requête non autorisée'});
     }
 };
-
-// exports.login = (req, res) => {
-//     try {
-//         const email = req.body.front_email;
-//         const pwd = req.body.front_password;
-
-//         if (email) {
-//             connection.query("SELECT * FROM users WHERE u_email = ?", [email], (err, results) => { 
-//                 if(err) {console.log("error: ", err);} 
-//                 else {
-//                     console.log('results: ', results);
-//                     const user = results[0];
-//                     console.log(user);
-//                     bcrypt.compare(pwd, user.u_password)
-//                     .then(valid => {
-//                         if (!valid) {
-//                             return res.status(401).json({error: "Mot de passe incorrect"});
-//                         }
-//                         res.status(200).json({ 
-//                             userId: user.u_id,
-//                             token: jwt.sign (
-//                                 { userId: user.u_id },
-//                                 'RANDOM_TOKEN_SECRET', // clé secrète de l'encodage - en production : 'string' longue et aléatoire
-//                                 { expiresIn: '24h' }
-//                             )
-//                         });
-//                     })
-//                     .catch(error => res.status(500).json({ error }));
-//                 }
-//             });
-//         } else {res.status(400).json(`${!email ? "email" : "pwd"} manquant`);}
-//     } catch (error) {
-//         res.status(403).json({ error: 'requête non autorisée'});
-//     }
-// }

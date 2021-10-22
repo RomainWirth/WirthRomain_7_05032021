@@ -1,9 +1,4 @@
 // Import function from User Model
-// import { getUserById, insertUsers, updateUserById, deleteUserById } from "../models/usersModel.js";
-// const insertUsers = require("../models/usersModel.js");
-// const getUserById = require("../models/usersModel.js");
-// const updateUserById = require("../models/usersModel.js");
-// const deleteUserById = require("../models/usersModel.js");
 const user = require("../models/usersModel.js");
 const message = require("../models/topic_messageModel");
 
