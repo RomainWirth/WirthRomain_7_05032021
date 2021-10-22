@@ -3,7 +3,6 @@
 const fs = require('fs');
 const connection = require("../config/database.js");
 const db_queries = require("../util/db_queries.js");
-// const { get_message_by_id, get_picture_url_by_id, delete_child_images_by_parent_id } = require('../util/db_queries.js');
 
 // Insert Topic_message to Database = création d'un message
 exports.insertTopicMessages = (data, result) => {
@@ -48,7 +47,7 @@ exports.updateMessage = (data, result) => {
                         console.log("image deleted");
                     } catch (err) {
                         result(err, null);
-                        console.error(err);
+                        console.log(err);
                     }
                 } // puis on met à jour la base de données en insérant une nouvelle image
                 connection.query("UPDATE topic_messages SET tm_title = ?, tm_content = ?, tm_picture_url = ? WHERE tm_id = ?",
@@ -105,7 +104,7 @@ exports.deleteTopicByUserId = (id, result) => {
                     });
                 } catch (err) { // gestion de l'erreur
                     result(err, null);
-                    console.error(err);
+                    console.log(err);
                 }   
             }
         }
@@ -152,26 +151,3 @@ exports.moderateMessage = (data, result) => {
         else { result(null, results); }
     });
 }
-
-// Get one topic
-// exports.getMessageByTitle = (title, result) => {
-//     connection.query("SELECT * FROM topic_messages WHERE tm_title = ?", [title], (err, results) => {
-//         if (err) { console.log("error: ", err); result(err, null); }
-//         else { result(null, results[0]); }
-//     });
-// }
-// Delete conversation
-// exports.deleteConversationByTitle = (title, result) => {
-//     connection.query("DELETE FROM topic_messages WHERE tm_title = ?", [title], (err, results) => {
-//         if (err) { console.log("error: ", err); result(err, null); }
-//         else { result(null, results[0]); }
-//     });
-// }
-// Récupérer les Messages d'un seul utilisateur
-// exports.userMessages = (id, result) => {
-//     connection.query("SELECT tm.*, u.u_pseudo FROM topic_messages tm INNER JOIN users u ON tm.tm_user_id = u.u_id WHERE u.u_id = ? ORDER BY tm.tm_id ASC", 
-//     [id.u_id], (err, results) => {
-//         if(err) {console.log("error: ", err); result(err, null);} 
-//         else {result(null, results);}
-//     });
-// }

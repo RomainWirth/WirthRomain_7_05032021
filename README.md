@@ -92,6 +92,7 @@ pseudo : userCCC
 email: userCCC@gmail.com
 mdp : pwduserCCC
 
+utilisateur modérateur :
 pseudo : userAdmin
 email: userAdmin@gmail.com
 mdp : pwduserAdmin
