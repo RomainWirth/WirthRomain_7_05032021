@@ -23,9 +23,9 @@
                         <p class="error">Merci d'apporter les corrections suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
                     </div>
-                    <input type="email" name="email" placeholder="Email" v-model="input.email"/> <!-- v-model="input.email" -->
-                    <input type="password" name="password" placeholder="Password" v-model="input.password"/> <!-- v-model="input.password" -->
-                    <button type="submit">Login</button> <!-- v-on:click="connect()" -->
+                    <input type="email" name="email" placeholder="Email" v-model="input.email"/> 
+                    <input type="password" name="password" placeholder="Password" v-model="input.password"/> 
+                    <button type="submit">Login</button> 
                 </form>
             </div>
         </section>
@@ -81,7 +81,7 @@ export default {
             }
             if (!this.errors.length) { return true; }
         },
-        connect() { // vérifier si async await est utile ici car login essentiel pour continuer sur la suite
+        connect() { 
             if(this.input.email != "" && this.input.password != "") {
                 axios.post("http://localhost:3000/api/login", {
                     front_email: this.input.email,

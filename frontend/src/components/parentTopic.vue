@@ -3,10 +3,8 @@
     <div class="forum__topics">
       <h2 class="forum__topics--title" v-if="!show" v-on:click="showAnswers">{{ Title }}</h2>
       <input name="modifyTmTitle" cols="120" rows="1" :placeholder="Title" v-model="newTitle" v-if="show"/>
-      <!-- value = même titre que parent v-model="tmTitle" -->
       <p class="forum__topics--content" v-if="!show">{{ Content }}</p>
       <textarea name="modifyTmContent" id="" cols="120" rows="5" :placeholder="Content" v-model="newContent" maxlength="600" v-if="show"></textarea>
-      <!-- afficher le contenu du message à modifier -->
       <div class="forum__topics--picture" v-if="Image && Image !== ''">
         <img class="myImg" :src="'http://localhost:3000/' + Image" alt="conversation"/>
       </div>
@@ -16,7 +14,6 @@
       <div class="forum__topics--details">
         <p>{{ Pseudo }}</p>
         <p>{{ new Date(date).toString().split("+")[0] }}</p> <!-- travail sur l'affichage de la date -->
-        <!-- <p>{{  }}</p> -->
         <span v-html="getmoderation(Moderation)"></span>
         <div>
           <select name="validation" id="validation" v-if="validateTopic" v-model="moderation">
