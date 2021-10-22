@@ -32,6 +32,7 @@ exports.deleteUser = (req, res) => {
         // console.log(results);
         if (err){ res.send(err); }
         else {
+<<<<<<< HEAD
             if (results.length > 0) { // si on a une image : on obtient un tableau results contenant un objet dont on extrait l'url
                 const picture_url = results[0].tm_picture_url;
                 try {
@@ -43,6 +44,8 @@ exports.deleteUser = (req, res) => {
                     console.error(err);
                 }
             }
+=======
+>>>>>>> second_branch
             user.deleteUserById(id, (err, results) => {
                 if (err){ res.send(err); }
                 else{

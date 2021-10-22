@@ -82,6 +82,7 @@ exports.deleteUserById = (id, result) => {
             console.log("error: ", err);
             result(err, null);
         } else {
+            console.log(results);
             result(null, results);
         }
     });

@@ -10,9 +10,9 @@
                     <textarea name="tmContent" id="" cols="120" rows="5" placeholder="écrivez le contenu ici" maxlength="600" v-model="newTmContent"></textarea><!--  v-model="newTmContent" -->
                     <input type="hidden" value="0" name="tmIdParent" v-model="newTmParent"/><!-- value = id du poste parent v-model="newTmIdParent" -->
                     <input type="hidden" value="" name="tmUserId" v-model="newTmUserId" /><!-- value = id de l'usager identifié v-model="newTmUserId" -->
-                    <p class="media">
-                        <input type="file" @change="addImage" />
-                    </p>
+                    <div class="media">
+                        <p><input type="file" @change="addImage" /></p>
+                    </div>
                     <p>
                         <button type="submit" @click="createMessage">Poster</button>
                         <button type="submit" v-on:click="unhide = !unhide">Annuler</button>
@@ -41,30 +41,49 @@ export default {
     methods: {
         showForm() {this.unhide = true;},
         addImage(e) {this.newTmPictureUrl = e.target.files[0]},
-        
         createMessage(e) {
             e.preventDefault();
             const access_token = localStorage.getItem("access_token");
             const user_id = localStorage.getItem("userId");
             const data = new FormData();
             data.append("image", this.newTmPictureUrl);
-            const body = {user_id: user_id, tm_parent: 0, title: this.newTmTitle, content: this.newTmContent, moderation: 0}
+            const body = {
+                user_id: user_id, 
+                tm_parent: 0, 
+                title: this.newTmTitle, 
+                content: this.newTmContent, 
+                moderation: 0
+            };
             data.append("topic", JSON.stringify(body));
             var config = {
                 method: "post",
                 url: "http://localhost:3000/api/topic_messages",
-                headers: {Authorization: "Bearer " + access_token, "Content-Type":"multipart/form-data"},
+                headers: {
+                    Authorization: "Bearer " + access_token, 
+                    "Content-Type":"multipart/form-data"
+                },
                 data: data,
             };
-            axios(config)
-            .then( (response) => {
-                console.log(JSON.stringify(response.data));
-                this.$router.go();
-            })
-            .catch((error) => {console.log(error);});
+            if (this.newTmTitle === "" && this.newTmContent === "") {
+                this.$dialog
+                .alert("Veuillez ajouter un titre et un contenu à votre message")
+                .then((dialog) => {
+                    console.log(dialog);
+                })
+            } else {
+                axios(config)
+                .then((response) => {
+                    console.log(JSON.stringify(response.data));
+                    this.$router.go();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
+            
         },
     },
 };
 </script>
 
-<style lang=""></style>
+<style lang="scss"></style>

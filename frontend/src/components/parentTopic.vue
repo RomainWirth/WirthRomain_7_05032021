@@ -50,11 +50,14 @@
       </form>
       <div class="topic__anwser-area--button" v-if="answerBox">
         <div class="media">
-          <input type="file" @change="addImage" />
+          <p><input type="file" @change="addImage" /></p>
         </div>
         <div>
-          <button type="submit" @click="createAnswer">Valider</button>
+          <button type="submit" @click="createAnswer" @mouseover="hover = true" @mouseleave="hover = false">Valider</button>
           <button type="submit" v-on:click="answerBox = !answerBox">Annuler</button>
+        </div>
+        <div>
+          <span v-if="hover" class="error">Merci de vérifier que votre réponse contient bien un contenu ou une image avant de valider</span>
         </div>
       </div>
     </div>
@@ -102,7 +105,7 @@ export default {
   data() {
     return {
       connected_id: Number,
-
+      hover: false,
       // update state
       newTitle: null,
       newContent: null,
@@ -149,7 +152,6 @@ export default {
     showModifyAnswer() {this.showAnswer = true;},
     showAnswerBox() {this.answerBox = !this.answerBox;},
     showModeration() {this.validateTopic = true;},
-
     // création de réponse
     createAnswer(e) {
       e.preventDefault();
@@ -174,7 +176,14 @@ export default {
         },
         data: data_2,
       };
-      axios(config)
+      if (this.response_content === "") {
+        this.$dialog
+        .alert("Veuillez ajouter un contenu à votre message")
+        .then((dialog) => {
+          console.log(dialog);
+        })
+      } else {
+        axios(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
           this.$router.go();
@@ -182,6 +191,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+      }
     },
     addImage(e) {
       this.response_pic = e.target.files[0];

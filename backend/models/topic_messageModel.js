@@ -84,11 +84,40 @@ exports.updateMessage = (data, result) => {
 }
 
 // Delete Message via id utilisateur
+<<<<<<< HEAD
 exports.deleteTopicByUserId = (data, result) => {
     connection.query("DELETE FROM topic_messages WHERE tm_user_id = ? ", [data], (err, results) => {
         if (err) { console.log("error: ", err); result(err, null); }
         else { result(null, results); }
     });
+=======
+exports.deleteTopicByUserId = (id, result) => {
+    db_queries.get_picture_url_by_tm_user_id(id, (err, results) => { // récupération de l'image selon l'id du message
+        // console.log(results); // URL de l'image parent si tm_parent = tm_id
+        if (err) { result(err, null); } // gestion de l'erreur
+        else { // gestion de la suppresion du message
+            // console.log(results);
+            if (results.length > 0) { // si on a une image : on obtient un tableau results contenant un objet dont on extrait l'url
+                try {
+                    for (let i = 0; i < results.length; i++) {
+                        const picture_url = results[i].tm_picture_url;
+                        // console.log("picture_url : ", picture_url);
+                        if (fs.existsSync(picture_url)) { // vérification de l'existence du fichier
+                            fs.unlinkSync(picture_url) //FileSystem : suppression des images/liens du "filesystem"
+                        }
+                    }
+                    connection.query("DELETE FROM topic_messages WHERE tm_user_id = ? ", [id], (err, results) => {
+                        if (err) { console.log("error: ", err); result(err, null); }
+                        else { result(null, results); }
+                    });
+                } catch (err) { // gestion de l'erreur
+                    result(err, null);
+                    console.error(err);
+                }   
+            }
+        }
+    })
+>>>>>>> second_branch
 }
 
 // Delete Message from Database + gestion des fichiers images de la bdd
