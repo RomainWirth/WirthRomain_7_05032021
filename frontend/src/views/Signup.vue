@@ -18,7 +18,7 @@
         <section class="login">
             <h1>Signup</h1>
             <div class="login__content">
-                <form @submit.prevent="createAccount()" @submit="checkFormSignup()" method="post" novalidate="true">
+                <form @submit.prevent="createAccount" @submit="checkFormSignup" method="post" novalidate="true">
                     <div v-if="errors.length">
                         <p class="error">Merci de corriger les erreurs suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -53,6 +53,12 @@ export default {
         // headerIdentification
     },
     methods: {
+        validPseudo: function(pseudo) {
+            var re = /^([a-zA-Z0-9-_]{2,36})$/;
+            return (
+                re.test(pseudo)
+            );
+        },
         validEmail: function(email) {
             var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
             return (
@@ -71,7 +77,11 @@ export default {
         checkFormSignup(e) {
             if (this.input.pseudo && this.input.email && this.input.password) { return true; }
             this.errors = [];
-            if (!this.input.pseudo) { this.errors.push("Pseudo requis"); }
+            if (!this.input.pseudo) { 
+                this.errors.push("Pseudo requis"); 
+            } else if (!this.validPseudo(this.input.pseudo)) {
+                this.errors.push("Pseudo valide requis : entre 2 et 36 caractères de A à Z (maj et min), - , _ et nombres uniquement");
+            }
             if (!this.input.email) { 
                 this.errors.push('Email requis'); 
             } else if (!this.validEmail(this.input.email)) { 
@@ -86,22 +96,31 @@ export default {
             e.preventDefault();
         },
         createAccount() {
-            console.log("requête vers le serveur");
-            axios.post("http://localhost:3000/api/signup", {
-                front_pseudo: this.input.pseudo,
-                front_email: this.input.email,
-                front_password: this.input.password,
-                // u_id, u_registration_date et u_level sont automatiquement générés dans la BDD
-            })
-            .then((response) => (
-                console.log(response),
-                this.$router.push("/")
-            ))
-            .catch((error) => {
-                this.errors=[];
-                this.errors.push('email ou pseudo existants');
-                (console.log(error + " : Erreur requête vers le serveur"))
-            });                
+            // console.log("requête vers le serveur");
+            if (this.input.pseudo != "" && this.input.email != "" && this.input.password != "") {
+                axios.post("http://localhost:3000/api/signup", {
+                    front_pseudo: this.input.pseudo,
+                    front_email: this.input.email,
+                    front_password: this.input.password,
+                    // u_id, u_registration_date et u_level sont automatiquement générés dans la BDD
+                })
+                .then((response) => (
+                    this.$dialog
+                    .alert("Utilisateur créé, cliquez sur continue pour vous identifier")
+                    .then((dialog) => {
+                        console.log(response);
+                        console.log(dialog);
+                        this.$router.push("/")
+                    })
+                ))
+                .catch((error) => {
+                    this.errors=[];
+                    this.errors.push('email ou pseudo existants');
+                    (console.log(error + " : Erreur requête vers le serveur"))
+                });
+            } else {
+                console.log('pseudo, email et mot de passe requis');
+            }
         }
     }
 };

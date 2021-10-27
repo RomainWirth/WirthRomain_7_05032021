@@ -12,9 +12,9 @@
         <input class="forum__topics--upload" type="file" @change="updateImage" v-if="show"/>
       </div>
       <div class="forum__topics--details">
-        <p>{{ Pseudo }}</p>
-        <p>{{ new Date(date).toString().split("+")[0] }}</p>
-        <span v-html="getmoderation(Moderation)"></span>
+        <p class="bold">{{ Pseudo }}</p>
+        <p class="bold">{{ new Date(date).toString().split("+")[0] }}</p>
+        <span v-html="getmoderation(Moderation)" class="bold"></span>
         <div v-if="userlevel === 0 && validateTopic">
           <select name="validation" id="validation" v-model="moderation">
             <option value="0">non modéré</option>
@@ -24,19 +24,19 @@
         </div>
       </div>
       <div>
-        <button type="submit" v-on:click="showModeration()" v-if="userlevel === 0">Modération</button>
+        <button type="submit" v-on:click="showModeration()" v-if="userlevel === 0" class="orange">Modération</button>
         <div v-if="validateTopic">
-          <button type="submit" v-on:click="updateModeraton">Valider</button>
-          <button type="submit" v-on:click="validateTopic = !validateTopic">Annuler</button>
+          <button type="submit" v-on:click="updateModeraton" class="validate">Valider</button>
+          <button type="submit" v-on:click="validateTopic = !validateTopic" class="delete">Annuler</button>
         </div>
       </div>
       <div v-if="connected_id === userId && !show">
-        <button type="submit" v-on:click="showModify">Modifier</button>
-        <button type="submit" v-on:click="deleteMessage">Supprimer</button>
+        <button type="submit" v-on:click="showModify" class="orange">Modifier</button>
+        <button type="submit" v-on:click="deleteMessage" class="delete">Supprimer</button>
       </div>
       <div v-if="show">
-        <button type="submit" v-on:click="updateTopic">Valider</button>
-        <button type="submit" v-on:click="show = !show">Annuler</button>
+        <button type="submit" v-on:click="updateTopic" class="validate">Valider</button>
+        <button type="submit" v-on:click="show = !show" class="delete">Annuler</button>
       </div>
     </div>
   </div>

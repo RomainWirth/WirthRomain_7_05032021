@@ -56,14 +56,14 @@
           <p>date d'enregistrement : {{ dateRegistered.toString().split("+")[0] }}</p>
         </div>
         <div class="loggedin__content--buttons" v-if="!unhideFields">
-          <button type="submit" v-on:click="showFields()">MODIFIER PROFIL</button>
+          <button type="submit" v-on:click="showFields()" class="orange">MODIFIER PROFIL</button>
           <!-- fenêtre popup pour valider ou annuler la modification -->
-          <button type="submit" v-on:click="deleteProfile">SUPPRIMER PROFIL</button>
+          <button type="submit" v-on:click="deleteProfile" class="delete">SUPPRIMER PROFIL</button>
           <!-- fenêtre popup pour valider ou annuler la suppression -->
         </div>
         <div class="loggedin__content--buttons" v-if="unhideFields">
-          <button type="submit" v-on:click="updateProfile">Valider Modifications</button>
-          <button type="submit" v-on:click="unhideFields = !unhideFields">Annuler Modifications</button>
+          <button type="submit" v-on:click="updateProfile" class="validate">Valider Modifications</button>
+          <button type="submit" v-on:click="unhideFields = !unhideFields" class="delete">Annuler Modifications</button>
         </div>
       </section>
     </div>

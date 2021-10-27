@@ -2,19 +2,19 @@
   <div class="forum">
     <div class="forum__topics">
       <h2 class="forum__topics--title" v-if="!show" v-on:click="showAnswers">{{ Title }}</h2>
-      <input name="modifyTmTitle" cols="120" rows="1" :placeholder="Title" v-model="newTitle" v-if="show"/>
-      <p class="forum__topics--content" v-if="!show">{{ Content }}</p>
+      <input name="modifyTmTitle" cols="120" rows="1" :placeholder="Title" v-model="newTitle" v-if="show" v-on:click="showAnswers"/>
+      <p class="forum__topics--content" v-if="!show" v-on:click="showAnswers">{{ Content }}</p>
       <textarea name="modifyTmContent" id="" cols="120" rows="5" :placeholder="Content" v-model="newContent" maxlength="600" v-if="show"></textarea>
       <div class="forum__topics--picture" v-if="Image && Image !== ''">
-        <img class="myImg" :src="'http://localhost:3000/' + Image" alt="conversation"/>
+        <img class="myImg" :src="'http://localhost:3000/' + Image" alt="conversation" v-on:click="showAnswers"/>
       </div>
       <div class="forum__topics--upload">
         <input class="forum__topics--upload" type="file" @change="updateImage" v-if="show"/>
       </div>
       <div class="forum__topics--details">
-        <p>{{ Pseudo }}</p>
-        <p>{{ new Date(date).toString().split("+")[0] }}</p> <!-- travail sur l'affichage de la date -->
-        <span v-html="getmoderation(Moderation)"></span>
+        <p class="bold">{{ Pseudo }}</p>
+        <p class="bold">{{ new Date(date).toString().split("+")[0] }}</p> <!-- travail sur l'affichage de la date -->
+        <span class="bold" v-html="getmoderation(Moderation)"></span>
         <div>
           <select name="validation" id="validation" v-if="validateTopic" v-model="moderation">
             <option value="0">Non modéré</option>
@@ -24,34 +24,35 @@
         </div>
       </div>
       <div>
-        <button type="submit" v-on:click="showModeration()" v-if="level === 0">Modération</button>
+        <button type="submit" v-on:click="showAnswers" class="validate">Répondre</button>
+        <button type="submit" v-on:click="showModeration()" v-if="level === 0" class="orange">Modération</button>
         <div v-if="validateTopic">
-          <button type="submit" v-on:click="updateModeraton">Valider</button>
-          <button type="submit" v-on:click="validateTopic = !validateTopic">Annuler</button>
+          <button type="submit" v-on:click="updateModeraton" class="validate">Valider</button>
+          <button type="submit" v-on:click="validateTopic = !validateTopic" class="delete">Annuler</button>
         </div>
       </div>
       <div v-if="connected_id === userId && !show">
-        <button type="submit" v-on:click="showModify">Modifier</button>
-        <button type="submit" @click="deleteMessage">Supprimer</button>
+        <button type="submit" v-on:click="showModify" class="orange">Modifier</button>
+        <button type="submit" @click="deleteMessage" class="delete">Supprimer</button>
       </div>
       <div v-if="show">
-        <button type="submit" v-on:click="updateTopic">Valider</button>
-        <button type="submit" v-on:click="show = !show">Annuler</button>
+        <button type="submit" v-on:click="updateTopic" class="validate">Valider</button>
+        <button type="submit" v-on:click="show = !show" class="delete">Annuler</button>
       </div>
     </div>
     <!-- add response bloc -->
     <div class="forum__topics" v-if="answers">
-      <button type="submit" v-on:click="showAnswerBox()" v-if="!answerBox">répondre</button>
-      <form action="" v-if="answerBox">
+      <button type="submit" v-on:click="showAnswerBox()" v-if="!answerBox" class="validate">Répondre</button>
+      <form action="" v-if="answerBox"> <!-- v-if="answerBox" -->
         <textarea name="réponse" id="" cols="120" rows="5" placeholder="répondez ici" maxlength="600" v-model="response_content"></textarea>
       </form>
-      <div class="topic__anwser-area--button" v-if="answerBox">
+      <div class="topic__anwser-area--button" v-if="answerBox"> <!-- v-if="answerBox" -->
         <div class="media">
           <p><input type="file" @change="addImage" /></p>
         </div>
         <div>
-          <button type="submit" @click="createAnswer" @mouseover="hover = true" @mouseleave="hover = false">Valider</button>
-          <button type="submit" v-on:click="answerBox = !answerBox">Annuler</button>
+          <button type="submit" @click="createAnswer" @mouseover="hover = true" @mouseleave="hover = false" class="validate">Valider</button>
+          <button type="submit" v-on:click="answerBox = !answerBox" class="delete">Annuler</button>
         </div>
         <div>
           <span v-if="hover" class="error">Merci de vérifier que votre réponse contient bien un contenu ou une image avant de valider</span>
@@ -74,7 +75,7 @@
       />
     </div>
     <div class="forum__topics" v-if="answers">
-      <button type="submit" v-on:click="answers = !answers">Fermer</button>
+      <button type="submit" v-on:click="answers = !answers" class="delete">Fermer</button>
     </div>
   </div>
 </template>

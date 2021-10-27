@@ -12,3 +12,21 @@ button {
         background-color: #FFD7D7;
     }
 }
+
+.validate {
+    &:hover {
+        background-color: #B0F2B6;
+    }
+}
+
+.delete {
+    &:hover {
+        background-color: #F08080;
+    }
+}
+
+.orange {
+    &:hover {
+        background-color: #E8A57C;
+    }
+}

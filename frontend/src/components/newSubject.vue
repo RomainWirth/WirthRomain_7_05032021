@@ -2,7 +2,7 @@
     <div class="forum">
         <div class="forum__new-topic">
             <div>
-                <button type="submit" v-on:click="showForm()">Nouveau Sujet</button>
+                <button type="submit" v-on:click="showForm()" class="validate">Nouveau Sujet</button>
             </div>
             <div class="forum__new-topic--field" v-if="unhide">
                 <form>
