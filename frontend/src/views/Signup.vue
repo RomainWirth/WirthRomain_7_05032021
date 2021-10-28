@@ -116,7 +116,7 @@ export default {
                 .catch((error) => {
                     this.errors=[];
                     this.errors.push('Utilisateur déjà existant');
-                    (console.log(error + " : Erreur requête vers le serveur"))
+                    (console.log(error + " : Duplicate Entry"))
                 });
             } else {
                 console.log('pseudo, email et mot de passe requis');

@@ -22,7 +22,7 @@ exports.signup = (req, res) => { // async = (req, res) => {
                 }, (err, results) => {
                     if (err) {
                         // console.log(err);
-                        res.status(500).json({err});
+                        res.status(400).json({err});
                     } else {
                         res.status(201).json('Utilisateur créé');
                     }
