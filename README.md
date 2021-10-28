@@ -22,6 +22,9 @@ npm run serve
 
 ## Backend
 ## Application Express
+npm install
+
+## si insufisant :
 npm install --save express
 npm install --save body-parser
 npm install --save bcrypt
@@ -41,7 +44,7 @@ La base de données est déjà créée.
 Il faudra la copier depuis le répertoire ../backend/"commandes sql"/p7_bdd.sql
 (modifier les ".." selon le chemin ou vous avez enregistré le repo git et le nom donné au dossier contenant l'application).
 
-SET PATH=%PATH%;"path_to_mysql"/MySQL/"MySQL Server 8.0"/bin
+SET PATH=%PATH%;C:/"Program Files"/MySQL/"MySQL Server 8.0"/bin
 
 Attention, il est possible de devoir créer la base de données en locale avant de copier le contenu. Exécuter les commandes suivantes :
 CREATE DATABASE p7_bdd CHARACTER SET 'utf8';
