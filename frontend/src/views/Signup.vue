@@ -115,7 +115,7 @@ export default {
                 ))
                 .catch((error) => {
                     this.errors=[];
-                    this.errors.push('email ou pseudo existants');
+                    this.errors.push('Utilisateur déjà existant');
                     (console.log(error + " : Erreur requête vers le serveur"))
                 });
             } else {
