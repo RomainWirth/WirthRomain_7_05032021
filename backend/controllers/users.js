@@ -1,6 +1,7 @@
 // Import function from User Model
 const user = require("../models/usersModel.js");
 const message = require("../models/topic_messageModel");
+const db_queries = require("../util/db_queries.js");
 
 // Get Single User for profil
 exports.showUserById = (req, res) => {
@@ -23,10 +24,8 @@ exports.updateUser = (req, res) => {
 // Delete User
 exports.deleteUser = (req, res) => {
     const id = req.params.u_id;
-    message.deleteTopicByUserId(id, (err, results) => {
-        // console.log(results);
-        if (err){ res.send(err); }
-        else {
+    db_queries.get_messages_bu_user_id(id, (err, results) => {
+        if (err) {
             user.deleteUserById(id, (err, results) => {
                 if (err){ res.send(err); }
                 else{
@@ -34,6 +33,21 @@ exports.deleteUser = (req, res) => {
                     res.json(results); 
                 }
             });
+        } else if (results) {
+            message.deleteTopicByUserId(id, (err, results) => {
+                // console.log(results);
+                if (err){ res.send(err); }
+                else {
+                    user.deleteUserById(id, (err, results) => {
+                        if (err){ res.send(err); }
+                        else{
+                            // console.log(results); 
+                            res.json(results); 
+                        }
+                    });
+                }
+            })
         }
     })
+    
 }

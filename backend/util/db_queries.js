@@ -1,6 +1,17 @@
 const connection = require("../config/database.js");
 const fs = require('fs');
 
+// récupération de tous les messages par user_id
+exports.get_messages_bu_user_id = (id, callback) => {
+    connection.query('SELECT * FROM topic_messages WHERE u_id = ?', [id], (err, results) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+}
+
 // récupération des infos de la ligne selon l'id du message
 exports.get_message_by_id = (id, callback) => {
     connection.query('SELECT * FROM topic_messages WHERE tm_id = ?', [id], (err, results) => {
