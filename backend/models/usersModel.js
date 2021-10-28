@@ -1,9 +1,25 @@
 // import connection
 const connection = require("../config/database.js");
 const bcrypt = require('bcrypt'); // Algorythme de hachage = package de chiffrement
+const { execute } = require("../config/database.js");
 
 // Insert into Users in Database table users
 exports.insertUsers = (data, result) => {
+    // var user_pseudo = {toSqlString: function() {return data.u_pseudo}};
+    // var user_email = {toSqlString: function() {return data.u_email}};
+    // var user_password = {toSqlString: function() {return data.u_password}};
+    // var user_data = [user_pseudo, user_email, user_password];
+    // var query = connection.query("INSERT INTO users (u_pseudo, u_email, u_password) VALUES (?, ?, ?)", user_data, (err, results, fields) => {
+    //     if (err) {
+    //         result(err, null);
+    //     }
+    //     else {
+    //         result(null, results);
+    //         return results;
+    //     }
+    // });
+    // console.log(query.sql);
+    
     connection.query("INSERT INTO users (u_pseudo, u_email, u_password) VALUES (?, ?, ?)", [data.u_pseudo, data.u_email, data.u_password], (err, results) => {
         if (err) {
             result(err, null);

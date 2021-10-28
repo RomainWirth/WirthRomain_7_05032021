@@ -18,7 +18,7 @@
         <section class="login">
             <h1>Signup</h1>
             <div class="login__content">
-                <form @submit.prevent="createAccount" @submit="checkFormSignup" method="post" novalidate="true">
+                <form  @submit="createAccount" method="post" novalidate="true">
                     <div v-if="errors.length">
                         <p class="error">Merci de corriger les erreurs suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -74,8 +74,8 @@ export default {
                 password.length <= 100
             );
         },
-        checkFormSignup(e) {
-            if (this.input.pseudo && this.input.email && this.input.password) { return true; }
+        checkFormSignup() {
+            // if (this.input.pseudo && this.input.email && this.input.password) { return true; }
             this.errors = [];
             if (!this.input.pseudo) { 
                 this.errors.push("Pseudo requis"); 
@@ -93,10 +93,15 @@ export default {
                 this.errors.push('Mot de passe : lettres minuscules')
             }
             if (!this.errors.length) { return true; }
-            e.preventDefault();
+            // e.preventDefault();
         },
-        createAccount() {
+        createAccount(e) {
+            e.preventDefault();
+            this.checkFormSignup();
             // console.log("requête vers le serveur");
+            if(this.errors.length > 0 ) return;
+
+            console.log("account created !");
             if (this.input.pseudo != "" && this.input.email != "" && this.input.password != "") {
                 axios.post("http://localhost:3000/api/signup", {
                     front_pseudo: this.input.pseudo,

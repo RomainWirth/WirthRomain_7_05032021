@@ -18,7 +18,7 @@
         <section class="login">
             <h2>Login</h2>
             <div class="login__content">
-                <form @submit.prevent="connect" @submit="checkFormLogin">
+                <form @submit="connect">
                     <div v-if="errors.length">
                         <p class="error">Merci d'apporter les corrections suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -67,8 +67,10 @@ export default {
             );
         },
         checkFormLogin() {
-            if (this.input.email && this.input.password) { return true; }
+            // if (this.input.email && this.input.password) { return true; }
             this.errors = [];
+            console.log(this.validEmail(this.input.email));
+            console.log(this.validPassword(this.input.password));
             if (!this.input.email) { 
                 this.errors.push('Email requis'); 
             } else if (!this.validEmail(this.input.email)) { 
@@ -81,7 +83,11 @@ export default {
             }
             if (!this.errors.length) { return true; }
         },
-        connect() { 
+        connect(e) { 
+            e.preventDefault();
+            this.checkFormLogin();
+            if(this.errors.length > 0 ) return;
+        
             if(this.input.email != "" && this.input.password != "") {
                 axios.post("http://localhost:3000/api/login", {
                     front_email: this.input.email,
