@@ -74,12 +74,12 @@ export default {
             if (!this.input.email) { 
                 this.errors.push('Email requis'); 
             } else if (!this.validEmail(this.input.email)) { 
-                this.errors.push('Email valide requis');
+                this.errors.push('Email incorrect');
             }
             if (!this.input.password) { 
                 this.errors.push('Mot de passe requis'); 
             } else if (!this.validPassword(this.input.password)) {
-                this.errors.push('Mot de passe : lettres minuscules')
+                this.errors.push('Mot de passe incorrect')
             }
             if (!this.errors.length) { return true; }
         },
@@ -106,7 +106,7 @@ export default {
                 .catch((error) => {
                     this.errors = [];
                     console.log(error);
-                    this.errors.push('Vérifiez votre email ou votre mot de passe');
+                    this.errors.push('Vérifiez que votre email et votre mot de passe correspondent');
                     (console.log(error + " : email ou mot de passe incorrects"));
 
                 });
