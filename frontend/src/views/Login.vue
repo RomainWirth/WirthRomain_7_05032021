@@ -106,7 +106,7 @@ export default {
                 .catch((error) => {
                     this.errors = [];
                     console.log(error);
-                    this.errors.push('utilisateur inconnu : vérifiez votre email et/ou votre mot de passe');
+                    this.errors.push('utilisateur inconnu : vérifiez votre email');
                     (console.log(error + " : email ou mot de passe incorrects"));
 
                 });
