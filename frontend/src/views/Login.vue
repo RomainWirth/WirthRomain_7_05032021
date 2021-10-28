@@ -18,7 +18,7 @@
         <section class="login">
             <h2>Login</h2>
             <div class="login__content">
-                <form @submit="connect">
+                <form @submit="connect" method="post" novalidate="true">
                     <div v-if="errors.length">
                         <p class="error">Merci d'apporter les corrections suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -106,7 +106,7 @@ export default {
                 .catch((error) => {
                     this.errors = [];
                     console.log(error);
-                    this.errors.push('utilisateur inconnu : vérifiez votre email');
+                    this.errors.push('utilisateur inconnu : vérifiez votre email et/ou votre mot de passe');
                     (console.log(error + " : email ou mot de passe incorrects"));
 
                 });

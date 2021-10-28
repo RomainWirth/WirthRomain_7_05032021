@@ -18,7 +18,7 @@
         <section class="login">
             <h1>Signup</h1>
             <div class="login__content">
-                <form  @submit="createAccount" method="post" novalidate="true">
+                <form @submit="createAccount" method="post" novalidate="true">
                     <div v-if="errors.length">
                         <p class="error">Merci de corriger les erreurs suivantes :</p>
                         <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
