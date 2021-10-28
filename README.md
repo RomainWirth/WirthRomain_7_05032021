@@ -62,7 +62,7 @@ GRANT ALL PRIVILEGES ON p7_bdd.* TO 'p7_main_user'@'localhost';
 mysql -u p7_main_user -p
 
 ## utilisateur du projet :
-## user :
+## User :
 p7_main_user
 ## MDP :
 p7_main_mdp
@@ -80,7 +80,7 @@ une fois un nouvel utilisateur créé depuis l'application (signup sur http://lo
 sur mysql, pour faire d'un utilisateur un modérateur :
 
 UPDATE users SET u_level = 0 WHERE u_id = ?; 
-## ? = u_id correspondant à l'utilisateur à passer en modérateur
+(? = u_id correspondant à l'utilisateur à passer en modérateur)
 
 ## pour accéder aux profils utilisateurs déjà existants depuis le frontend sur http://localhost:8080/
 pseudo : userAAA
