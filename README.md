@@ -24,7 +24,7 @@ npm run serve
 ## Application Express
 npm install
 
-## si insufisant :
+## si insuffisant :
 npm install --save express
 npm install --save body-parser
 npm install --save bcrypt

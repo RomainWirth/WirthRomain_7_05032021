@@ -21,7 +21,7 @@ exports.signup = (req, res) => { // async = (req, res) => {
                     // date et id générés automatiquement et level default = 1
                 }, (err, results) => {
                     if (err) {
-                        // console.log(err);
+                        console.log(err);
                         res.status(400).json({err});
                     } else {
                         res.status(201).json('Utilisateur créé');
@@ -31,6 +31,7 @@ exports.signup = (req, res) => { // async = (req, res) => {
             .catch(error => res.status(500).json({ error }));
         }
     } catch (error) {
+        console.log(error);
         res.status(400).json('utilisateur déjà existant');
     }
 };
