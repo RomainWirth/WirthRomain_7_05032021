@@ -17,7 +17,7 @@ exports.signup = (req, res) => { // async = (req, res) => {
                 userData.insertUsers({
                     u_pseudo: req.body.front_pseudo, // requiert le pseudo du corps de la requête
                     u_email: req.body.front_email, // adresse email du corps de la requête
-                    u_password: hash // le mot de passe est stocké crypté
+                    u_password: hash // le mot de passe est stocké chiffré
                     // date et id générés automatiquement et level default = 1
                 }, (err, results) => {
                     if (err) {
